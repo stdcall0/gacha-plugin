@@ -1,4 +1,21 @@
-# xiaoye-plugin
+# gacha-plugin
+## Gacha simulation for Miao-Yunzai
+
+Forked from [xiaoye-plugin](https://gitee.com/xiaoye12123/xiaoye-plugin.git)
+
+---
+
+#### To-do List
+- [ ] 优化底层代码
+- [ ] 提供双爆分排序，方便筛选
+- [ ] 3合1模式
+- [ ] 星铁遗器模拟
+- [ ] cs开箱模拟
+
+---
+
+# Leagcy README
+## xiaoye-plugin
 [![访问量](https://profile-counter.glitch.me/xiaoye-plugin/count.svg)](https://gitee.com/xiaoye12123/xiaoye-plugin.git)
 
 #### 介绍
