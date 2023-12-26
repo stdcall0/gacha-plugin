@@ -127,8 +127,10 @@ export class ssyw extends plugin {
                 if (!img) {
                     img = await puppeteer.screenshot("syw", data);
                 }
+
+                vals = await Promise.all(vals)
                 if (sywNum > 1) {
-                    vals.push({"msg": [`id:${i}`, img], "score": syw.getCritScore(vice, viceData)})
+                    vals.push({"msg": [`id:${i}`, img], "score": await syw.getCritScore(vice, viceData)})
                 } else {
                     vals.push({"msg": img, "score": 0})
                 }
@@ -138,6 +140,8 @@ export class ssyw extends plugin {
             await redis.set('gacha:syw:qq:' + e.user_id, JSON.stringify(dataList), { EX: 86400 })
             await syw.setCishu(e, sywNum)
             await syw.setCD(e)
+
+            vals = await Promise.all(vals)
             if (vals.length > 1) {
                 vals.sort((a, b) => a.score > b.score)
 
