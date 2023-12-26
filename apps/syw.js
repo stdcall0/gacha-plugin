@@ -128,7 +128,6 @@ export class ssyw extends plugin {
                     img = await puppeteer.screenshot("syw", data);
                 }
 
-                vals = await Promise.all(vals)
                 if (sywNum > 1) {
                     vals.push({"msg": [`id:${i}`, img], "score": await syw.getCritScore(vice, viceData)})
                 } else {
@@ -141,7 +140,6 @@ export class ssyw extends plugin {
             await syw.setCishu(e, sywNum)
             await syw.setCD(e)
 
-            vals = await Promise.all(vals)
             if (vals.length > 1) {
                 vals.sort((a, b) => a.score > b.score)
 
@@ -229,14 +227,14 @@ export class ssyw extends plugin {
                 let result = await this.upgrade(dataList[i], up)
                 if (result.data) {
                     data.data.push(result.data)
-                    data.vals.push({'msg': [`id:${i + 1}`, ...result.msg], 'score': syw.getCritScore(dataList[i].vice, dataList[i].viceData)})
+                    data.vals.push({'msg': [`id:${i + 1}`, ...result.msg], 'score': await syw.getCritScore(dataList[i].vice, dataList[i].viceData)})
                 } else {
                     data.data.push(dataList[i])
                     let img = await puppeteer.screenshot("syw", dataList[i]);
                     if (!img) {
                         img = await puppeteer.screenshot("syw", dataList[i]);
                     }
-                    data.vals.push({'msg': [`id:${i + 1}`, ...result.msg], 'score': syw.getCritScore(dataList[i].vice, dataList[i].viceData)})
+                    data.vals.push({'msg': [`id:${i + 1}`, ...result.msg], 'score': await syw.getCritScore(dataList[i].vice, dataList[i].viceData)})
                 }
             }
             data.vals.sort((a, b) => a.score > b.score)
