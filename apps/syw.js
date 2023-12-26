@@ -75,8 +75,8 @@ export class ssyw extends plugin {
         if (target >= 0) {
             const DomainName = e.msg.replace(/#|刷圣遗物/g, "").trim();
 
-            let msg = []
             let dataList = []
+            let vals = []
 
             for (let i = 1; i <= sywNum; i++) {
                 //先看看有没有这个副本
@@ -97,6 +97,10 @@ export class ssyw extends plugin {
 
                 //确定主词条 {id: 'HealthFlat',display: '生命值',percentage: false,suffix: ''}
                 const main = await syw.getMain(Artifact.id, Artifact.mainList)
+
+                if (main === undefined) {
+                    break;
+                }
 
                 //给主词条加初始值 717
                 const mainData = await syw.getMaindata(main.id, level)
@@ -124,19 +128,24 @@ export class ssyw extends plugin {
                     img = await puppeteer.screenshot("syw", data);
                 }
                 if (sywNum > 1) {
-                    msg.push([`id:${i}`, img])
+                    vals.push({"msg": [`id:${i}`, img], "score": syw.getCritScore(vice, viceData)})
                 } else {
-                    msg.push(img)
+                    vals.push({"msg": img, "score": 0})
                 }
                 dataList.push(data)
             }
+
             await redis.set('gacha:syw:qq:' + e.user_id, JSON.stringify(dataList), { EX: 86400 })
             await syw.setCishu(e, sywNum)
             await syw.setCD(e)
-            if (msg.length > 1) {
+            if (vals.length > 1) {
+                vals.sort((a, b) => a.score > b.score)
+
+                let msg = []
+                vals.forEach(i => msg.push(i.msg))
                 await e.reply(await ForwardMsg(e, msg), false, { at: false, recallMsg: cfg.recall })
-            } else {
-                await e.reply(msg, true, { at: false, recallMsg: cfg.recall })
+            } else if (vals.length) {
+                await e.reply(vals[0].msg, true, { at: false, recallMsg: cfg.recall })
             }
         } else {
             await e.reply('今天的次数不够刷这么多次了', true, { at: false, recallMsg: cfg.recall })
@@ -210,23 +219,27 @@ export class ssyw extends plugin {
         if (all) {
             let data = {
                 data: [],
-                msg: []
+                vals: []
             }
             for (let i = 0; i < dataList.length; i++) {
                 let result = await this.upgrade(dataList[i], up)
                 if (result.data) {
                     data.data.push(result.data)
-                    data.msg.push([`id:${i + 1}`, ...result.msg])
+                    data.vals.push({'msg': [`id:${i + 1}`, ...result.msg], 'score': syw.getCritScore(dataList[i].vice, dataList[i].viceData)})
                 } else {
                     data.data.push(dataList[i])
                     let img = await puppeteer.screenshot("syw", dataList[i]);
                     if (!img) {
                         img = await puppeteer.screenshot("syw", dataList[i]);
                     }
-                    data.msg.push([`id:${i + 1}`, img])
+                    data.vals.push({'msg': [`id:${i + 1}`, ...result.msg], 'score': syw.getCritScore(dataList[i].vice, dataList[i].viceData)})
                 }
             }
-            await e.reply(await ForwardMsg(e, data.msg), false, { at: false, recallMsg: cfg.recall })
+            data.vals.sort((a, b) => a.score > b.score)
+
+            let msg = []
+            data.vals.forEach(i => msg.push(i.msg))
+            await e.reply(await ForwardMsg(e, msg), false, { at: false, recallMsg: cfg.recall })
             await redis.set('gacha:syw:qq:' + e.user_id, JSON.stringify(data.data), { EX: 86400 })
         } else {
             let data = await this.upgrade(dataList[id - 1], up)

@@ -5,6 +5,23 @@ import data from '../resources/data/data.js'
 
 export default new class syw {
     /**
+     * 计算给定圣遗物副词条的双爆分数
+     * @param {*} vice 副词条
+     * @param {*} viceData 副词条数值
+     * @returns 双爆分数
+     */
+    async getCritScore(vice, viceData) {
+        let score = 0;
+        for (let i = 0; i < vice.length; ++i) {
+            if (vice[i].display == '暴击率')
+                score += viceData[i].oldValue * 2;
+            if (vice[i].display == '暴击伤害')
+                score += viceData[i].oldValue;
+        }
+        return score;
+    }
+
+    /**
      * 定义一个函数，用于根据给定的概率数组从一个数组中随机选择一个元素
      * @param {*} arr 指定的数组
      * @param {*} prob 指定的概率
