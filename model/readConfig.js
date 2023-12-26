@@ -85,7 +85,7 @@ class Cfg {
    * @param name 名称
    */
   getYaml(type, name) {
-    const configPath = process.cwd().replace(/\\/g, "/") + '/plugins/xiaoye-plugin/'
+    const configPath = process.cwd().replace(/\\/g, "/") + '/plugins/gacha-plugin/'
     let file = configPath + `${type}/${name}.yaml`
     let key = `${type}.${name}`
     if (this.config[key]) return this.config[key]
@@ -103,7 +103,7 @@ class Cfg {
    * 修改配置yaml
    */
   setYaml(type, name, data) {
-    const configPath = process.cwd().replace(/\\/g, "/") + '/plugins/xiaoye-plugin/'
+    const configPath = process.cwd().replace(/\\/g, "/") + '/plugins/gacha-plugin/'
     let file = configPath + `${type}/${name}.yaml`
     try {
       fs.writeFileSync(file, YAML.stringify(data), 'utf8')
@@ -124,7 +124,7 @@ class Cfg {
     watcher.on('change', path => {
       delete this.config[key]
       if (typeof Bot == 'undefined') return
-      logger.mark(`[修改配置文件][xiaoye-plugin/${type}][${name}]`)
+      logger.mark(`[修改配置文件][gacha-plugin/${type}][${name}]`)
       if (this[`change_${name}`]) {
         this[`change_${name}`]()
       }

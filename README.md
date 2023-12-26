@@ -1,5 +1,5 @@
 # gacha-plugin
-## Gacha simulation for Miao-Yunzai
+## All-in-one Gacha Simulation for Miao-Yunzai
 
 Forked from [xiaoye-plugin](https://gitee.com/xiaoye12123/xiaoye-plugin.git)
 
@@ -7,9 +7,10 @@ Forked from [xiaoye-plugin](https://gitee.com/xiaoye12123/xiaoye-plugin.git)
 
 #### To-do List
 - [ ] 优化底层代码
-- [ ] 提供双爆分排序，方便筛选
-- [ ] 3合1模式
+- [ ] 结果按照圣遗物分数排序，方便筛选
+- [ ] 圣遗物 3 合 1 模式
 - [ ] 星铁遗器模拟
+- [ ] 新增星铁抽卡
 - [ ] cs开箱模拟
 
 ---

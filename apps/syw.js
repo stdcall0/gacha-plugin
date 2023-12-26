@@ -108,7 +108,7 @@ export class ssyw extends plugin {
                 let viceData = await syw.getViceData(vice)
 
                 let data = {
-                    tplFile: './plugins/xiaoye-plugin/resources/html/syw/syw.html',
+                    tplFile: './plugins/gacha-plugin/resources/html/syw/syw.html',
                     pluResPath: path,
                     Artifact,       //部位
                     ArtifactName,   //名字
@@ -130,7 +130,7 @@ export class ssyw extends plugin {
                 }
                 dataList.push(data)
             }
-            await redis.set('xiaoye:syw:qq:' + e.user_id, JSON.stringify(dataList), { EX: 86400 })
+            await redis.set('gacha:syw:qq:' + e.user_id, JSON.stringify(dataList), { EX: 86400 })
             await syw.setCishu(e, sywNum)
             await syw.setCD(e)
             if (msg.length > 1) {
@@ -167,7 +167,7 @@ export class ssyw extends plugin {
         let up = 20
 
         //要强化的圣遗物数据
-        let dataList = await redis.get('xiaoye:syw:qq:' + e.user_id)
+        let dataList = await redis.get('gacha:syw:qq:' + e.user_id)
         dataList = JSON.parse(dataList)
         if (dataList == null) {
             e.reply('还没有圣遗物哦,请先#刷圣遗物绝缘', true, { at: false, recallMsg: cfg.recall })
@@ -227,12 +227,12 @@ export class ssyw extends plugin {
                 }
             }
             await e.reply(await ForwardMsg(e, data.msg), false, { at: false, recallMsg: cfg.recall })
-            await redis.set('xiaoye:syw:qq:' + e.user_id, JSON.stringify(data.data), { EX: 86400 })
+            await redis.set('gacha:syw:qq:' + e.user_id, JSON.stringify(data.data), { EX: 86400 })
         } else {
             let data = await this.upgrade(dataList[id - 1], up)
             if (data.data) {
                 dataList[id - 1] = data.data
-                await redis.set('xiaoye:syw:qq:' + e.user_id, JSON.stringify(dataList), { EX: 86400 })
+                await redis.set('gacha:syw:qq:' + e.user_id, JSON.stringify(dataList), { EX: 86400 })
             }
             await e.reply(data.msg, true, { at: false, recallMsg: cfg.recall })
         }
@@ -246,7 +246,7 @@ export class ssyw extends plugin {
     }
 
     async viewLastTime(e) {
-        let dataList = await redis.get('xiaoye:syw:qq:' + e.user_id)
+        let dataList = await redis.get('gacha:syw:qq:' + e.user_id)
         dataList = JSON.parse(dataList)
         if (dataList == null) {
             e.reply('还没有圣遗物哦,请先#刷圣遗物绝缘', true, { at: false, recallMsg: cfg.recall })
@@ -337,7 +337,7 @@ export class ssyw extends plugin {
         //设置主词条数据
         mainData = await syw.getMaindata(main.id, level)
         let newData = {
-            tplFile: './plugins/xiaoye-plugin/resources/html/syw/syw.html',
+            tplFile: './plugins/gacha-plugin/resources/html/syw/syw.html',
             pluResPath: path,
             Artifact,       //部位
             ArtifactName,   //名字

@@ -5,7 +5,7 @@ await init()
 /** 初始化事件 */
 async function init() {
   //检查有没有config/config.yaml
-  const configPath = process.cwd().replace(/\\/g, "/") + '/plugins/xiaoye-plugin/'
+  const configPath = process.cwd().replace(/\\/g, "/") + '/plugins/gacha-plugin/'
   let path = configPath + 'config/'
   let pathDef = configPath + 'def/'
   const files = fs.readdirSync(pathDef).filter(file => file.endsWith('.yaml'))

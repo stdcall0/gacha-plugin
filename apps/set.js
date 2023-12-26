@@ -5,7 +5,7 @@ import { set, setUtil } from "../model/index.js"
 
 const _path = process.cwd().replace(/\\/g, "/");
 
-export class xiaoyeSet extends plugin {
+export class gachaSet extends plugin {
     constructor() {
         super(
             {
@@ -73,7 +73,7 @@ export class xiaoyeSet extends plugin {
         }
         let setList = set.getData()
         let data = {
-            tplFile: './plugins/xiaoye-plugin/resources/html/set/set.html',
+            tplFile: './plugins/gacha-plugin/resources/html/set/set.html',
             pluResPath: _path,
             setList
         }

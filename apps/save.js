@@ -34,7 +34,7 @@ export class save extends plugin {
 
     async save(e) {
         //先判断有没有圣遗物
-        let dataList = await redis.get('xiaoye:syw:qq:' + e.user_id)
+        let dataList = await redis.get('gacha:syw:qq:' + e.user_id)
         dataList = JSON.parse(dataList)
         if (dataList == null) {
             e.reply('还没有圣遗物哦,请先#刷圣遗物绝缘', true)
@@ -67,7 +67,7 @@ export class save extends plugin {
             return true
         }
         let newData = {
-            tplFile: './plugins/xiaoye-plugin/resources/html/syw/syw.html',
+            tplFile: './plugins/gacha-plugin/resources/html/syw/syw.html',
             imgType: 'png',
             pluResPath: path,
             Artifact: dataList[id - 1].Artifact,
@@ -81,7 +81,7 @@ export class save extends plugin {
         }
 
         try {
-            let tempPic = `${path}/plugins/xiaoye-plugin/resources/userData/${e.user_id}`;
+            let tempPic = `${path}/plugins/gacha-plugin/resources/userData/${e.user_id}`;
             //检查路径是否存在,不存在就创建
             if (!fs.existsSync(tempPic)) {
                 fs.mkdirSync(tempPic, (err) => {
@@ -118,7 +118,7 @@ export class save extends plugin {
             dataList[id - 1] = newData
             return true
         }
-        await redis.set('xiaoye:syw:qq:' + e.user_id, JSON.stringify(dataList), { EX: 86400 })
+        await redis.set('gacha:syw:qq:' + e.user_id, JSON.stringify(dataList), { EX: 86400 })
         await e.reply('保存成功~', true);
         return true
     }
@@ -126,7 +126,7 @@ export class save extends plugin {
     async view(e) {
         let msg = []
 
-        let tempPic = `${path}/plugins/xiaoye-plugin/resources/userData/${e.user_id}`;
+        let tempPic = `${path}/plugins/gacha-plugin/resources/userData/${e.user_id}`;
         //检查路径是否存在
         if (!fs.existsSync(tempPic)) {
             e.reply('还没有保存圣遗物呢', true)
@@ -171,7 +171,7 @@ export class save extends plugin {
     }
 
     async delete(e) {
-        let tempPic = `${path}/plugins/xiaoye-plugin/resources/userData/${e.user_id}`;
+        let tempPic = `${path}/plugins/gacha-plugin/resources/userData/${e.user_id}`;
         let targetId = e.msg.replace(/#|删除圣遗物/g, "").trim();
         let id = textToNumber(targetId)
         if (id == -1) {

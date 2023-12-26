@@ -457,8 +457,8 @@ const ArtifactsDomains = [
                     '平雷之心'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/如雷的盛怒/1.webp',
-                    'plugins/xiaoye-plugin/resources/img/平息鸣雷的尊者/1.webp'
+                    'plugins/gacha-plugin/resources/img/如雷的盛怒/1.webp',
+                    'plugins/gacha-plugin/resources/img/平息鸣雷的尊者/1.webp'
                 ]
             },
             PlumeOfDeath: {
@@ -467,8 +467,8 @@ const ArtifactsDomains = [
                     '平雷之羽'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/如雷的盛怒/2.webp',
-                    'plugins/xiaoye-plugin/resources/img/平息鸣雷的尊者/2.webp'
+                    'plugins/gacha-plugin/resources/img/如雷的盛怒/2.webp',
+                    'plugins/gacha-plugin/resources/img/平息鸣雷的尊者/2.webp'
                 ]
             },
             SandsOfEon: {
@@ -477,8 +477,8 @@ const ArtifactsDomains = [
                     '平雷之刻'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/如雷的盛怒/3.webp',
-                    'plugins/xiaoye-plugin/resources/img/平息鸣雷的尊者/3.webp'
+                    'plugins/gacha-plugin/resources/img/如雷的盛怒/3.webp',
+                    'plugins/gacha-plugin/resources/img/平息鸣雷的尊者/3.webp'
                 ]
             },
             GobletOfEonothem: {
@@ -487,8 +487,8 @@ const ArtifactsDomains = [
                     '平雷之器'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/如雷的盛怒/4.webp',
-                    'plugins/xiaoye-plugin/resources/img/平息鸣雷的尊者/4.webp'
+                    'plugins/gacha-plugin/resources/img/如雷的盛怒/4.webp',
+                    'plugins/gacha-plugin/resources/img/平息鸣雷的尊者/4.webp'
                 ]
             },
             CircletOfLogos: {
@@ -497,8 +497,8 @@ const ArtifactsDomains = [
                     '平雷之冠'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/如雷的盛怒/5.webp',
-                    'plugins/xiaoye-plugin/resources/img/平息鸣雷的尊者/5.webp'
+                    'plugins/gacha-plugin/resources/img/如雷的盛怒/5.webp',
+                    'plugins/gacha-plugin/resources/img/平息鸣雷的尊者/5.webp'
                 ]
             }
         }
@@ -520,8 +520,8 @@ const ArtifactsDomains = [
                     '远方的少女之心'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/翠绿之影/1.webp',
-                    'plugins/xiaoye-plugin/resources/img/被怜爱的少女/1.webp'
+                    'plugins/gacha-plugin/resources/img/翠绿之影/1.webp',
+                    'plugins/gacha-plugin/resources/img/被怜爱的少女/1.webp'
                 ]
             },
             PlumeOfDeath: {
@@ -530,8 +530,8 @@ const ArtifactsDomains = [
                     '少女飘摇的思念'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/翠绿之影/2.webp',
-                    'plugins/xiaoye-plugin/resources/img/被怜爱的少女/2.webp'
+                    'plugins/gacha-plugin/resources/img/翠绿之影/2.webp',
+                    'plugins/gacha-plugin/resources/img/被怜爱的少女/2.webp'
                 ]
             },
             SandsOfEon: {
@@ -540,8 +540,8 @@ const ArtifactsDomains = [
                     '少女苦短的良辰'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/翠绿之影/3.webp',
-                    'plugins/xiaoye-plugin/resources/img/被怜爱的少女/3.webp'
+                    'plugins/gacha-plugin/resources/img/翠绿之影/3.webp',
+                    'plugins/gacha-plugin/resources/img/被怜爱的少女/3.webp'
                 ]
             },
             GobletOfEonothem: {
@@ -550,8 +550,8 @@ const ArtifactsDomains = [
                     '少女片刻的闲暇'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/翠绿之影/4.webp',
-                    'plugins/xiaoye-plugin/resources/img/被怜爱的少女/4.webp'
+                    'plugins/gacha-plugin/resources/img/翠绿之影/4.webp',
+                    'plugins/gacha-plugin/resources/img/被怜爱的少女/4.webp'
                 ]
             },
             CircletOfLogos: {
@@ -560,8 +560,8 @@ const ArtifactsDomains = [
                     '少女易逝的芳颜'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/翠绿之影/5.webp',
-                    'plugins/xiaoye-plugin/resources/img/被怜爱的少女/5.webp'
+                    'plugins/gacha-plugin/resources/img/翠绿之影/5.webp',
+                    'plugins/gacha-plugin/resources/img/被怜爱的少女/5.webp'
                 ]
             }
         }
@@ -584,8 +584,8 @@ const ArtifactsDomains = [
                     '夏祭之花'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/悠古的磐岩/1.webp',
-                    'plugins/xiaoye-plugin/resources/img/逆飞的流星/1.webp'
+                    'plugins/gacha-plugin/resources/img/悠古的磐岩/1.webp',
+                    'plugins/gacha-plugin/resources/img/逆飞的流星/1.webp'
                 ]
             },
             PlumeOfDeath: {
@@ -594,8 +594,8 @@ const ArtifactsDomains = [
                     '夏祭终末'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/悠古的磐岩/2.webp',
-                    'plugins/xiaoye-plugin/resources/img/逆飞的流星/2.webp'
+                    'plugins/gacha-plugin/resources/img/悠古的磐岩/2.webp',
+                    'plugins/gacha-plugin/resources/img/逆飞的流星/2.webp'
                 ]
             },
             SandsOfEon: {
@@ -604,8 +604,8 @@ const ArtifactsDomains = [
                     '夏祭之刻'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/悠古的磐岩/3.webp',
-                    'plugins/xiaoye-plugin/resources/img/逆飞的流星/3.webp'
+                    'plugins/gacha-plugin/resources/img/悠古的磐岩/3.webp',
+                    'plugins/gacha-plugin/resources/img/逆飞的流星/3.webp'
                 ]
             },
             GobletOfEonothem: {
@@ -614,8 +614,8 @@ const ArtifactsDomains = [
                     '夏祭水玉'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/悠古的磐岩/4.webp',
-                    'plugins/xiaoye-plugin/resources/img/逆飞的流星/4.webp'
+                    'plugins/gacha-plugin/resources/img/悠古的磐岩/4.webp',
+                    'plugins/gacha-plugin/resources/img/逆飞的流星/4.webp'
                 ]
             },
             CircletOfLogos: {
@@ -624,8 +624,8 @@ const ArtifactsDomains = [
                     '夏祭之面'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/悠古的磐岩/5.webp',
-                    'plugins/xiaoye-plugin/resources/img/逆飞的流星/5.webp'
+                    'plugins/gacha-plugin/resources/img/悠古的磐岩/5.webp',
+                    'plugins/gacha-plugin/resources/img/逆飞的流星/5.webp'
                 ]
             }
         }
@@ -648,8 +648,8 @@ const ArtifactsDomains = [
                     '渡火者的决绝'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/炽烈的炎之魔女/1.webp',
-                    'plugins/xiaoye-plugin/resources/img/渡过烈火的贤人/1.webp'
+                    'plugins/gacha-plugin/resources/img/炽烈的炎之魔女/1.webp',
+                    'plugins/gacha-plugin/resources/img/渡过烈火的贤人/1.webp'
                 ]
             },
             PlumeOfDeath: {
@@ -658,8 +658,8 @@ const ArtifactsDomains = [
                     '渡火者的解脱'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/炽烈的炎之魔女/2.webp',
-                    'plugins/xiaoye-plugin/resources/img/渡过烈火的贤人/2.webp'
+                    'plugins/gacha-plugin/resources/img/炽烈的炎之魔女/2.webp',
+                    'plugins/gacha-plugin/resources/img/渡过烈火的贤人/2.webp'
                 ]
             },
             SandsOfEon: {
@@ -668,8 +668,8 @@ const ArtifactsDomains = [
                     '渡火者的煎熬'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/炽烈的炎之魔女/3.webp',
-                    'plugins/xiaoye-plugin/resources/img/渡过烈火的贤人/3.webp'
+                    'plugins/gacha-plugin/resources/img/炽烈的炎之魔女/3.webp',
+                    'plugins/gacha-plugin/resources/img/渡过烈火的贤人/3.webp'
                 ]
             },
             GobletOfEonothem: {
@@ -678,8 +678,8 @@ const ArtifactsDomains = [
                     '渡火者的醒悟'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/炽烈的炎之魔女/4.webp',
-                    'plugins/xiaoye-plugin/resources/img/渡过烈火的贤人/4.webp'
+                    'plugins/gacha-plugin/resources/img/炽烈的炎之魔女/4.webp',
+                    'plugins/gacha-plugin/resources/img/渡过烈火的贤人/4.webp'
                 ]
             },
             CircletOfLogos: {
@@ -688,8 +688,8 @@ const ArtifactsDomains = [
                     '渡火者的智慧'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/炽烈的炎之魔女/5.webp',
-                    'plugins/xiaoye-plugin/resources/img/渡过烈火的贤人/5.webp'
+                    'plugins/gacha-plugin/resources/img/炽烈的炎之魔女/5.webp',
+                    'plugins/gacha-plugin/resources/img/渡过烈火的贤人/5.webp'
                 ]
             }
         }
@@ -710,8 +710,8 @@ const ArtifactsDomains = [
                     '宗室之花'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/染血的骑士道/1.webp',
-                    'plugins/xiaoye-plugin/resources/img/昔日宗室之仪/1.webp'
+                    'plugins/gacha-plugin/resources/img/染血的骑士道/1.webp',
+                    'plugins/gacha-plugin/resources/img/昔日宗室之仪/1.webp'
                 ]
             },
             PlumeOfDeath: {
@@ -720,8 +720,8 @@ const ArtifactsDomains = [
                     '宗室之翎'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/染血的骑士道/2.webp',
-                    'plugins/xiaoye-plugin/resources/img/昔日宗室之仪/2.webp'
+                    'plugins/gacha-plugin/resources/img/染血的骑士道/2.webp',
+                    'plugins/gacha-plugin/resources/img/昔日宗室之仪/2.webp'
                 ]
             },
             SandsOfEon: {
@@ -730,8 +730,8 @@ const ArtifactsDomains = [
                     '宗室时计'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/染血的骑士道/3.webp',
-                    'plugins/xiaoye-plugin/resources/img/昔日宗室之仪/3.webp'
+                    'plugins/gacha-plugin/resources/img/染血的骑士道/3.webp',
+                    'plugins/gacha-plugin/resources/img/昔日宗室之仪/3.webp'
                 ]
             },
             GobletOfEonothem: {
@@ -740,8 +740,8 @@ const ArtifactsDomains = [
                     '宗室银瓮'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/染血的骑士道/4.webp',
-                    'plugins/xiaoye-plugin/resources/img/昔日宗室之仪/4.webp'
+                    'plugins/gacha-plugin/resources/img/染血的骑士道/4.webp',
+                    'plugins/gacha-plugin/resources/img/昔日宗室之仪/4.webp'
                 ]
             },
             CircletOfLogos: {
@@ -750,8 +750,8 @@ const ArtifactsDomains = [
                     '宗室面具'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/染血的骑士道/5.webp',
-                    'plugins/xiaoye-plugin/resources/img/昔日宗室之仪/5.webp'
+                    'plugins/gacha-plugin/resources/img/染血的骑士道/5.webp',
+                    'plugins/gacha-plugin/resources/img/昔日宗室之仪/5.webp'
                 ]
             }
         }
@@ -774,8 +774,8 @@ const ArtifactsDomains = [
                     '饰金胸花'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/冰风迷途的勇士/1.webp',
-                    'plugins/xiaoye-plugin/resources/img/沉沦之心/1.webp'
+                    'plugins/gacha-plugin/resources/img/冰风迷途的勇士/1.webp',
+                    'plugins/gacha-plugin/resources/img/沉沦之心/1.webp'
                 ]
             },
             PlumeOfDeath: {
@@ -784,8 +784,8 @@ const ArtifactsDomains = [
                     '追忆之风'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/冰风迷途的勇士/2.webp',
-                    'plugins/xiaoye-plugin/resources/img/沉沦之心/2.webp'
+                    'plugins/gacha-plugin/resources/img/冰风迷途的勇士/2.webp',
+                    'plugins/gacha-plugin/resources/img/沉沦之心/2.webp'
                 ]
             },
             SandsOfEon: {
@@ -794,8 +794,8 @@ const ArtifactsDomains = [
                     '坚铜罗盘'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/冰风迷途的勇士/3.webp',
-                    'plugins/xiaoye-plugin/resources/img/沉沦之心/3.webp'
+                    'plugins/gacha-plugin/resources/img/冰风迷途的勇士/3.webp',
+                    'plugins/gacha-plugin/resources/img/沉沦之心/3.webp'
                 ]
             },
             GobletOfEonothem: {
@@ -804,8 +804,8 @@ const ArtifactsDomains = [
                     '沉波之盏'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/冰风迷途的勇士/4.webp',
-                    'plugins/xiaoye-plugin/resources/img/沉沦之心/4.webp'
+                    'plugins/gacha-plugin/resources/img/冰风迷途的勇士/4.webp',
+                    'plugins/gacha-plugin/resources/img/沉沦之心/4.webp'
                 ]
             },
             CircletOfLogos: {
@@ -814,8 +814,8 @@ const ArtifactsDomains = [
                     '酒渍船帽'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/冰风迷途的勇士/5.webp',
-                    'plugins/xiaoye-plugin/resources/img/沉沦之心/5.webp'
+                    'plugins/gacha-plugin/resources/img/冰风迷途的勇士/5.webp',
+                    'plugins/gacha-plugin/resources/img/沉沦之心/5.webp'
                 ]
             }
         }
@@ -836,8 +836,8 @@ const ArtifactsDomains = [
                     '无垢之花'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/千岩牢固/1.webp',
-                    'plugins/xiaoye-plugin/resources/img/苍白之火/1.webp'
+                    'plugins/gacha-plugin/resources/img/千岩牢固/1.webp',
+                    'plugins/gacha-plugin/resources/img/苍白之火/1.webp'
                 ]
             },
             PlumeOfDeath: {
@@ -846,8 +846,8 @@ const ArtifactsDomains = [
                     '贤医之羽'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/千岩牢固/2.webp',
-                    'plugins/xiaoye-plugin/resources/img/苍白之火/2.webp'
+                    'plugins/gacha-plugin/resources/img/千岩牢固/2.webp',
+                    'plugins/gacha-plugin/resources/img/苍白之火/2.webp'
                 ]
             },
             SandsOfEon: {
@@ -856,8 +856,8 @@ const ArtifactsDomains = [
                     '停摆之刻'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/千岩牢固/3.webp',
-                    'plugins/xiaoye-plugin/resources/img/苍白之火/3.webp'
+                    'plugins/gacha-plugin/resources/img/千岩牢固/3.webp',
+                    'plugins/gacha-plugin/resources/img/苍白之火/3.webp'
                 ]
             },
             GobletOfEonothem: {
@@ -866,8 +866,8 @@ const ArtifactsDomains = [
                     '超越之盏'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/千岩牢固/4.webp',
-                    'plugins/xiaoye-plugin/resources/img/苍白之火/4.webp'
+                    'plugins/gacha-plugin/resources/img/千岩牢固/4.webp',
+                    'plugins/gacha-plugin/resources/img/苍白之火/4.webp'
                 ]
             },
             CircletOfLogos: {
@@ -876,8 +876,8 @@ const ArtifactsDomains = [
                     '嗤笑之面'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/千岩牢固/5.webp',
-                    'plugins/xiaoye-plugin/resources/img/苍白之火/5.webp'
+                    'plugins/gacha-plugin/resources/img/千岩牢固/5.webp',
+                    'plugins/gacha-plugin/resources/img/苍白之火/5.webp'
                 ]
             }
         }
@@ -898,8 +898,8 @@ const ArtifactsDomains = [
                     '羁缠之花'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/绝缘之旗印/1.webp',
-                    'plugins/xiaoye-plugin/resources/img/追忆之注连/1.webp'
+                    'plugins/gacha-plugin/resources/img/绝缘之旗印/1.webp',
+                    'plugins/gacha-plugin/resources/img/追忆之注连/1.webp'
                 ]
             },
             PlumeOfDeath: {
@@ -908,8 +908,8 @@ const ArtifactsDomains = [
                     '思忆之矢'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/绝缘之旗印/2.webp',
-                    'plugins/xiaoye-plugin/resources/img/追忆之注连/2.webp'
+                    'plugins/gacha-plugin/resources/img/绝缘之旗印/2.webp',
+                    'plugins/gacha-plugin/resources/img/追忆之注连/2.webp'
                 ]
             },
             SandsOfEon: {
@@ -918,8 +918,8 @@ const ArtifactsDomains = [
                     '朝露之时'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/绝缘之旗印/3.webp',
-                    'plugins/xiaoye-plugin/resources/img/追忆之注连/3.webp'
+                    'plugins/gacha-plugin/resources/img/绝缘之旗印/3.webp',
+                    'plugins/gacha-plugin/resources/img/追忆之注连/3.webp'
                 ]
             },
             GobletOfEonothem: {
@@ -928,8 +928,8 @@ const ArtifactsDomains = [
                     '祈望之心'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/绝缘之旗印/4.webp',
-                    'plugins/xiaoye-plugin/resources/img/追忆之注连/4.webp'
+                    'plugins/gacha-plugin/resources/img/绝缘之旗印/4.webp',
+                    'plugins/gacha-plugin/resources/img/追忆之注连/4.webp'
                 ]
             },
             CircletOfLogos: {
@@ -938,8 +938,8 @@ const ArtifactsDomains = [
                     '无常之面'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/绝缘之旗印/5.webp',
-                    'plugins/xiaoye-plugin/resources/img/追忆之注连/5.webp'
+                    'plugins/gacha-plugin/resources/img/绝缘之旗印/5.webp',
+                    'plugins/gacha-plugin/resources/img/追忆之注连/5.webp'
                 ]
             }
         }
@@ -961,8 +961,8 @@ const ArtifactsDomains = [
                     '海染之花'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/华馆梦醒形骸记/1.webp',
-                    'plugins/xiaoye-plugin/resources/img/海染砗磲/1.webp'
+                    'plugins/gacha-plugin/resources/img/华馆梦醒形骸记/1.webp',
+                    'plugins/gacha-plugin/resources/img/海染砗磲/1.webp'
                 ]
             },
             PlumeOfDeath: {
@@ -971,8 +971,8 @@ const ArtifactsDomains = [
                     '渊宫之羽'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/华馆梦醒形骸记/2.webp',
-                    'plugins/xiaoye-plugin/resources/img/海染砗磲/2.webp'
+                    'plugins/gacha-plugin/resources/img/华馆梦醒形骸记/2.webp',
+                    'plugins/gacha-plugin/resources/img/海染砗磲/2.webp'
                 ]
             },
             SandsOfEon: {
@@ -981,8 +981,8 @@ const ArtifactsDomains = [
                     '离别之贝'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/华馆梦醒形骸记/3.webp',
-                    'plugins/xiaoye-plugin/resources/img/海染砗磲/3.webp'
+                    'plugins/gacha-plugin/resources/img/华馆梦醒形骸记/3.webp',
+                    'plugins/gacha-plugin/resources/img/海染砗磲/3.webp'
                 ]
             },
             GobletOfEonothem: {
@@ -991,8 +991,8 @@ const ArtifactsDomains = [
                     '真珠之笼'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/华馆梦醒形骸记/4.webp',
-                    'plugins/xiaoye-plugin/resources/img/海染砗磲/4.webp'
+                    'plugins/gacha-plugin/resources/img/华馆梦醒形骸记/4.webp',
+                    'plugins/gacha-plugin/resources/img/海染砗磲/4.webp'
                 ]
             },
             CircletOfLogos: {
@@ -1001,8 +1001,8 @@ const ArtifactsDomains = [
                     '海祇之冠'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/华馆梦醒形骸记/5.webp',
-                    'plugins/xiaoye-plugin/resources/img/海染砗磲/5.webp'
+                    'plugins/gacha-plugin/resources/img/华馆梦醒形骸记/5.webp',
+                    'plugins/gacha-plugin/resources/img/海染砗磲/5.webp'
                 ]
             }
         }
@@ -1023,8 +1023,8 @@ const ArtifactsDomains = [
                     '魂香之花'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/辰砂往生录/1.webp',
-                    'plugins/xiaoye-plugin/resources/img/来歆余响/1.webp'
+                    'plugins/gacha-plugin/resources/img/辰砂往生录/1.webp',
+                    'plugins/gacha-plugin/resources/img/来歆余响/1.webp'
                 ]
             },
             PlumeOfDeath: {
@@ -1033,8 +1033,8 @@ const ArtifactsDomains = [
                     '垂玉之叶'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/辰砂往生录/2.webp',
-                    'plugins/xiaoye-plugin/resources/img/来歆余响/2.webp'
+                    'plugins/gacha-plugin/resources/img/辰砂往生录/2.webp',
+                    'plugins/gacha-plugin/resources/img/来歆余响/2.webp'
                 ]
             },
             SandsOfEon: {
@@ -1043,8 +1043,8 @@ const ArtifactsDomains = [
                     '祝祀之凭'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/辰砂往生录/3.webp',
-                    'plugins/xiaoye-plugin/resources/img/来歆余响/3.webp'
+                    'plugins/gacha-plugin/resources/img/辰砂往生录/3.webp',
+                    'plugins/gacha-plugin/resources/img/来歆余响/3.webp'
                 ]
             },
             GobletOfEonothem: {
@@ -1053,8 +1053,8 @@ const ArtifactsDomains = [
                     '涌泉之盏'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/辰砂往生录/4.webp',
-                    'plugins/xiaoye-plugin/resources/img/来歆余响/4.webp'
+                    'plugins/gacha-plugin/resources/img/辰砂往生录/4.webp',
+                    'plugins/gacha-plugin/resources/img/来歆余响/4.webp'
                 ]
             },
             CircletOfLogos: {
@@ -1063,8 +1063,8 @@ const ArtifactsDomains = [
                     '浮溯之珏'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/辰砂往生录/5.webp',
-                    'plugins/xiaoye-plugin/resources/img/来歆余响/5.webp'
+                    'plugins/gacha-plugin/resources/img/辰砂往生录/5.webp',
+                    'plugins/gacha-plugin/resources/img/来歆余响/5.webp'
                 ]
             }
         }
@@ -1087,8 +1087,8 @@ const ArtifactsDomains = [
                     '梦中的铁花'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/深林的记忆/1.webp',
-                    'plugins/xiaoye-plugin/resources/img/饰金之梦/1.webp'
+                    'plugins/gacha-plugin/resources/img/深林的记忆/1.webp',
+                    'plugins/gacha-plugin/resources/img/饰金之梦/1.webp'
                 ]
             },
             PlumeOfDeath: {
@@ -1097,8 +1097,8 @@ const ArtifactsDomains = [
                     '裁断的翎羽'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/深林的记忆/2.webp',
-                    'plugins/xiaoye-plugin/resources/img/饰金之梦/2.webp'
+                    'plugins/gacha-plugin/resources/img/深林的记忆/2.webp',
+                    'plugins/gacha-plugin/resources/img/饰金之梦/2.webp'
                 ]
             },
             SandsOfEon: {
@@ -1107,8 +1107,8 @@ const ArtifactsDomains = [
                     '沉金的岁月'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/深林的记忆/3.webp',
-                    'plugins/xiaoye-plugin/resources/img/饰金之梦/3.webp'
+                    'plugins/gacha-plugin/resources/img/深林的记忆/3.webp',
+                    'plugins/gacha-plugin/resources/img/饰金之梦/3.webp'
                 ]
             },
             GobletOfEonothem: {
@@ -1117,8 +1117,8 @@ const ArtifactsDomains = [
                     '如蜜的终宴'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/深林的记忆/4.webp',
-                    'plugins/xiaoye-plugin/resources/img/饰金之梦/4.webp'
+                    'plugins/gacha-plugin/resources/img/深林的记忆/4.webp',
+                    'plugins/gacha-plugin/resources/img/饰金之梦/4.webp'
                 ]
             },
             CircletOfLogos: {
@@ -1127,8 +1127,8 @@ const ArtifactsDomains = [
                     '沙王的投影'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/深林的记忆/5.webp',
-                    'plugins/xiaoye-plugin/resources/img/饰金之梦/5.webp'
+                    'plugins/gacha-plugin/resources/img/深林的记忆/5.webp',
+                    'plugins/gacha-plugin/resources/img/饰金之梦/5.webp'
                 ]
             }
         }
@@ -1149,8 +1149,8 @@ const ArtifactsDomains = [
                     '众王之都的开端'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/乐园遗落之花/1.webp',
-                    'plugins/xiaoye-plugin/resources/img/沙上楼阁史话/1.webp'
+                    'plugins/gacha-plugin/resources/img/乐园遗落之花/1.webp',
+                    'plugins/gacha-plugin/resources/img/沙上楼阁史话/1.webp'
                 ]
             },
             PlumeOfDeath: {
@@ -1159,8 +1159,8 @@ const ArtifactsDomains = [
                     '黄金邦国的结末'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/乐园遗落之花/2.webp',
-                    'plugins/xiaoye-plugin/resources/img/沙上楼阁史话/2.webp'
+                    'plugins/gacha-plugin/resources/img/乐园遗落之花/2.webp',
+                    'plugins/gacha-plugin/resources/img/沙上楼阁史话/2.webp'
                 ]
             },
             SandsOfEon: {
@@ -1169,8 +1169,8 @@ const ArtifactsDomains = [
                     '迷醉长梦的守护'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/乐园遗落之花/3.webp',
-                    'plugins/xiaoye-plugin/resources/img/沙上楼阁史话/3.webp'
+                    'plugins/gacha-plugin/resources/img/乐园遗落之花/3.webp',
+                    'plugins/gacha-plugin/resources/img/沙上楼阁史话/3.webp'
                 ]
             },
             GobletOfEonothem: {
@@ -1179,8 +1179,8 @@ const ArtifactsDomains = [
                     '失落迷途的机芯'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/乐园遗落之花/4.webp',
-                    'plugins/xiaoye-plugin/resources/img/沙上楼阁史话/4.webp'
+                    'plugins/gacha-plugin/resources/img/乐园遗落之花/4.webp',
+                    'plugins/gacha-plugin/resources/img/沙上楼阁史话/4.webp'
                 ]
             },
             CircletOfLogos: {
@@ -1189,8 +1189,8 @@ const ArtifactsDomains = [
                     '流沙贵嗣的遗宝'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/乐园遗落之花/5.webp',
-                    'plugins/xiaoye-plugin/resources/img/沙上楼阁史话/5.webp'
+                    'plugins/gacha-plugin/resources/img/乐园遗落之花/5.webp',
+                    'plugins/gacha-plugin/resources/img/沙上楼阁史话/5.webp'
                 ]
             }
         }
@@ -1213,8 +1213,8 @@ const ArtifactsDomains = [
                     "灵光源起之蕊"
                 ],
                 icon: [
-                    "plugins/xiaoye-plugin/resources/img/水仙之梦/1.webp",
-                    "plugins/xiaoye-plugin/resources/img/花海甘露之光/1.webp"
+                    "plugins/gacha-plugin/resources/img/水仙之梦/1.webp",
+                    "plugins/gacha-plugin/resources/img/花海甘露之光/1.webp"
                 ]
             },
             PlumeOfDeath: {
@@ -1223,8 +1223,8 @@ const ArtifactsDomains = [
                     "琦色灵彩之羽"
                 ],
                 icon: [
-                    "plugins/xiaoye-plugin/resources/img/水仙之梦/2.webp",
-                    "plugins/xiaoye-plugin/resources/img/花海甘露之光/2.webp"
+                    "plugins/gacha-plugin/resources/img/水仙之梦/2.webp",
+                    "plugins/gacha-plugin/resources/img/花海甘露之光/2.webp"
                 ]
             },
             SandsOfEon: {
@@ -1233,8 +1233,8 @@ const ArtifactsDomains = [
                     "久远花落之时"
                 ],
                 icon: [
-                    "plugins/xiaoye-plugin/resources/img/水仙之梦/3.webp",
-                    "plugins/xiaoye-plugin/resources/img/花海甘露之光/3.webp"
+                    "plugins/gacha-plugin/resources/img/水仙之梦/3.webp",
+                    "plugins/gacha-plugin/resources/img/花海甘露之光/3.webp"
                 ]
             },
             GobletOfEonothem: {
@@ -1243,8 +1243,8 @@ const ArtifactsDomains = [
                     "无边酣乐之筵"
                 ],
                 icon: [
-                    "plugins/xiaoye-plugin/resources/img/水仙之梦/4.webp",
-                    "plugins/xiaoye-plugin/resources/img/花海甘露之光/4.webp"
+                    "plugins/gacha-plugin/resources/img/水仙之梦/4.webp",
+                    "plugins/gacha-plugin/resources/img/花海甘露之光/4.webp"
                 ]
             },
             CircletOfLogos: {
@@ -1253,8 +1253,8 @@ const ArtifactsDomains = [
                     "灵光明烁之心"
                 ],
                 icon: [
-                    "plugins/xiaoye-plugin/resources/img/水仙之梦/5.webp",
-                    "plugins/xiaoye-plugin/resources/img/花海甘露之光/5.webp"
+                    "plugins/gacha-plugin/resources/img/水仙之梦/5.webp",
+                    "plugins/gacha-plugin/resources/img/花海甘露之光/5.webp"
                 ]
             }
         }
@@ -1277,8 +1277,8 @@ const ArtifactsDomains = [
                     "黄金乐曲的变奏"
                 ],
                 icon: [
-                    "plugins/xiaoye-plugin/resources/img/逐影猎人/1.webp",
-                    "plugins/xiaoye-plugin/resources/img/黄金剧团/1.webp"
+                    "plugins/gacha-plugin/resources/img/逐影猎人/1.webp",
+                    "plugins/gacha-plugin/resources/img/黄金剧团/1.webp"
                 ]
             },
             PlumeOfDeath: {
@@ -1287,8 +1287,8 @@ const ArtifactsDomains = [
                     "黄金飞鸟的落羽"
                 ],
                 icon: [
-                    "plugins/xiaoye-plugin/resources/img/逐影猎人/2.webp",
-                    "plugins/xiaoye-plugin/resources/img/黄金剧团/2.webp"
+                    "plugins/gacha-plugin/resources/img/逐影猎人/2.webp",
+                    "plugins/gacha-plugin/resources/img/黄金剧团/2.webp"
                 ]
             },
             SandsOfEon: {
@@ -1297,8 +1297,8 @@ const ArtifactsDomains = [
                     "黄金时代的先声"
                 ],
                 icon: [
-                    "plugins/xiaoye-plugin/resources/img/逐影猎人/3.webp",
-                    "plugins/xiaoye-plugin/resources/img/黄金剧团/3.webp"
+                    "plugins/gacha-plugin/resources/img/逐影猎人/3.webp",
+                    "plugins/gacha-plugin/resources/img/黄金剧团/3.webp"
                 ]
             },
             GobletOfEonothem: {
@@ -1307,8 +1307,8 @@ const ArtifactsDomains = [
                     "黄金之夜的喧嚣"
                 ],
                 icon: [
-                    "plugins/xiaoye-plugin/resources/img/逐影猎人/4.webp",
-                    "plugins/xiaoye-plugin/resources/img/黄金剧团/4.webp"
+                    "plugins/gacha-plugin/resources/img/逐影猎人/4.webp",
+                    "plugins/gacha-plugin/resources/img/黄金剧团/4.webp"
                 ]
             },
             CircletOfLogos: {
@@ -1317,8 +1317,8 @@ const ArtifactsDomains = [
                     "黄金剧团的奖赏"
                 ],
                 icon: [
-                    "plugins/xiaoye-plugin/resources/img/逐影猎人/5.webp",
-                    "plugins/xiaoye-plugin/resources/img/黄金剧团/5.webp"
+                    "plugins/gacha-plugin/resources/img/逐影猎人/5.webp",
+                    "plugins/gacha-plugin/resources/img/黄金剧团/5.webp"
                 ]
             }
         }
@@ -1338,8 +1338,8 @@ const ArtifactsDomains = [
                     '乐团的晨光'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/角斗士的终幕礼/1.webp',
-                    'plugins/xiaoye-plugin/resources/img/流浪大地的乐团/1.webp'
+                    'plugins/gacha-plugin/resources/img/角斗士的终幕礼/1.webp',
+                    'plugins/gacha-plugin/resources/img/流浪大地的乐团/1.webp'
                 ]
             },
             PlumeOfDeath: {
@@ -1348,8 +1348,8 @@ const ArtifactsDomains = [
                     '琴师的箭羽'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/角斗士的终幕礼/2.webp',
-                    'plugins/xiaoye-plugin/resources/img/流浪大地的乐团/2.webp'
+                    'plugins/gacha-plugin/resources/img/角斗士的终幕礼/2.webp',
+                    'plugins/gacha-plugin/resources/img/流浪大地的乐团/2.webp'
                 ]
             },
             SandsOfEon: {
@@ -1358,8 +1358,8 @@ const ArtifactsDomains = [
                     '终幕的时计'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/角斗士的终幕礼/3.webp',
-                    'plugins/xiaoye-plugin/resources/img/流浪大地的乐团/3.webp'
+                    'plugins/gacha-plugin/resources/img/角斗士的终幕礼/3.webp',
+                    'plugins/gacha-plugin/resources/img/流浪大地的乐团/3.webp'
                 ]
             },
             GobletOfEonothem: {
@@ -1368,8 +1368,8 @@ const ArtifactsDomains = [
                     '吟游者之壶'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/角斗士的终幕礼/4.webp',
-                    'plugins/xiaoye-plugin/resources/img/流浪大地的乐团/4.webp'
+                    'plugins/gacha-plugin/resources/img/角斗士的终幕礼/4.webp',
+                    'plugins/gacha-plugin/resources/img/流浪大地的乐团/4.webp'
                 ]
             },
             CircletOfLogos: {
@@ -1378,8 +1378,8 @@ const ArtifactsDomains = [
                     '指挥的礼帽'
                 ],
                 icon: [
-                    'plugins/xiaoye-plugin/resources/img/角斗士的终幕礼/5.webp',
-                    'plugins/xiaoye-plugin/resources/img/流浪大地的乐团/5.webp'
+                    'plugins/gacha-plugin/resources/img/角斗士的终幕礼/5.webp',
+                    'plugins/gacha-plugin/resources/img/流浪大地的乐团/5.webp'
                 ]
             }
         }

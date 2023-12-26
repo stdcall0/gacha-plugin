@@ -277,7 +277,7 @@ export default new class syw {
     async getCD(e) {
         if (cfg.cd > 0) {
             if (!e.isMaster) {
-                return await redis.ttl('xiaoye:syw:cd:qq:' + e.user_id)
+                return await redis.ttl('gacha:syw:cd:qq:' + e.user_id)
             }
         }
         return 0
@@ -289,7 +289,7 @@ export default new class syw {
      */
     async setCD(e) {
         if (cfg.cd > 0) {
-            await redis.set('xiaoye:syw:cd:qq:' + e.user_id, JSON.stringify('cd'), { EX: cfg.cd })
+            await redis.set('gacha:syw:cd:qq:' + e.user_id, JSON.stringify('cd'), { EX: cfg.cd })
         }
     }
 
@@ -301,7 +301,7 @@ export default new class syw {
     async getCishu(e) {
         if (cfg.cishu > 0) {
             if (!e.isMaster) {
-                let data = await redis.get(`xiaoye:syw:cishu:qq:${e.user_id}`)
+                let data = await redis.get(`gacha:syw:cishu:qq:${e.user_id}`)
                 if (!data) {
                     return cfg.cishu
                 } else {
@@ -325,11 +325,11 @@ export default new class syw {
                 let exTime = Math.round(
                     (new Date(time).getTime() - new Date().getTime()) / 1000
                 );
-                let data = await redis.get(`xiaoye:syw:cishu:qq:${e.user_id}`)
+                let data = await redis.get(`gacha:syw:cishu:qq:${e.user_id}`)
                 if (!data) {
-                    await redis.set(`xiaoye:syw:cishu:qq:${e.user_id}`, i * 1, { EX: exTime })
+                    await redis.set(`gacha:syw:cishu:qq:${e.user_id}`, i * 1, { EX: exTime })
                 } else {
-                    await redis.set(`xiaoye:syw:cishu:qq:${e.user_id}`, Number(data) + i, { EX: exTime })
+                    await redis.set(`gacha:syw:cishu:qq:${e.user_id}`, Number(data) + i, { EX: exTime })
                 }
             }
         }

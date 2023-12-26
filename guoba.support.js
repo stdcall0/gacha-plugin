@@ -2,7 +2,7 @@ import cfg from './model/readConfig.js'
 import util from './model/setUtil.js'
 
 const Path = process.cwd();
-const Plugin_Name = 'xiaoye-plugin'
+const Plugin_Name = 'gacha-plugin'
 const Plugin_Path = `${Path}/plugins/${Plugin_Name}`;
 // 支持锅巴
 export function supportGuoba() {
@@ -11,14 +11,14 @@ export function supportGuoba() {
     // 如果你的插件没有在插件库里，那么需要填上补充信息
     // 如果存在的话，那么填不填就无所谓了，填了就以你的信息为准
     pluginInfo: {
-      name: 'xiaoye-plugin',
-      title: 'xiaoye-plugin',
-      author: '@小叶',
-      authorLink: 'https://gitee.com/xiaoye12123',
-      link: 'https://gitee.com/xiaoye12123/xiaoye-plugin',
+      name: 'gacha-plugin',
+      title: 'gacha-plugin',
+      author: '@stdcall & @小叶',
+      authorLink: 'https://github.com/stdcall0/',
+      link: 'https://github.com/stdcall0/gacha-plugin',
       isV3: true,
       isV2: false,
-      description: '提供模拟刷圣遗物和强化',
+      description: '提供原神、星铁、CS的抽卡模拟（包括圣遗物与遗器）',
       // 显示图标，此为个性化配置
       // 图标可在 https://icon-sets.iconify.design 这里进行搜索
       icon: 'mdi:stove',

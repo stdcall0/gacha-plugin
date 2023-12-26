@@ -26,7 +26,7 @@ export class update extends plugin {
                 }
             ]
         })
-        this.typeName = 'xiaoye-plugin'
+        this.typeName = 'gacha-plugin'
     }
 
     async update(e) {
@@ -36,7 +36,7 @@ export class update extends plugin {
             return
         }
         /** 获取插件 */
-        let plugin = 'xiaoye-plugin'
+        let plugin = 'gacha-plugin'
 
         /** 检查git安装 */
         if (!await this.checkGit()) return
