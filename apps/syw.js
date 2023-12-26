@@ -17,11 +17,11 @@ export class ssyw extends plugin {
                 priority: '5',
                 rule: [
                     {
-                        reg: '^#*刷圣遗物.*$',
+                        reg: '^#*刷(本|圣遗物).*$',
                         fnc: 'chuhuoba'
                     },
                     {
-                        reg: '^#*(一键)?强化圣遗物([一二三四五六七八九十]|[0-9])*([\+到至]([一二三四五六七八九十]|[0-9])+级?)?$',
+                        reg: '^#*(一键强化|强化圣遗物|一键强化圣遗物)([一二三四五六七八九十]|[0-9])*([\+到至]([一二三四五六七八九十]|[0-9])+级?)?$',
                         fnc: 'qianghua'
                     },
                     {
@@ -56,7 +56,7 @@ export class ssyw extends plugin {
             throttle = false
             return true
         }
-        let reg = new RegExp('(([一二三四五六七八九十]|[0-9])+)[次个]$')
+        let reg = new RegExp('(([一二三四五六七八九十]|[0-9])+)[次个]?$')
         let sywNum = 1
         if (reg.exec(e.msg)) {
             let num = reg.exec(e.msg)[1]
@@ -67,13 +67,13 @@ export class ssyw extends plugin {
                 num = 1
             }
             sywNum = num
-            e.msg = e.msg.replace(/([一二三四五六七八九十]|[0-9])+[次个]/g, "").trim()
+            e.msg = e.msg.replace(/([一二三四五六七八九十]|[0-9])+[次个]?/g, "").trim()
         }
         let cishu = await syw.getCishu(e)
         //看看剩余次数够不够
         let target = cishu - sywNum
         if (target >= 0) {
-            const DomainName = e.msg.replace(/#|刷圣遗物/g, "").trim();
+            const DomainName = e.msg.replace(/#|刷(圣遗物|本)/g, "").trim();
 
             let dataList = []
             let vals = []
@@ -129,7 +129,7 @@ export class ssyw extends plugin {
                 }
 
                 if (sywNum > 1) {
-                    vals.push({"msg": [`id:${i}`, img], "score": await syw.getCritScore(vice, viceData)})
+                    vals.push({"msg": [`ID: #${i}`, img], "score": await syw.getCritScore(vice, viceData)})
                 } else {
                     vals.push({"msg": img, "score": 0})
                 }
@@ -141,7 +141,7 @@ export class ssyw extends plugin {
             await syw.setCD(e)
 
             if (vals.length > 1) {
-                vals.sort((a, b) => a.score > b.score)
+                vals.sort((a, b) => b.score - a.score)
 
                 let msg = []
                 vals.forEach(i => msg.push(i.msg))
@@ -168,7 +168,7 @@ export class ssyw extends plugin {
         } else {
             throttle = true
         }
-        let reg = new RegExp('^#*(一键)?强化圣遗物(([一二三四五六七八九十]|[0-9])*)([\+到至](([一二三四五六七八九十]|[0-9])+)级?)?$')
+        let reg = new RegExp('^#*(一键强化|强化圣遗物|一键强化圣遗物)(([一二三四五六七八九十]|[0-9])*)([\+到至](([一二三四五六七八九十]|[0-9])+)级?)?$')
         let regResult = reg.exec(e.msg)
         //是否一键强化
         let all = regResult[1] ? true : false
@@ -227,17 +227,19 @@ export class ssyw extends plugin {
                 let result = await this.upgrade(dataList[i], up)
                 if (result.data) {
                     data.data.push(result.data)
-                    data.vals.push({'msg': [`id:${i + 1}`, ...result.msg], 'score': await syw.getCritScore(dataList[i].vice, dataList[i].viceData)})
+                    let score = await syw.getCritScore(dataList[i].vice, dataList[i].viceData);
+                    data.vals.push({'msg': [`ID: #${i + 1}`, `双爆分: ${score}`, ...result.msg], 'score': score})
                 } else {
                     data.data.push(dataList[i])
                     let img = await puppeteer.screenshot("syw", dataList[i]);
                     if (!img) {
                         img = await puppeteer.screenshot("syw", dataList[i]);
                     }
-                    data.vals.push({'msg': [`id:${i + 1}`, ...result.msg], 'score': await syw.getCritScore(dataList[i].vice, dataList[i].viceData)})
+                    let score = await syw.getCritScore(dataList[i].vice, dataList[i].viceData);
+                    data.vals.push({'msg': [`ID: #${i + 1}`, `双爆分: ${score}`, ...result.msg], 'score': score})
                 }
             }
-            data.vals.sort((a, b) => a.score > b.score)
+            data.vals = data.vals.sort((a, b) => b.score - a.score)
 
             let msg = []
             data.vals.forEach(i => msg.push(i.msg))
