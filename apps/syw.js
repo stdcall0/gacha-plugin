@@ -129,7 +129,7 @@ export class ssyw extends plugin {
                 }
 
                 if (sywNum > 1) {
-                    vals.push({"msg": [`ID: #${i}`, img], "score": await syw.getCritScore(vice, viceData)})
+                    vals.push({"msg": [`ID: #${i}\n`, img], "score": await syw.getCritScore(vice, viceData)})
                 } else {
                     vals.push({"msg": img, "score": 0})
                 }
@@ -228,7 +228,7 @@ export class ssyw extends plugin {
                 if (result.data) {
                     data.data.push(result.data)
                     let score = await syw.getCritScore(dataList[i].vice, dataList[i].viceData);
-                    data.vals.push({'msg': [`ID: #${i + 1}`, `双爆分: ${score}`, ...result.msg], 'score': score})
+                    data.vals.push({'msg': [`ID: #${i + 1}\n`, `双爆分: ${score}\n`, ...result.msg], 'score': score})
                 } else {
                     data.data.push(dataList[i])
                     let img = await puppeteer.screenshot("syw", dataList[i]);
@@ -236,7 +236,7 @@ export class ssyw extends plugin {
                         img = await puppeteer.screenshot("syw", dataList[i]);
                     }
                     let score = await syw.getCritScore(dataList[i].vice, dataList[i].viceData);
-                    data.vals.push({'msg': [`ID: #${i + 1}`, `双爆分: ${score}`, ...result.msg], 'score': score})
+                    data.vals.push({'msg': [`ID: #${i + 1}\n`, `双爆分: ${score}\n`, ...result.msg], 'score': score})
                 }
             }
             data.vals = data.vals.sort((a, b) => b.score - a.score)
