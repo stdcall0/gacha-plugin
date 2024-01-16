@@ -28,12 +28,8 @@ export class GenshinArtifactPlugin extends plugin {
         throttle = true;
         const artifactSet = GenshinArtifactSets.EmblemOfSeveredFate; // consider adding set reference to piece
         let artifactPiece = artifactSet.rollPiece();
-        let msg = `${artifactPiece.displayName} ${artifactPiece.setDisplayName}\n`;
-        msg += `[M] ${artifactPiece.mainStat.displayName}+${artifactPiece.mainStat.displayValue}`;
-        artifactPiece.subStats.forEach(x => {
-            msg += `\n[m] ${x.displayName}+${x.displayValue}`;
-        });
         lastArtifact[this.e.user_id] = artifactPiece;
+        let msg = await artifactPiece.generateImage();
         await this.reply(msg, false, { at: false, recallMsg: 0 });
         throttle = false;
     }
@@ -46,12 +42,8 @@ export class GenshinArtifactPlugin extends plugin {
         const artifactSet = GenshinArtifactSets.EmblemOfSeveredFate;
         let artifactPiece = lastArtifact[this.e.user_id];
         artifactPiece.rollUpgrade();
-        let msg = `${artifactPiece.displayName} ${artifactPiece.setDisplayName}\n`;
-        msg += `[M] ${artifactPiece.mainStat.displayName}+${artifactPiece.mainStat.displayValue}`;
-        artifactPiece.subStats.forEach(x => {
-            msg += `\n[m] ${x.displayName}+${x.displayValue}`;
-        });
         lastArtifact[this.e.user_id] = artifactPiece;
+        let msg = await artifactPiece.generateImage();
         await this.reply(msg, false, { at: false, recallMsg: 0 });
         throttle = false;
     }

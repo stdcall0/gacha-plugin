@@ -90,6 +90,9 @@ export class ArtifactPiece {
             this.subStats[l].rollUpgrade();
         }
     }
+    async generateImage() {
+        return null;
+    }
     get setName() {
         if (this.artifactSet && this.name in this.artifactSet.pieceData)
             return this.artifactSet.pieceData[this.name].name;
