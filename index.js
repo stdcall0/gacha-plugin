@@ -1,13 +1,9 @@
 import fs from 'node:fs'
-import './model/init.js'
+// import './model/init.js'
 
 const files = fs.readdirSync('./plugins/gacha-plugin/apps').filter(file => file.endsWith('.js'))
 
 let ret = []
-
-logger.info('-----------------')
-logger.info('小叶插件初始化~')
-
 
 files.forEach((file) => {
     ret.push(import(`./apps/${file}`))
