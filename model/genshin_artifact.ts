@@ -38,6 +38,7 @@ export class GenshinArtifactPiece extends base.ArtifactPiece {
                 this.subStatList
                     .filter(x => !(x.name in names))
                     .choice()
+                    .instance()
             );
         } else {
             let l = lodash.random(0, this.subStats.length - 1);
