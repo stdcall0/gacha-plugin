@@ -1,4 +1,4 @@
-import * as lodash from 'lodash';
+import lodash from 'lodash';
 import Lottery from './lottery.js';
 import { DisplayMode } from './utils.js';
 
@@ -111,13 +111,13 @@ export class ArtifactPiece {
     }
 
     get setName(): string {
-        if (this.artifactSet && this.name in this.artifactSet.pieceNames)
-            return this.artifactSet.pieceNames[this.name].name;
+        if (this.artifactSet && this.name in this.artifactSet.pieceData)
+            return this.artifactSet.pieceData[this.name].name;
         return this.name;
     }
     get setDisplayName(): string {
-        if (this.artifactSet && this.name in this.artifactSet.pieceNames)
-            return this.artifactSet.pieceNames[this.name].displayName;
+        if (this.artifactSet && this.name in this.artifactSet.pieceData)
+            return this.artifactSet.pieceData[this.name].displayName;
         return this.displayName;
     }
 
@@ -131,7 +131,7 @@ export class ArtifactPiece {
     }
 };
 
-export interface PieceName {
+export interface ArtifactPieceData {
     name: string;
     displayName: string;
 };
@@ -143,7 +143,7 @@ export class ArtifactSet {
         public displayName: string,
         public aliases: string[],
         public pieceList: Lottery<ArtifactPiece>,
-        public pieceNames: { [name: string]: PieceName }
+        public pieceData: { [name: string]: ArtifactPieceData }
     ) { }
 
     rollPiece(): ArtifactPiece {

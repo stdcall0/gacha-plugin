@@ -5,7 +5,7 @@ import puppeteer from '../../../lib/puppeteer/puppeteer.js';
 import common from '../../../lib/common/common.js';
 
 import { ArtifactPiece } from '../model/base_artifact.js';
-import { GenshinArtifactSets } from '../model/genshin_artifact_data.js';
+import { GenshinArtifactSets } from '../resources/genshin_artifact_data.js';
 
 let throttle: boolean = false;
 let lastArtifact: { [key: string]: ArtifactPiece } = {};

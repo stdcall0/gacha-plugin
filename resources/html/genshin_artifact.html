@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <title></title>
+    <link rel="preload" href="{{pluResPath}}/plugins/gacha-plugin/resources/font/genshin.ttf" as="font">
+    <link rel="stylesheet" type="text/css" href="{{pluResPath}}/plugins/gacha-plugin/resources/html/genshin_artifact.css" />
+    <style>
+    </style>
+</head>
+
+<body>
+    <div class="body">
+        <div class="name">{{artifactPiece.setDisplayName}}</div>
+        <div class="img">
+            <div class="artifactimg"><img src="{{pluResPath}}/{{artifactPiece.imagePath}}"><span id="block"></span></div>
+        </div>
+        <div class="buwei">{{artifactPiece.displayName}}</div>
+        <div class="zhucitiao">{{artifactPiece.mainStat.displayName}}</div>
+        <div class="zhucitiaoData">{{artifactPiece.mainStat.displayValue}}</div>
+        <div class="star">
+            <img src="{{pluResPath}}/plugins/gacha-plugin/resources/html/img/x.png" alt="">
+            <img src="{{pluResPath}}/plugins/gacha-plugin/resources/html/img/x.png" alt="">
+            <img src="{{pluResPath}}/plugins/gacha-plugin/resources/html/img/x.png" alt="">
+            <img src="{{pluResPath}}/plugins/gacha-plugin/resources/html/img/x.png" alt="">
+            <img src="{{pluResPath}}/plugins/gacha-plugin/resources/html/img/x.png" alt="">
+        </div>
+        <div class="level">+{{artifactPiece.level}}</div>
+        {{if locked}}
+        <div class="suo"><img class="suoimg" src="{{pluResPath}}/plugins/gacha-plugin/resources/html/img/2.png"
+                alt=""></div>
+        {{else}}
+        <div class="suo"><img class="suoimg" src="{{pluResPath}}/plugins/gacha-plugin/resources/html/img/1.png"
+                alt=""></div>
+        {{/if}}
+
+        <div class="fucitiao">
+            <ul class="ul">
+                {{each artifactPiece.subStats subStat}}
+                <li>
+                    <div class="dian">•&nbsp;</div>{{subStat.displayName}}+{{subStat.displayValue}}
+                </li>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>

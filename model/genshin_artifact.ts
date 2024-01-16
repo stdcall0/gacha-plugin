@@ -1,9 +1,13 @@
 import lodash from 'lodash';
+import puppeteer from '../../../lib/puppeteer/puppeteer.js';
+
+import * as cpath from '../resources/cpath.js';
 import * as base from './base_artifact.js';
 import Lottery from './lottery.js';
 
 export class GenshinArtifactPiece extends base.ArtifactPiece {
     upgradeCount: number;
+    artifactSet: GenshinArtifactSet;
 
     constructor(
         name: string,
@@ -14,6 +18,17 @@ export class GenshinArtifactPiece extends base.ArtifactPiece {
     ) {
         super(name, displayName, mainStatList, subStatList, subStatCount);
         this.upgradeCount = 0;
+    }
+
+    get imagePath(): string {
+        if (!(this.artifactSet)) return null;
+        if (!(this.name in this.artifactSet.pieceData)) return null;
+
+        return cpath.ImagePath + this.artifactSet.pieceData[this.name].image;
+    }
+
+    get level(): number {
+        return 0 + this.upgradeCount * 4;
     }
 
     rollSubStats() {
@@ -45,5 +60,38 @@ export class GenshinArtifactPiece extends base.ArtifactPiece {
             this.subStats[l].rollUpgrade();
         }
         this.upgradeCount += 1;
+    }
+
+    async generateImage(): Promise<string> {
+        if (!this.artifactSet)
+            return null;
+        if (!(this.name in this.artifactSet.pieceData))
+            return null;
+
+        const data = {
+            tplFile: cpath.HTMLPath + 'artifact.html',
+            pluResPath: cpath.ProcessPath,
+            artifactPiece: this,
+            locked: false
+        };
+
+        return puppeteer.screenshot("artifact", data);
+    }
+};
+
+export interface GenshinArtifactPieceData extends base.ArtifactPieceData {
+    image: string;
+};
+
+export class GenshinArtifactSet extends base.ArtifactSet {
+
+    constructor(
+        name: string,
+        displayName: string,
+        aliases: string[],
+        pieceList: Lottery<GenshinArtifactPiece>,
+        public pieceData: { [name: string]: GenshinArtifactPieceData },
+    ) {
+        super(name, displayName, aliases, pieceList, pieceData);
     }
 };
