@@ -51,7 +51,7 @@ export class GenshinArtifactPiece extends base.ArtifactPiece {
             this.subStats.forEach(x => names.push(x.name));
             this.subStats.push(
                 this.subStatList
-                    .filter(x => !(x.name in names))
+                    .filter(x => !(names.includes(x.name)))
                     .choice()
                     .instance()
             );
