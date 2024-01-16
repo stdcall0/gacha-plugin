@@ -4,6 +4,7 @@ import util from './model/setUtil.js'
 const Path = process.cwd();
 const Plugin_Name = 'gacha-plugin'
 const Plugin_Path = `${Path}/plugins/${Plugin_Name}`;
+
 // 支持锅巴
 export function supportGuoba() {
   return {
