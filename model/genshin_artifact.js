@@ -2,6 +2,7 @@ import lodash from 'lodash';
 import puppeteer from '../../../lib/puppeteer/puppeteer.js';
 import * as cpath from '../resources/cpath.js';
 import * as base from './base_artifact.js';
+import { DisplayModes } from './utils.js';
 ;
 ;
 export class GenshinArtifactPiece extends base.ArtifactPiece {
@@ -49,7 +50,7 @@ export class GenshinArtifactPiece extends base.ArtifactPiece {
     getScore(scorer) {
         return scorer(this);
     }
-    async generateImage() {
+    async generateImage(score) {
         if (!this.artifactSet)
             return null;
         if (!(this.name in this.artifactSet.pieceData))
@@ -58,6 +59,7 @@ export class GenshinArtifactPiece extends base.ArtifactPiece {
             tplFile: cpath.HTMLPath + 'genshin_artifact.html',
             pluResPath: cpath.ProcessPath,
             artifactPiece: this,
+            artifactScore: DisplayModes.Float1D(score),
             locked: false
         };
         return puppeteer.screenshot("genshin_artifact", data);
