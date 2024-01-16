@@ -21,7 +21,7 @@ body {
 }
 
 
-.sywimg {
+.artifactImg {
     text-align: center;
     line-height: 300px;
     width: 270px;
@@ -29,7 +29,7 @@ body {
     margin: 0 auto;
 }
 
-.sywimg>img {
+.artifactImg>img {
     width: 90%;
     vertical-align: middle;
 }
