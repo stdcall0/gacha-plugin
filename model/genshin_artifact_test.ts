@@ -1,4 +1,4 @@
-import { GenshinArtifactSets } from "./genshin_artifact_data.js";
+import { GenshinArtifactSets } from "../resources/genshin_artifact_data.js";
 
 let t = GenshinArtifactSets.EmblemOfSeveredFate;
 let p = t.rollPiece()

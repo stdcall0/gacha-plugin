@@ -1,0 +1,132 @@
+@font-face {
+    font-family: "genshin";
+    src: url("../font/genshin.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'genshin';
+}
+
+body {
+    width: 746px;
+}
+
+.body {
+    width: 746px;
+    background: url(./img/bgimg.jpg) no-repeat;
+}
+
+
+.sywimg {
+    text-align: center;
+    line-height: 300px;
+    width: 270px;
+    height: 270px;
+    margin: 0 auto;
+}
+
+.sywimg>img {
+    width: 90%;
+    vertical-align: middle;
+}
+
+#block {
+    line-height: 300px;
+}
+
+
+.suoimg {
+    width: 140%;
+    height: 140%;
+}
+
+.star img {
+    width: 40px;
+    height: 40px;
+    margin-right: 2px;
+}
+
+.fucitiao {
+    margin-top: 190px;
+    margin-left: 50px;
+    font-size: 0px;
+}
+
+.ul {
+    list-style: none;
+    font-size: 40px;
+    color: rgb(76, 85, 103);
+}
+
+.dian {
+    position: relative;
+    bottom: 5px;
+    font-size: 30px;
+    display: inline-block;
+}
+
+.ul li {
+    height: 60px;
+    line-height: 60px;
+    list-style-position: inside;
+}
+
+.name {
+    padding-top: 17px;
+    margin-left: 42px;
+    color: rgb(255, 255, 255);
+    font-size: 47px;
+}
+
+.img {
+    position: absolute;
+    top: 110px;
+    left: 420px;
+    width: 300px;
+    height: 300px;
+}
+
+.suo {
+    position: absolute;
+    top: 460px;
+    left: 650px;
+}
+
+.buwei {
+    margin-top: 32px;
+    margin-left: 42px;
+    color: white;
+    font-size: 29px;
+}
+
+.zhucitiao {
+    margin-top: 100px;
+    margin-left: 42px;
+    font-size: 30px;
+    color: rgb(192, 173, 165)
+}
+
+.zhucitiaoData {
+    margin-top: 5px;
+    margin-left: 42px;
+    color: white;
+    font-size: 60px;
+}
+
+.star {
+    position: absolute;
+    top: 370px;
+    left: 42px;
+}
+
+.level {
+    position: absolute;
+    top: 475px;
+    left: 48px;
+    color: white;
+    font-size: 38px;
+}

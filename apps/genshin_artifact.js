@@ -1,6 +1,6 @@
 // Genshin Artifact Generation
 import plugin from '../../../lib/plugins/plugin.js';
-import { GenshinArtifactSets } from '../model/genshin_artifact_data.js';
+import { GenshinArtifactSets } from '../resources/genshin_artifact_data.js';
 let throttle = false;
 let lastArtifact = {};
 export class GenshinArtifactPlugin extends plugin {
@@ -12,11 +12,11 @@ export class GenshinArtifactPlugin extends plugin {
             priority: '98',
             rule: [
                 {
-                    reg: '^#*新版刷圣遗物.*$',
+                    reg: '^#*刷圣遗物.*$',
                     fnc: 'generateArtifact'
                 },
                 {
-                    reg: '^#*新版强化圣遗物(4|8|16|20)?$',
+                    reg: '^#*强化圣遗物(4|8|16|20)?$',
                     fnc: 'upgradeArtifact'
                 }
             ]

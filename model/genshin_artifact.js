@@ -1,9 +1,21 @@
 import lodash from 'lodash';
+import puppeteer from '../../../lib/puppeteer/puppeteer.js';
+import * as cpath from '../resources/cpath.js';
 import * as base from './base_artifact.js';
 export class GenshinArtifactPiece extends base.ArtifactPiece {
     constructor(name, displayName, mainStatList, subStatList, subStatCount) {
         super(name, displayName, mainStatList, subStatList, subStatCount);
         this.upgradeCount = 0;
+    }
+    get imagePath() {
+        if (!(this.artifactSet))
+            return null;
+        if (!(this.name in this.artifactSet.pieceData))
+            return null;
+        return cpath.ImagePath + this.artifactSet.pieceData[this.name].image;
+    }
+    get level() {
+        return 0 + this.upgradeCount * 4;
     }
     rollSubStats() {
         this.subStats = [];
@@ -31,6 +43,27 @@ export class GenshinArtifactPiece extends base.ArtifactPiece {
             this.subStats[l].rollUpgrade();
         }
         this.upgradeCount += 1;
+    }
+    async generateImage() {
+        if (!this.artifactSet)
+            return null;
+        if (!(this.name in this.artifactSet.pieceData))
+            return null;
+        const data = {
+            tplFile: cpath.HTMLPath + 'artifact.html',
+            pluResPath: cpath.ProcessPath,
+            artifactPiece: this,
+            locked: false
+        };
+        return puppeteer.screenshot("artifact", data);
+    }
+}
+;
+;
+export class GenshinArtifactSet extends base.ArtifactSet {
+    constructor(name, displayName, aliases, pieceList, pieceData) {
+        super(name, displayName, aliases, pieceList, pieceData);
+        this.pieceData = pieceData;
     }
 }
 ;

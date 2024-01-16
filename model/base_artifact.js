@@ -1,4 +1,4 @@
-import * as lodash from 'lodash';
+import lodash from 'lodash';
 export class ArtifactStat {
     constructor(name, displayName, displayMode) {
         this.name = name;
@@ -91,13 +91,13 @@ export class ArtifactPiece {
         }
     }
     get setName() {
-        if (this.artifactSet && this.name in this.artifactSet.pieceNames)
-            return this.artifactSet.pieceNames[this.name].name;
+        if (this.artifactSet && this.name in this.artifactSet.pieceData)
+            return this.artifactSet.pieceData[this.name].name;
         return this.name;
     }
     get setDisplayName() {
-        if (this.artifactSet && this.name in this.artifactSet.pieceNames)
-            return this.artifactSet.pieceNames[this.name].displayName;
+        if (this.artifactSet && this.name in this.artifactSet.pieceData)
+            return this.artifactSet.pieceData[this.name].displayName;
         return this.displayName;
     }
     instance(artifactSet) {
@@ -111,12 +111,12 @@ export class ArtifactPiece {
 ;
 ;
 export class ArtifactSet {
-    constructor(name, displayName, aliases, pieceList, pieceNames) {
+    constructor(name, displayName, aliases, pieceList, pieceData) {
         this.name = name;
         this.displayName = displayName;
         this.aliases = aliases;
         this.pieceList = pieceList;
-        this.pieceNames = pieceNames;
+        this.pieceData = pieceData;
     }
     rollPiece() {
         return this.pieceList.choice().instance(this);
