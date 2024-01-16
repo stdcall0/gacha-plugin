@@ -45,7 +45,7 @@ export class GenshinArtifactPlugin extends plugin {
             msg += `\n[m] ${x.displayName}+${x.displayValue}`;
         });
 
-        lastArtifact[this.user_id] = artifactPiece;
+        lastArtifact[this.e.user_id] = artifactPiece;
         await (this as any).reply(msg, false, { at: false, recallMsg: 0 })
 
         throttle = false;
@@ -53,12 +53,12 @@ export class GenshinArtifactPlugin extends plugin {
 
     async upgradeArtifact() {
         if (throttle) return;
-        if (!(this.user_id in lastArtifact)) return;
+        if (!(this.e.user_id in lastArtifact)) return;
         throttle = true;
 
         const artifactSet = GenshinArtifactSets.EmblemOfSeveredFate;
 
-        let artifactPiece = lastArtifact[this.user_id];
+        let artifactPiece = lastArtifact[this.e.user_id];
         artifactPiece.rollUpgrade();
 
         const artifactName = artifactSet.getPieceDisplayName(artifactPiece);
@@ -69,7 +69,7 @@ export class GenshinArtifactPlugin extends plugin {
             msg += `\n[m] ${x.displayName}+${x.displayValue}`;
         });
 
-        lastArtifact[this.user_id] = artifactPiece;
+        lastArtifact[this.e.user_id] = artifactPiece;
         await (this as any).reply(msg, false, { at: false, recallMsg: 0 })
 
         throttle = false;
