@@ -1,5 +1,6 @@
 // Genshin Artifact Generation
 import plugin from '../../../lib/plugins/plugin.js';
+import common from '../../../lib/common/common.js';
 import { GenshinArtifactSets } from '../resources/genshin_artifact_data.js';
 let throttle = false;
 let lastArtifact = {};
@@ -26,12 +27,37 @@ export class GenshinArtifactPlugin extends plugin {
         if (throttle)
             return;
         throttle = true;
-        const artifactSet = GenshinArtifactSets.EmblemOfSeveredFate; // consider adding set reference to piece
-        let artifactPiece = artifactSet.rollPiece();
-        lastArtifact[this.e.user_id] = artifactPiece;
-        let msg = await artifactPiece.generateImage();
-        await this.reply(msg, false, { at: false, recallMsg: 0 });
+        let each = this.e.msg;
+        let times = parseInt(each.replace("刷圣遗物", "").replace("#", "").replace("次", "").trim());
+        if (times !== times || times <= 1) {
+            const artifactSet = GenshinArtifactSets.EmblemOfSeveredFate; // consider adding set reference to piece
+            let artifactPiece = artifactSet.rollPiece();
+            lastArtifact[this.e.user_id] = artifactPiece;
+            const msg = await artifactPiece.generateImage();
+            await this.reply(msg, false, { at: false, recallMsg: 0 });
+        }
+        else if (times <= 20) {
+            const artifactSet = GenshinArtifactSets.EmblemOfSeveredFate; // consider adding set reference to piece
+            let imgs = [];
+            let pieces = artifactSet.rollPieceMulti(times);
+            for (const artifactPiece of pieces)
+                imgs.push(await artifactPiece.generateImage());
+            lastArtifact[this.e.user_id] = pieces;
+            const msg = await common.makeForwardMsg(this.e, imgs, '点我查看圣遗物');
+            await this.reply(msg, false, { at: false, recallMsg: 0 });
+        }
         throttle = false;
+    }
+    upgradeTimes(artifactPiece, times) {
+        if (times == 0) {
+            artifactPiece.rollUpgrade();
+            return;
+        }
+        let count = 0;
+        while (count <= 5 && artifactPiece.level < times) {
+            artifactPiece.rollUpgrade();
+            ++count;
+        }
     }
     async upgradeArtifact() {
         if (throttle)
@@ -39,12 +65,28 @@ export class GenshinArtifactPlugin extends plugin {
         if (!(this.e.user_id in lastArtifact))
             return;
         throttle = true;
-        const artifactSet = GenshinArtifactSets.EmblemOfSeveredFate;
-        let artifactPiece = lastArtifact[this.e.user_id];
-        artifactPiece.rollUpgrade();
-        lastArtifact[this.e.user_id] = artifactPiece;
-        let msg = await artifactPiece.generateImage();
-        await this.reply(msg, false, { at: false, recallMsg: 0 });
+        let each = this.e.msg;
+        let times = parseInt(each.replace("强化圣遗物", "").replace("#", "").trim());
+        if (times !== times || !(times in [4, 8, 16, 20]))
+            times = 0;
+        let pieces = lastArtifact[this.e.user_id];
+        if (!Array.isArray(pieces)) {
+            let artifactPiece = pieces;
+            this.upgradeTimes(artifactPiece, times);
+            lastArtifact[this.e.user_id] = artifactPiece;
+            const msg = await artifactPiece.generateImage();
+            await this.reply(msg, false, { at: false, recallMsg: 0 });
+        }
+        else {
+            let imgs = [];
+            for (let artifactPiece of pieces) {
+                this.upgradeTimes(artifactPiece, times);
+                imgs.push(await artifactPiece.generateImage());
+            }
+            lastArtifact[this.e.user_id] = pieces;
+            const msg = await common.makeForwardMsg(this.e, imgs, '点我查看强化结果');
+            await this.reply(msg, false, { at: false, recallMsg: 0 });
+        }
         throttle = false;
     }
 }
