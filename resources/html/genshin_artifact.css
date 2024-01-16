@@ -17,7 +17,6 @@ body {
 
 .body {
     width: 746px;
-    margin-bottom: 0.3cm;
     background: url(./img/bgimg.jpg) no-repeat;
 }
 
@@ -130,5 +129,4 @@ body {
     left: 48px;
     color: white;
     font-size: 38px;
-    width:auto;
 }
