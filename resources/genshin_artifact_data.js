@@ -5,8 +5,8 @@ import Lottery from '../model/lottery.js';
 import { DisplayModes } from '../model/utils.js';
 /* ------------------------ Artifact Stat ------------------------ */
 export const GenshinArtifactMainStat = {
-    FlatHP: new base.ArtifactStatConst("HP", "生命值", 717, [1530, 2342, 3155, 3967, 4780], DisplayModes.Integer),
-    FlatATK: new base.ArtifactStatConst("ATK", "攻击力", 47, [100, 152, 205, 258, 311], DisplayModes.Integer),
+    FlatHP: new base.ArtifactStatConst("FlatHP", "生命值", 717, [1530, 2342, 3155, 3967, 4780], DisplayModes.Integer),
+    FlatATK: new base.ArtifactStatConst("FlatATK", "攻击力", 47, [100, 152, 205, 258, 311], DisplayModes.Integer),
     HP: new base.ArtifactStatConst("HP", "生命值", 7.0, [14.9, 22.8, 30.8, 38.7, 46.6], DisplayModes.Percentage1D),
     ATK: new base.ArtifactStatConst("ATK", "攻击力", 7.0, [14.9, 22.8, 30.8, 38.7, 46.6], DisplayModes.Percentage1D),
     DEF: new base.ArtifactStatConst("DEF", "防御力", 8.7, [18.6, 28.6, 38.5, 48.4, 58.3], DisplayModes.Percentage1D),
@@ -32,11 +32,11 @@ export const GenshinArtifactSubStat = {
     CRITRate: new base.ArtifactStatRandom("CRIT Rate", "暴击率", CRITRate, CRITRate, DisplayModes.Percentage1D),
     CRITDamage: new base.ArtifactStatRandom("CRIT Damage", "暴击伤害", CRITDamage, CRITDamage, DisplayModes.Percentage1D),
     ATK: new base.ArtifactStatRandom("ATK", "攻击力", ATK, ATK, DisplayModes.Percentage1D),
-    FlatATK: new base.ArtifactStatRandom("ATK", "攻击力", FlatATK, FlatATK, DisplayModes.Integer),
+    FlatATK: new base.ArtifactStatRandom("FlatATK", "攻击力", FlatATK, FlatATK, DisplayModes.Integer),
     HP: new base.ArtifactStatRandom("HP", "生命值", HP, HP, DisplayModes.Percentage1D),
-    FlatHP: new base.ArtifactStatRandom("HP", "生命值", FlatHP, FlatHP, DisplayModes.Integer),
+    FlatHP: new base.ArtifactStatRandom("FlatHP", "生命值", FlatHP, FlatHP, DisplayModes.Integer),
     DEF: new base.ArtifactStatRandom("DEF", "防御力", DEF, DEF, DisplayModes.Percentage1D),
-    FlatDEF: new base.ArtifactStatRandom("DEF", "防御力", FlatDEF, FlatDEF, DisplayModes.Integer),
+    FlatDEF: new base.ArtifactStatRandom("FlatDEF", "防御力", FlatDEF, FlatDEF, DisplayModes.Integer),
     ElementalMastery: new base.ArtifactStatRandom("Elemental Mastery", "元素精通", ElementalMastery, ElementalMastery, DisplayModes.Integer),
     EnergyRecharge: new base.ArtifactStatRandom("Energy Recharge", "元素充能效率", EnergyRecharge, EnergyRecharge, DisplayModes.Percentage1D),
 };
@@ -72,7 +72,13 @@ const subStat2 = new Lottery([
 const subCount = new Lottery([
     3, 4
 ], [
-    80, 20
+    8, 2
+]);
+const subCountAlt = new Lottery(// Crafting Table, BOSS drop
+[
+    3, 4
+], [
+    2, 1
 ]);
 export const GenshinArtifactPieces = {
     FlowerOfLife: new gs.GenshinArtifactPiece("Flower of Life", "生之花", new Lottery([GenshinArtifactMainStat.FlatHP]), subStat1, subCount),
@@ -114,8 +120,73 @@ export const GenshinArtifactPieces = {
         22, 22, 22, 10, 10, 10, 4
     ]), subStat2, subCount),
 };
+let GenshinArtifactPiecesAlt_ = {};
+Object.keys(GenshinArtifactPieces).forEach(x => {
+    let y = Object.create(GenshinArtifactPieces[x]);
+    y.subStatCount = subCountAlt;
+    GenshinArtifactPiecesAlt_[x] = y;
+});
+export const GenshinArtifactPiecesAlt = GenshinArtifactPiecesAlt_;
+/* ------------------------ Resin Drop ------------------------ */
+export const GenshinOriginalResinDropLottery = new Lottery([
+    1, 2
+], [
+    93, 7
+]);
+export const GenshinCondensedResinDropLottery = new Lottery([
+    2, 3
+], [
+    86.49, 100 - 86.49
+]);
+/* ------------------------ Score Calculation ------------------------ */
+export const GenshinArtifactStatScore = {
+    "CRIT Rate": 2,
+    "CRIT Damage": 1,
+    "Elemental Mastery": 0.33,
+    "Energy Recharge": 1.1979,
+    "ATK": 1.33,
+    "HP": 1.33,
+    "DEF": 1.06,
+    "FlatATK": 0.398 * 0.5,
+    "FlatHP": 0.026 * 0.66,
+    "FlatDEF": 0.335 * 0.66
+};
+export const GenshinArtifactScoreTempRule = {
+    "CRIT Rate": 1,
+    "CRIT Damage": 1,
+    "Elemental Mastery": 0,
+    "Energy Recharge": 0.7,
+    "ATK": 0.5,
+    "HP": 0,
+    "DEF": 0.9,
+    "FlatATK": 0.5,
+    "FlatHP": 0,
+    "FlatDEF": 0.9
+};
+const findRule = (stat, rule) => {
+    Object.keys(rule).forEach(x => {
+        if (stat.name == x)
+            return rule[x];
+    });
+    return 0;
+};
+const spStat = ["CRIT Rate", "CRIT Damage"];
+export const GenshinArtifactScorers = [
+    (piece) => {
+        let score = 0;
+        if (spStat.includes(piece.mainStat.name))
+            score = 20;
+        piece.subStats.forEach(subStat => {
+            score += subStat.value
+                * findRule(subStat, GenshinArtifactStatScore)
+                * findRule(subStat, GenshinArtifactScoreTempRule);
+        });
+        return score;
+    }
+];
 /* ------------------------ Artifact Set ------------------------ */
 const pieces = new Lottery(lodash.values(GenshinArtifactPieces));
+const piecesAlt = new Lottery(lodash.values(GenshinArtifactPiecesAlt));
 export const GenshinArtifactSets = {
     EmblemOfSeveredFate: new gs.GenshinArtifactSet("Emblem of Severed Fate", "绝缘之旗印", ["绝缘"], pieces, {
         "Flower of Life": {
@@ -145,3 +216,10 @@ export const GenshinArtifactSets = {
         },
     })
 };
+let GenshinArtifactSetsAlt_ = {};
+Object.keys(GenshinArtifactSets).forEach(x => {
+    let y = Object.create(GenshinArtifactSets[x]);
+    y.pieceList = piecesAlt;
+    GenshinArtifactSetsAlt_[x] = y;
+});
+export const GenshinArtifactSetsAlt = GenshinArtifactSetsAlt_;
