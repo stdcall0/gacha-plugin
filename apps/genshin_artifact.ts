@@ -19,11 +19,11 @@ export class GenshinArtifactPlugin extends plugin {
             priority: '98',
             rule: [
                 {
-                    reg: '^#*新版刷圣遗物.*$',
+                    reg: '^#*刷圣遗物.*$',
                     fnc: 'generateArtifact'
                 },
                 {
-                    reg: '^#*新版强化圣遗物(4|8|16|20)?$',
+                    reg: '^#*强化圣遗物(4|8|16|20)?$',
                     fnc: 'upgradeArtifact'
                 }
             ]
@@ -37,9 +37,8 @@ export class GenshinArtifactPlugin extends plugin {
         const artifactSet = GenshinArtifactSets.EmblemOfSeveredFate; // consider adding set reference to piece
 
         let artifactPiece = artifactSet.rollPiece();
-        const artifactName = artifactSet.getPieceDisplayName(artifactPiece);
 
-        let msg = `${artifactName} ${artifactSet.displayName}\n`;
+        let msg = `${artifactPiece.displayName} ${artifactPiece.setDisplayName}\n`;
         msg += `[M] ${artifactPiece.mainStat.displayName}+${artifactPiece.mainStat.displayValue}`;
         artifactPiece.subStats.forEach(x => {
             msg += `\n[m] ${x.displayName}+${x.displayValue}`;
@@ -61,9 +60,7 @@ export class GenshinArtifactPlugin extends plugin {
         let artifactPiece = lastArtifact[this.e.user_id];
         artifactPiece.rollUpgrade();
 
-        const artifactName = artifactSet.getPieceDisplayName(artifactPiece);
-
-        let msg = `${artifactName} ${artifactSet.displayName}\n`;
+        let msg = `${artifactPiece.displayName} ${artifactPiece.setDisplayName}\n`;
         msg += `[M] ${artifactPiece.mainStat.displayName}+${artifactPiece.mainStat.displayValue}`;
         artifactPiece.subStats.forEach(x => {
             msg += `\n[m] ${x.displayName}+${x.displayValue}`;

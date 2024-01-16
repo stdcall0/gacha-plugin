@@ -5,7 +5,7 @@ let p = t.rollPiece()
 
 console.log(p)
 console.log(p.name, p.displayName)
-console.log(t.getPieceDisplayName(p))
+console.log(p.setDisplayName)
 console.log(p.mainStat)
 console.log(p.mainStat.name, p.mainStat.displayName, p.mainStat.displayValue)
 console.log(p.subStats)
