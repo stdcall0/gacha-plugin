@@ -50,12 +50,12 @@ export class GenshinArtifactPiece extends base.ArtifactPiece {
         if (!(this.name in this.artifactSet.pieceData))
             return null;
         const data = {
-            tplFile: cpath.HTMLPath + 'artifact.html',
+            tplFile: cpath.HTMLPath + 'genshin_artifact.html',
             pluResPath: cpath.ProcessPath,
             artifactPiece: this,
             locked: false
         };
-        return puppeteer.screenshot("artifact", data);
+        return puppeteer.screenshot("genshin_artifact", data);
     }
 }
 ;
