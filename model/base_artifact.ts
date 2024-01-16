@@ -110,6 +110,10 @@ export class ArtifactPiece {
         }
     }
 
+    async generateImage(): Promise<string> {
+        return null
+    }
+
     get setName(): string {
         if (this.artifactSet && this.name in this.artifactSet.pieceData)
             return this.artifactSet.pieceData[this.name].name;
