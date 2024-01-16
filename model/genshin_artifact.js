@@ -2,6 +2,8 @@ import lodash from 'lodash';
 import puppeteer from '../../../lib/puppeteer/puppeteer.js';
 import * as cpath from '../resources/cpath.js';
 import * as base from './base_artifact.js';
+;
+;
 export class GenshinArtifactPiece extends base.ArtifactPiece {
     constructor(name, displayName, mainStatList, subStatList, subStatCount) {
         super(name, displayName, mainStatList, subStatList, subStatCount);
@@ -43,6 +45,9 @@ export class GenshinArtifactPiece extends base.ArtifactPiece {
             this.subStats[l].rollUpgrade();
         }
         this.upgradeCount += 1;
+    }
+    getScore(scorer) {
+        return scorer(this);
     }
     async generateImage() {
         if (!this.artifactSet)

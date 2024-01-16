@@ -7,12 +7,12 @@ import { DisplayModes } from '../model/utils.js';
 /* ------------------------ Artifact Stat ------------------------ */
 export const GenshinArtifactMainStat = {
     FlatHP: new base.ArtifactStatConst(
-        "HP", "生命值",
+        "FlatHP", "生命值",
         717, [1530, 2342, 3155, 3967, 4780],
         DisplayModes.Integer
     ),
     FlatATK: new base.ArtifactStatConst(
-        "ATK", "攻击力",
+        "FlatATK", "攻击力",
         47, [100, 152, 205, 258, 311],
         DisplayModes.Integer
     ),
@@ -90,19 +90,19 @@ export const GenshinArtifactSubStat = {
         "ATK", "攻击力", ATK, ATK, DisplayModes.Percentage1D
     ),
     FlatATK: new base.ArtifactStatRandom(
-        "ATK", "攻击力", FlatATK, FlatATK, DisplayModes.Integer
+        "FlatATK", "攻击力", FlatATK, FlatATK, DisplayModes.Integer
     ),
     HP: new base.ArtifactStatRandom(
         "HP", "生命值", HP, HP, DisplayModes.Percentage1D
     ),
     FlatHP: new base.ArtifactStatRandom(
-        "HP", "生命值", FlatHP, FlatHP, DisplayModes.Integer
+        "FlatHP", "生命值", FlatHP, FlatHP, DisplayModes.Integer
     ),
     DEF: new base.ArtifactStatRandom(
         "DEF", "防御力", DEF, DEF, DisplayModes.Percentage1D
     ),
     FlatDEF: new base.ArtifactStatRandom(
-        "DEF", "防御力", FlatDEF, FlatDEF, DisplayModes.Integer
+        "FlatDEF", "防御力", FlatDEF, FlatDEF, DisplayModes.Integer
     ),
     ElementalMastery: new base.ArtifactStatRandom(
         "Elemental Mastery", "元素精通", ElementalMastery, ElementalMastery, DisplayModes.Integer
@@ -154,9 +154,18 @@ const subCount = new Lottery<number>(
         3, 4
     ],
     [
-        80, 20
+        8, 2
     ]
 );
+const subCountAlt = new Lottery<number>( // Crafting Table, BOSS drop
+    [
+        3, 4
+    ],
+    [
+        2, 1
+    ]
+);
+
 
 export const GenshinArtifactPieces = {
     FlowerOfLife: new gs.GenshinArtifactPiece(
@@ -228,9 +237,96 @@ export const GenshinArtifactPieces = {
     ),
 };
 
+let GenshinArtifactPiecesAlt_ = {};
+Object.keys(GenshinArtifactPieces).forEach(x => {
+    let y: gs.GenshinArtifactPiece = Object.create(GenshinArtifactPieces[x]);
+    y.subStatCount = subCountAlt;
+    GenshinArtifactPiecesAlt_[x] = y;
+});
+export const GenshinArtifactPiecesAlt = GenshinArtifactPiecesAlt_;
+
+
+
+/* ------------------------ Resin Drop ------------------------ */
+
+export const GenshinOriginalResinDropLottery = new Lottery<number>(
+    [
+        1, 2
+    ],
+    [
+        93, 7
+    ]
+);
+
+export const GenshinCondensedResinDropLottery = new Lottery<number>(
+    [
+        2, 3
+    ],
+    [
+        86.49, 100 - 86.49
+    ]
+);
+
+
+
+
+/* ------------------------ Score Calculation ------------------------ */
+
+
+export const GenshinArtifactStatScore: gs.GenshinArtifactScoreRule = {
+    "CRIT Rate": 2,
+    "CRIT Damage": 1,
+    "Elemental Mastery": 0.33,
+    "Energy Recharge": 1.1979,
+    "ATK": 1.33,
+    "HP": 1.33,
+    "DEF": 1.06,
+    "FlatATK": 0.398 * 0.5,
+    "FlatHP": 0.026 * 0.66,
+    "FlatDEF": 0.335 * 0.66
+};
+
+export const GenshinArtifactScoreTempRule: gs.GenshinArtifactScoreRule = { // Noelle
+    "CRIT Rate": 1,
+    "CRIT Damage": 1,
+    "Elemental Mastery": 0,
+    "Energy Recharge": 0.7,
+    "ATK": 0.5,
+    "HP": 0,
+    "DEF": 0.9,
+    "FlatATK": 0.5,
+    "FlatHP": 0,
+    "FlatDEF": 0.9
+};
+
+const findRule = (stat: base.ArtifactStat, rule: gs.GenshinArtifactScoreRule): number => {
+    Object.keys(rule).forEach(x => {
+        if (stat.name == x)
+            return rule[x];
+    });
+    return 0;
+};
+
+const spStat = ["CRIT Rate", "CRIT Damage"];
+
+export const GenshinArtifactScorers: gs.GenshinArtifactScorer[] = [
+    (piece) => { // Noelle
+        let score = 0;
+        if (spStat.includes(piece.mainStat.name)) score = 20;
+        piece.subStats.forEach(subStat => {
+            score += subStat.value
+                * findRule(subStat, GenshinArtifactStatScore)
+                * findRule(subStat, GenshinArtifactScoreTempRule);
+        });
+        return score;
+    }
+];
+
 
 /* ------------------------ Artifact Set ------------------------ */
+
 const pieces = new Lottery<gs.GenshinArtifactPiece>(lodash.values(GenshinArtifactPieces));
+const piecesAlt = new Lottery<gs.GenshinArtifactPiece>(lodash.values(GenshinArtifactPiecesAlt));
 
 export const GenshinArtifactSets = {
     EmblemOfSeveredFate: new gs.GenshinArtifactSet(
@@ -266,3 +362,12 @@ export const GenshinArtifactSets = {
         },
     )
 };
+
+let GenshinArtifactSetsAlt_ = {};
+Object.keys(GenshinArtifactSets).forEach(x => {
+    let y: gs.GenshinArtifactSet = Object.create(GenshinArtifactSets[x]);
+    y.pieceList = piecesAlt;
+    GenshinArtifactSetsAlt_[x] = y;
+});
+export const GenshinArtifactSetsAlt = GenshinArtifactSetsAlt_;
+

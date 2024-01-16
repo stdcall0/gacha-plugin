@@ -5,6 +5,11 @@ import * as cpath from '../resources/cpath.js';
 import * as base from './base_artifact.js';
 import Lottery from './lottery.js';
 
+export interface GenshinArtifactScorer {
+    (piece: GenshinArtifactPiece): number
+};
+export interface GenshinArtifactScoreRule { [stat: string]: number };
+
 export class GenshinArtifactPiece extends base.ArtifactPiece {
     upgradeCount: number;
     artifactSet: GenshinArtifactSet;
@@ -60,6 +65,10 @@ export class GenshinArtifactPiece extends base.ArtifactPiece {
             this.subStats[l].rollUpgrade();
         }
         this.upgradeCount += 1;
+    }
+
+    getScore(scorer: GenshinArtifactScorer): number {
+        return scorer(this);
     }
 
     async generateImage(): Promise<string> {
