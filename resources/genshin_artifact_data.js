@@ -164,11 +164,12 @@ export const GenshinArtifactScoreTempRule = {
     "FlatDEF": 0.9
 };
 const findRule = (stat, rule) => {
+    let multipler = 0;
     Object.keys(rule).forEach(x => {
         if (stat.name == x)
-            return rule[x];
+            multipler = rule[x];
     });
-    return 0;
+    return multipler;
 };
 const spStat = ["CRIT Rate", "CRIT Damage"];
 export const GenshinArtifactScorers = [

@@ -300,11 +300,12 @@ export const GenshinArtifactScoreTempRule: gs.GenshinArtifactScoreRule = { // No
 };
 
 const findRule = (stat: base.ArtifactStat, rule: gs.GenshinArtifactScoreRule): number => {
+    let multipler = 0;
     Object.keys(rule).forEach(x => {
         if (stat.name == x)
-            return rule[x];
+            multipler = rule[x];
     });
-    return 0;
+    return multipler;
 };
 
 const spStat = ["CRIT Rate", "CRIT Damage"];
