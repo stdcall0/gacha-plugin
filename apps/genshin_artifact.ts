@@ -5,10 +5,13 @@ import puppeteer from '../../../lib/puppeteer/puppeteer.js';
 import common from '../../../lib/common/common.js';
 
 import { ArtifactPiece } from '../model/base_artifact.js';
-import { GenshinArtifactSets } from '../resources/genshin_artifact_data.js';
+import { GenshinArtifactSets, GenshinArtifactScorers } from '../resources/genshin_artifact_data.js';
+import { GenshinArtifactPiece } from '../model/genshin_artifact.js';
 
 let throttle: boolean = false;
 let lastArtifact: { [key: string]: ArtifactPiece | ArtifactPiece[] } = {};
+
+const scorer = GenshinArtifactScorers[0];
 
 export class GenshinArtifactPlugin extends plugin {
     constructor() {
@@ -40,19 +43,21 @@ export class GenshinArtifactPlugin extends plugin {
         if (times !== times || times <= 1) {
             const artifactSet = GenshinArtifactSets.EmblemOfSeveredFate; // consider adding set reference to piece
 
-            let artifactPiece = artifactSet.rollPiece();
+            let artifactPiece = artifactSet.rollPiece() as GenshinArtifactPiece; // NEED TO RESTRUCT the class to avoid explict conversion
     
             lastArtifact[this.e.user_id] = artifactPiece;
     
-            const msg = await artifactPiece.generateImage();
+            const msg = await artifactPiece.generateImage(artifactPiece.getScore(scorer));
             await this.reply(msg, false, { at: false, recallMsg: 0 });
         } else if (times <= 20) {
             const artifactSet = GenshinArtifactSets.EmblemOfSeveredFate; // consider adding set reference to piece
     
             let imgs = [];
-            let pieces = artifactSet.rollPieceMulti(times);
+            let pieces = artifactSet.rollPieceMulti(times) as GenshinArtifactPiece[];
+
+            pieces.sort((a, b) => b.getScore(scorer) - a.getScore(scorer));
             for (const artifactPiece of pieces)
-                imgs.push(await artifactPiece.generateImage());
+                imgs.push(await artifactPiece.generateImage(artifactPiece.getScore(scorer)));
             lastArtifact[this.e.user_id] = pieces;
 
             const msg = await common.makeForwardMsg(this.e, imgs, '点我查看圣遗物');
@@ -85,20 +90,24 @@ export class GenshinArtifactPlugin extends plugin {
 
         if (times !== times || !([4, 8, 16, 20].includes(times))) times = 0;
 
-        let pieces = lastArtifact[this.e.user_id];
+        let pieces = lastArtifact[this.e.user_id] as (GenshinArtifactPiece | GenshinArtifactPiece[]);
         if (!Array.isArray(pieces)) {
             let artifactPiece = pieces;
 
             this.upgradeTimes(artifactPiece, times);
             lastArtifact[this.e.user_id] = artifactPiece;
             
-            const msg = await artifactPiece.generateImage();
+            const msg = await artifactPiece.generateImage(artifactPiece.getScore(scorer));
             await this.reply(msg, false, { at: false, recallMsg: 0 });
         } else {
             let imgs = [];
             for (let artifactPiece of pieces) {
                 this.upgradeTimes(artifactPiece, times);
-                imgs.push(await artifactPiece.generateImage());
+            }
+
+            pieces.sort((a, b) => b.getScore(scorer) - a.getScore(scorer));
+            for (let artifactPiece of pieces) {
+                imgs.push(await artifactPiece.generateImage(artifactPiece.getScore(scorer)));
             }
             lastArtifact[this.e.user_id] = pieces;
 

@@ -93,7 +93,7 @@ export class ArtifactPiece {
             this.subStats[l].rollUpgrade();
         }
     }
-    async generateImage() {
+    async generateImage(t) {
         return null;
     }
     get setName() {

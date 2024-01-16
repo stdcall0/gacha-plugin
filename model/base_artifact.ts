@@ -114,7 +114,7 @@ export class ArtifactPiece {
         }
     }
 
-    async generateImage(): Promise<string> {
+    async generateImage(t: any): Promise<string> {
         return null
     }
 
