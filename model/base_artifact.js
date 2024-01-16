@@ -72,6 +72,9 @@ export class ArtifactPiece {
         this.mainStat = null;
         this.subStats = [];
     }
+    get level() {
+        return 0;
+    }
     rollMainStat() {
         this.mainStat = this.mainStatList.choice().instance();
     }
