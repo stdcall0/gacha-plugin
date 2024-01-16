@@ -67,7 +67,7 @@ export class GenshinArtifactPlugin extends plugin {
         throttle = true;
         let each = this.e.msg;
         let times = parseInt(each.replace("强化圣遗物", "").replace("#", "").trim());
-        if (times !== times || [4, 8, 16, 20].includes(times))
+        if (times !== times || !([4, 8, 16, 20].includes(times)))
             times = 0;
         let pieces = lastArtifact[this.e.user_id];
         if (!Array.isArray(pieces)) {
