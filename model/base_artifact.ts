@@ -78,6 +78,7 @@ export class ArtifactStatRandom extends ArtifactStat {
 export class ArtifactPiece {
     mainStat: ArtifactStat;
     subStats: ArtifactStat[];
+    artifactSet: ArtifactSet;
 
     constructor(
         public name: string,
@@ -109,9 +110,21 @@ export class ArtifactPiece {
         }
     }
 
-    instance(): ArtifactPiece {
+    get setName(): string {
+        if (this.artifactSet && this.name in this.artifactSet.pieceNames)
+            return this.artifactSet.pieceNames[this.name].name;
+        return this.name;
+    }
+    get setDisplayName(): string {
+        if (this.artifactSet && this.name in this.artifactSet.pieceNames)
+            return this.artifactSet.pieceNames[this.name].displayName;
+        return this.displayName;
+    }
+
+    instance(artifactSet: ArtifactSet): ArtifactPiece {
         let piece = Object.create(this);
 
+        piece.artifactSet = artifactSet;
         piece.rollMainStat();
         piece.rollSubStats();
         return piece;
@@ -134,24 +147,13 @@ export class ArtifactSet {
     ) { }
 
     rollPiece(): ArtifactPiece {
-        return this.pieceList.choice().instance();
+        return this.pieceList.choice().instance(this);
     }
     rollPieceMulti(n: number): ArtifactPiece[] {
         let res = [];
         this.pieceList.choiceMulti(n).forEach(x => {
-            res.push(x.instance());
+            res.push(x.instance(this));
         });
         return res;
-    }
-
-    getPieceName(p: ArtifactPiece): string {
-        if (p.name in this.pieceNames)
-            return this.pieceNames[p.name].name;
-        return p.name;
-    }
-    getPieceDisplayName(p: ArtifactPiece): string {
-        if (p.name in this.pieceNames)
-            return this.pieceNames[p.name].displayName;
-        return p.displayName;
     }
 };

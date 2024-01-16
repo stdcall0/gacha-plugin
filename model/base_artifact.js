@@ -90,8 +90,19 @@ export class ArtifactPiece {
             this.subStats[l].rollUpgrade();
         }
     }
-    instance() {
+    get setName() {
+        if (this.artifactSet && this.name in this.artifactSet.pieceNames)
+            return this.artifactSet.pieceNames[this.name].name;
+        return this.name;
+    }
+    get setDisplayName() {
+        if (this.artifactSet && this.name in this.artifactSet.pieceNames)
+            return this.artifactSet.pieceNames[this.name].displayName;
+        return this.displayName;
+    }
+    instance(artifactSet) {
         let piece = Object.create(this);
+        piece.artifactSet = artifactSet;
         piece.rollMainStat();
         piece.rollSubStats();
         return piece;
@@ -108,24 +119,14 @@ export class ArtifactSet {
         this.pieceNames = pieceNames;
     }
     rollPiece() {
-        return this.pieceList.choice().instance();
+        return this.pieceList.choice().instance(this);
     }
     rollPieceMulti(n) {
         let res = [];
         this.pieceList.choiceMulti(n).forEach(x => {
-            res.push(x.instance());
+            res.push(x.instance(this));
         });
         return res;
-    }
-    getPieceName(p) {
-        if (p.name in this.pieceNames)
-            return this.pieceNames[p.name].name;
-        return p.name;
-    }
-    getPieceDisplayName(p) {
-        if (p.name in this.pieceNames)
-            return this.pieceNames[p.name].displayName;
-        return p.displayName;
     }
 }
 ;
