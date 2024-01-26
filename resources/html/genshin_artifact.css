@@ -130,3 +130,11 @@ body {
     color: white;
     font-size: 38px;
 }
+
+.level {
+    position: absolute;
+    top: 475px;
+    left: 300px;
+    color: rgb(76, 85, 103);
+    font-size: 38px;
+}

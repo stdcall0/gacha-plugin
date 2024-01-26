@@ -25,15 +25,15 @@ export class GenshinArtifactPlugin extends plugin {
             priority: '98',
             rule: [
                 {
-                    reg: '^#?刷圣遗物.*$',  // 刷圣遗物绝缘20
+                    reg: '^#*刷圣遗物.*$',  // 刷圣遗物绝缘20
                     fnc: 'generateArtifact'
                 },
                 {
-                    reg: '^#?(合成|合)圣遗物.*$',  // 合成圣遗物绝缘20
+                    reg: '^#*(合成|合)圣遗物.*$',  // 合成圣遗物绝缘20
                     fnc: 'generateArtifactAlt'
                 },
                 {
-                    reg: '^#?(强化|升)圣遗物(4|8|16|20)?$',
+                    reg: '^#*(强化|升)圣遗物(4|8|16|20)?$',
                     fnc: 'upgradeArtifact'
                 }
             ]
@@ -118,10 +118,9 @@ export class GenshinArtifactPlugin extends plugin {
             pieces.forEach(x => scores.push(scorer(x)));
 
             let max = DisplayModes.Float1D(Math.max(...scores));
-            let min = DisplayModes.Float1D(Math.min(...scores));
             let avg = DisplayModes.Float1D(scores.reduce((a, b) => a+b, 0) / scores.length);
 
-            const msg = await common.makeForwardMsg(this.e, imgs, `最高分: ${max}\n最低分: ${min}\n平均分: ${avg}`);
+            const msg = await common.makeForwardMsg(this.e, imgs, `点击查看圣遗物\n最高分: ${max}; 平均分: ${avg}`);
             await this.reply(msg, false, { at: false, recallMsg: 0 });
         }
 
@@ -177,10 +176,9 @@ export class GenshinArtifactPlugin extends plugin {
             pieces.forEach(x => scores.push(scorer(x)));
 
             let max = DisplayModes.Float1D(Math.max(...scores));
-            let min = DisplayModes.Float1D(Math.min(...scores));
             let avg = DisplayModes.Float1D(scores.reduce((a, b) => a+b, 0) / scores.length);
 
-            const msg = await common.makeForwardMsg(this.e, imgs, `最高分: ${max}\n最低分: ${min}\n平均分: ${avg}`);
+            const msg = await common.makeForwardMsg(this.e, imgs, `点击查看强化结果\n最高分: ${max}; 平均分: ${avg}`);
             await this.reply(msg, false, { at: false, recallMsg: 0 });
         }
 
