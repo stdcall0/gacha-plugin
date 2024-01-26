@@ -6,14 +6,7 @@ import * as base from './base_artifact.js';
 import Lottery from './lottery.js';
 import { DisplayModes } from './utils.js';
 
-export interface GenshinArtifactScorer {
-    (piece: GenshinArtifactPiece): number
-};
-export interface GenshinArtifactScoreRule { [stat: string]: number };
-
 export class GenshinArtifactPiece extends base.ArtifactPiece {
-    upgradeCount: number;
-    artifactSet: GenshinArtifactSet;
 
     constructor(
         name: string,
@@ -68,10 +61,6 @@ export class GenshinArtifactPiece extends base.ArtifactPiece {
         this.upgradeCount += 1;
     }
 
-    getScore(scorer: GenshinArtifactScorer): number {
-        return scorer(this);
-    }
-
     async generateImage(score: number): Promise<string> {
         if (!this.artifactSet)
             return null;
@@ -90,19 +79,9 @@ export class GenshinArtifactPiece extends base.ArtifactPiece {
     }
 };
 
-export interface GenshinArtifactPieceData extends base.ArtifactPieceData {
-    image: string;
+
+export interface GenshinArtifactScorer {
+    (piece: base.ArtifactPiece): number
 };
 
-export class GenshinArtifactSet extends base.ArtifactSet {
-
-    constructor(
-        name: string,
-        displayName: string,
-        aliases: string[],
-        pieceList: Lottery<GenshinArtifactPiece>,
-        public pieceData: { [name: string]: GenshinArtifactPieceData },
-    ) {
-        super(name, displayName, aliases, pieceList, pieceData);
-    }
-};
+export interface GenshinArtifactScoreRule { [stat: string]: number };

@@ -23,7 +23,7 @@ export default class Lottery<ObjType> {
         }
     }
 
-    updateProb() {
+    private updateProb() {
         this.probTotal = 0;
         this.probPrefix = [];
 

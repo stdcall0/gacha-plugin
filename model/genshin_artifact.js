@@ -3,8 +3,6 @@ import puppeteer from '../../../lib/puppeteer/puppeteer.js';
 import * as cpath from '../resources/cpath.js';
 import * as base from './base_artifact.js';
 import { DisplayModes } from './utils.js';
-;
-;
 export class GenshinArtifactPiece extends base.ArtifactPiece {
     constructor(name, displayName, mainStatList, subStatList, subStatCount) {
         super(name, displayName, mainStatList, subStatList, subStatCount);
@@ -47,9 +45,6 @@ export class GenshinArtifactPiece extends base.ArtifactPiece {
         }
         this.upgradeCount += 1;
     }
-    getScore(scorer) {
-        return scorer(this);
-    }
     async generateImage(score) {
         if (!this.artifactSet)
             return null;
@@ -67,10 +62,4 @@ export class GenshinArtifactPiece extends base.ArtifactPiece {
 }
 ;
 ;
-export class GenshinArtifactSet extends base.ArtifactSet {
-    constructor(name, displayName, aliases, pieceList, pieceData) {
-        super(name, displayName, aliases, pieceList, pieceData);
-        this.pieceData = pieceData;
-    }
-}
 ;
