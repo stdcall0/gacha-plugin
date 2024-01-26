@@ -78,6 +78,7 @@ export class ArtifactStatRandom extends ArtifactStat {
 export class ArtifactPiece {
     mainStat: ArtifactStat;
     subStats: ArtifactStat[];
+    upgradeCount: number;
     artifactSet: ArtifactSet;
 
     constructor(
@@ -142,6 +143,7 @@ export class ArtifactPiece {
 export interface ArtifactPieceData {
     name: string;
     displayName: string;
+    image: string;
 };
 
 export class ArtifactSet {
@@ -161,6 +163,37 @@ export class ArtifactSet {
         let res = [];
         this.pieceList.choiceMulti(n).forEach(x => {
             res.push(x.instance(this));
+        });
+        return res;
+    }
+};
+
+export class ArtifactDomain {
+
+    constructor(
+        public name: string,
+        public displayName: string,
+        public aliases: string[],
+        public setList: Lottery<ArtifactSet>
+    ) {
+        setList.objList.forEach(set => {
+            this.aliases = this.aliases.concat(set.aliases);
+            this.aliases.push(set.displayName);
+        });
+        this.aliases.push(this.displayName);
+    }
+
+    check(s: string): boolean {
+        return this.aliases.includes(s);
+    }
+
+    rollPiece(): ArtifactPiece {
+        return this.setList.choice().rollPiece();
+    }
+    rollPieceMulti(n: number): ArtifactPiece[] {
+        let res = [];
+        this.setList.choiceMulti(n).forEach(x => {
+            res.push(x.rollPiece());
         });
         return res;
     }

@@ -4,14 +4,17 @@ import plugin from '../../../lib/plugins/plugin.js';
 import puppeteer from '../../../lib/puppeteer/puppeteer.js';
 import common from '../../../lib/common/common.js';
 
-import { ArtifactPiece } from '../model/base_artifact.js';
-import { GenshinArtifactSets, GenshinArtifactScorers } from '../resources/genshin_artifact_data.js';
+import { ArtifactPiece, ArtifactDomain } from '../model/base_artifact.js';
+import { DisplayModes } from '../model/utils.js';
+import { GenshinArtifactScorer } from '../resources/genshin_artifact_data.js';
+import { GenshinArtifactDomains } from '../resources/genshin_artifact_data.js';
+import { GenshinArtifactDomainsAlt } from '../resources/genshin_artifact_data.js';
 import { GenshinArtifactPiece } from '../model/genshin_artifact.js';
 
 let throttle: boolean = false;
 let lastArtifact: { [key: string]: ArtifactPiece | ArtifactPiece[] } = {};
 
-const scorer = GenshinArtifactScorers[0];
+const scorer = GenshinArtifactScorer;
 
 export class GenshinArtifactPlugin extends plugin {
     constructor() {
@@ -22,11 +25,15 @@ export class GenshinArtifactPlugin extends plugin {
             priority: '98',
             rule: [
                 {
-                    reg: '^#*刷圣遗物.*$',
+                    reg: '^#?刷圣遗物.*$',  // 刷圣遗物绝缘20
                     fnc: 'generateArtifact'
                 },
                 {
-                    reg: '^#*强化圣遗物(4|8|16|20)?$',
+                    reg: '^#?(合成|合)圣遗物.*$',  // 合成圣遗物绝缘20
+                    fnc: 'generateArtifactAlt'
+                },
+                {
+                    reg: '^#?(强化|升)圣遗物(4|8|16|20)?$',
                     fnc: 'upgradeArtifact'
                 }
             ]
@@ -34,33 +41,87 @@ export class GenshinArtifactPlugin extends plugin {
     }
 
     async generateArtifact() {
+        let inst: string = this.e.msg;
+        inst = inst.replace("刷圣遗物", "").replace("#", "").replace("次", "").trim();
+
+        let s_domain = "";
+        let s_time = "";
+
+        for (let i = 0; i < inst.length; ++i) {
+            if ("0" <= inst[i] && inst[i] <= "9")
+                s_time = s_time + inst[i];
+            else
+                s_domain = s_domain + inst[i];
+        }
+        let times = parseInt(s_time);
+        let domain: ArtifactDomain = null;
+
+        GenshinArtifactDomains.forEach(x => {
+            if (x.check(s_domain))
+                domain = x;
+        });
+
+        if (domain == null) return;
+
+        await this.makeArtifact(times, domain);
+    }
+
+    async generateArtifactAlt() {
+        let inst: string = this.e.msg;
+        inst = inst.replace("合圣遗物", "").replace("合成圣遗物", "")
+            .replace("#", "").replace("次", "").trim();
+
+        let s_domain = "";
+        let s_time = "";
+
+        for (let i = 0; i < inst.length; ++i) {
+            if ("0" <= inst[i] && inst[i] <= "9")
+                s_time = s_time + inst[i];
+            else
+                s_domain = s_domain + inst[i];
+        }
+        let times = parseInt(s_time);
+        let domain: ArtifactDomain = null;
+
+        GenshinArtifactDomainsAlt.forEach(x => {
+            if (x.check(s_domain))
+                domain = x;
+        });
+
+        if (domain == null) return;
+        
+        await this.makeArtifact(times, domain);
+    }
+
+    async makeArtifact(times: number, domain: ArtifactDomain) {
         if (throttle) return;
         throttle = true;
 
-        let each: string = this.e.msg;
-        let times = parseInt(each.replace("刷圣遗物", "").replace("#", "").replace("次", "").trim());
-        
         if (times !== times || times <= 1) {
-            const artifactSet = GenshinArtifactSets.EmblemOfSeveredFate; // consider adding set reference to piece
+            let artifactPiece = domain.rollPiece();
 
-            let artifactPiece = artifactSet.rollPiece() as GenshinArtifactPiece; // NEED TO RESTRUCT the class to avoid explict conversion
-    
             lastArtifact[this.e.user_id] = artifactPiece;
     
-            const msg = await artifactPiece.generateImage(artifactPiece.getScore(scorer));
+            const msg = await artifactPiece.generateImage(scorer(artifactPiece));
             await this.reply(msg, false, { at: false, recallMsg: 0 });
         } else if (times <= 20) {
-            const artifactSet = GenshinArtifactSets.EmblemOfSeveredFate; // consider adding set reference to piece
-    
             let imgs = [];
-            let pieces = artifactSet.rollPieceMulti(times) as GenshinArtifactPiece[];
+            let pieces = domain.rollPieceMulti(times);
 
-            pieces.sort((a, b) => b.getScore(scorer) - a.getScore(scorer));
+            pieces.sort((a, b) => scorer(b) - scorer(a));
             for (const artifactPiece of pieces)
-                imgs.push(await artifactPiece.generateImage(artifactPiece.getScore(scorer)));
+                imgs.push(await artifactPiece.generateImage(scorer(artifactPiece)));
+
             lastArtifact[this.e.user_id] = pieces;
 
-            const msg = await common.makeForwardMsg(this.e, imgs, '点我查看圣遗物');
+            let scores: number[] = [];
+            pieces.forEach(x => scores.push(scorer(x)));
+
+            let max = DisplayModes.Float1D(Math.max(...scores));
+            let min = DisplayModes.Float1D(Math.min(...scores));
+            let avg = DisplayModes.Float1D(scores.reduce((a, b) => a+b, 0) / scores.length);
+
+            const msg = await common.makeForwardMsg(this.e, imgs, `最高分: ${max}\n最低分: ${min}\n平均分: ${avg}`);
             await this.reply(msg, false, { at: false, recallMsg: 0 });
         }
 
@@ -86,18 +147,19 @@ export class GenshinArtifactPlugin extends plugin {
         throttle = true;
 
         let each: string = this.e.msg;
-        let times = parseInt(each.replace("强化圣遗物", "").replace("#", "").trim());
+        let times = parseInt(each.replace("强化圣遗物", "").replace("升圣遗物", "")
+            .replace("#", "").trim());
 
         if (times !== times || !([4, 8, 16, 20].includes(times))) times = 0;
 
-        let pieces = lastArtifact[this.e.user_id] as (GenshinArtifactPiece | GenshinArtifactPiece[]);
+        let pieces = lastArtifact[this.e.user_id];
         if (!Array.isArray(pieces)) {
             let artifactPiece = pieces;
 
             this.upgradeTimes(artifactPiece, times);
             lastArtifact[this.e.user_id] = artifactPiece;
             
-            const msg = await artifactPiece.generateImage(artifactPiece.getScore(scorer));
+            const msg = await artifactPiece.generateImage(scorer(artifactPiece));
             await this.reply(msg, false, { at: false, recallMsg: 0 });
         } else {
             let imgs = [];
@@ -105,13 +167,20 @@ export class GenshinArtifactPlugin extends plugin {
                 this.upgradeTimes(artifactPiece, times);
             }
 
-            pieces.sort((a, b) => b.getScore(scorer) - a.getScore(scorer));
+            pieces.sort((a, b) => scorer(b) - scorer(a));
             for (let artifactPiece of pieces) {
-                imgs.push(await artifactPiece.generateImage(artifactPiece.getScore(scorer)));
+                imgs.push(await artifactPiece.generateImage(scorer(artifactPiece)));
             }
             lastArtifact[this.e.user_id] = pieces;
 
-            const msg = await common.makeForwardMsg(this.e, imgs, '点我查看强化结果');
+            let scores: number[] = [];
+            pieces.forEach(x => scores.push(scorer(x)));
+
+            let max = DisplayModes.Float1D(Math.max(...scores));
+            let min = DisplayModes.Float1D(Math.min(...scores));
+            let avg = DisplayModes.Float1D(scores.reduce((a, b) => a+b, 0) / scores.length);
+
+            const msg = await common.makeForwardMsg(this.e, imgs, `最高分: ${max}\n最低分: ${min}\n平均分: ${avg}`);
             await this.reply(msg, false, { at: false, recallMsg: 0 });
         }
 

@@ -1,5 +1,5 @@
-import { GenshinArtifactSets } from "../resources/genshin_artifact_data.js";
-let t = GenshinArtifactSets.EmblemOfSeveredFate;
+import { GenshinArtifactDomainsAlt } from "../resources/genshin_artifact_data.js";
+let t = GenshinArtifactDomainsAlt[0];
 let p = t.rollPiece();
 console.log(p);
 console.log(p.name, p.displayName);

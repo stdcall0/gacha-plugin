@@ -273,7 +273,7 @@ export const GenshinCondensedResinDropLottery = new Lottery<number>(
 /* ------------------------ Score Calculation ------------------------ */
 
 
-export const GenshinArtifactStatScore: gs.GenshinArtifactScoreRule = {
+export const GenshinArtifactScore_BaseMultipler: gs.GenshinArtifactScoreRule = {
     "CRIT Rate": 2,
     "CRIT Damage": 1,
     "Elemental Mastery": 0.33,
@@ -286,42 +286,38 @@ export const GenshinArtifactStatScore: gs.GenshinArtifactScoreRule = {
     "FlatDEF": 0.335 * 0.66
 };
 
-export const GenshinArtifactScoreTempRule: gs.GenshinArtifactScoreRule = { // Noelle
+export const GenshinArtifactScore_TempMultipler: gs.GenshinArtifactScoreRule = { // Noelle
     "CRIT Rate": 1,
     "CRIT Damage": 1,
-    "Elemental Mastery": 0,
-    "Energy Recharge": 0.7,
-    "ATK": 0.5,
-    "HP": 0,
-    "DEF": 0.9,
-    "FlatATK": 0.5,
-    "FlatHP": 0,
-    "FlatDEF": 0.9
+    "Elemental Mastery": 0.25,
+    "Energy Recharge": 0.25,
+    "ATK": 0.2,
+    "HP": 0.2,
+    "DEF": 0,
+    "FlatATK": 0.2,
+    "FlatHP": 0.2,
+    "FlatDEF": 0
 };
 
 const findRule = (stat: base.ArtifactStat, rule: gs.GenshinArtifactScoreRule): number => {
-    let multipler = 0;
-    Object.keys(rule).forEach(x => {
-        if (stat.name == x)
-            multipler = rule[x];
-    });
-    return multipler;
+    if (stat.name in rule) return rule[stat.name];
+    return 0;
 };
 
 const spStat = ["CRIT Rate", "CRIT Damage"];
 
-export const GenshinArtifactScorers: gs.GenshinArtifactScorer[] = [
-    (piece) => { // Noelle
+export const GenshinArtifactScorer: gs.GenshinArtifactScorer =
+    (piece) => {
         let score = 0;
         if (spStat.includes(piece.mainStat.name)) score = 20;
         piece.subStats.forEach(subStat => {
             score += subStat.value
-                * findRule(subStat, GenshinArtifactStatScore)
-                * findRule(subStat, GenshinArtifactScoreTempRule);
+                * findRule(subStat, GenshinArtifactScore_BaseMultipler)
+                * findRule(subStat, GenshinArtifactScore_TempMultipler);
         });
         return score;
-    }
-];
+    };
+
 
 
 /* ------------------------ Artifact Set ------------------------ */
@@ -330,7 +326,7 @@ const pieces = new Lottery<gs.GenshinArtifactPiece>(lodash.values(GenshinArtifac
 const piecesAlt = new Lottery<gs.GenshinArtifactPiece>(lodash.values(GenshinArtifactPiecesAlt));
 
 export const GenshinArtifactSets = {
-    EmblemOfSeveredFate: new gs.GenshinArtifactSet(
+    EmblemOfSeveredFate: new base.ArtifactSet(
         "Emblem of Severed Fate", "绝缘之旗印",
         ["绝缘"],
         pieces,
@@ -361,14 +357,231 @@ export const GenshinArtifactSets = {
                 image: "绝缘之旗印/5.webp",
             },
         },
-    )
+    ),
+    ShimenawasReminiscence: new base.ArtifactSet(
+        "Shimenawa's Reminiscence", "追忆之注连",
+        ["追忆"],
+        pieces,
+        {
+            "Flower of Life": {
+                name: "Entangling Bloom",
+                displayName: "羁缠之花",
+                image: "追忆之注连/1.webp",
+            },
+            "Plume of Death": {
+                name: "Shaft of Remembrance",
+                displayName: "思忆之矢",
+                image: "追忆之注连/2.webp",
+            },
+            "Sands of Eon": {
+                name: "Morning Dew's Moment",
+                displayName: "朝露之时",
+                image: "追忆之注连/3.webp",
+            },
+            "Goblet of Eonothem": {
+                name: "Hopeful Heart",
+                displayName: "祈望之心",
+                image: "追忆之注连/4.webp",
+            },
+            "Circlet of Logos": {
+                name: "Capricious Visage",
+                displayName: "无常之面",
+                image: "追忆之注连/5.webp",
+            },
+        },
+    ),
+    DeepwoodMemories: new base.ArtifactSet(
+        "Deepwood Memories", "深林的记忆",
+        ["草套", "深林"],
+        pieces,
+        {
+            "Flower of Life": {
+                name: "Labyrinth Wayfarer",
+                displayName: "迷宫的游人",
+                image: "深林的记忆/1.webp",
+            },
+            "Plume of Death": {
+                name: "Scholar of Vines",
+                displayName: "翠蔓的智者",
+                image: "深林的记忆/2.webp",
+            },
+            "Sands of Eon": {
+                name: "A Time of Insight",
+                displayName: "贤智的定期",
+                image: "深林的记忆/3.webp",
+            },
+            "Goblet of Eonothem": {
+                name: "Lamp of the Lost",
+                displayName: "迷误者之灯",
+                image: "深林的记忆/4.webp",
+            },
+            "Circlet of Logos": {
+                name: "Laurel Coronet",
+                displayName: "月桂的宝冠",
+                image: "深林的记忆/5.webp",
+            },
+        },
+    ),
+    GildedDreams: new base.ArtifactSet(
+        "Gilded Dreams", "饰金之梦",
+        ["饰金"],
+        pieces,
+        {
+            "Flower of Life": {
+                name: "Dreaming Steelbloom",
+                displayName: "梦中的铁花",
+                image: "饰金之梦/1.webp",
+            },
+            "Plume of Death": {
+                name: "Feather of Judgment",
+                displayName: "裁断的翎羽",
+                image: "饰金之梦/2.webp",
+            },
+            "Sands of Eon": {
+                name: "The Sunken Years",
+                displayName: "沉金的岁月",
+                image: "饰金之梦/3.webp",
+            },
+            "Goblet of Eonothem": {
+                name: "Honeyed Final Feast",
+                displayName: "如蜜的终宴",
+                image: "饰金之梦/4.webp",
+            },
+            "Circlet of Logos": {
+                name: "Shadow of the Sand King",
+                displayName: "沙王的投影",
+                image: "饰金之梦/5.webp",
+            },
+        },
+    ),
+    MarechausseeHunter: new base.ArtifactSet(
+        "Marechaussee Hunter", "逐影猎人",
+        ["猎人", "逐影"],
+        pieces,
+        {
+            "Flower of Life": {
+                name: "Hunter's Brooch",
+                displayName: "猎人的胸花",
+                image: "逐影猎人/1.webp",
+            },
+            "Plume of Death": {
+                name: "Masterpiece's Overture",
+                displayName: "杰作的序曲",
+                image: "逐影猎人/2.webp",
+            },
+            "Sands of Eon": {
+                name: "Moment of Judgment",
+                displayName: "裁判的时刻",
+                image: "逐影猎人/3.webp",
+            },
+            "Goblet of Eonothem": {
+                name: "Forgotten Vessel",
+                displayName: "遗忘的容器",
+                image: "逐影猎人/4.webp",
+            },
+            "Circlet of Logos": {
+                name: "Veteran's Visage",
+                displayName: "老兵的容颜",
+                image: "逐影猎人/5.webp",
+            },
+        },
+    ),
+    GoldenTroupe: new base.ArtifactSet(
+        "Golden Troupe", "黄金剧团",
+        ["黄金", "剧团"],
+        pieces,
+        {
+            "Flower of Life": {
+                name: "Golden Song's Variation",
+                displayName: "黄金乐曲的变奏",
+                image: "黄金剧团/1.webp",
+            },
+            "Plume of Death": {
+                name: "Golden Bird's Shedding",
+                displayName: "黄金飞鸟的落羽",
+                image: "黄金剧团/2.webp",
+            },
+            "Sands of Eon": {
+                name: "Golden Era's Prelude",
+                displayName: "黄金时代的先声",
+                image: "黄金剧团/3.webp",
+            },
+            "Goblet of Eonothem": {
+                name: "Golden Night's Bustle",
+                displayName: "黄金之夜的喧嚣",
+                image: "黄金剧团/4.webp",
+            },
+            "Circlet of Logos": {
+                name: "Golden Troupe's Reward",
+                displayName: "黄金剧团的奖赏",
+                image: "黄金剧团/5.webp",
+            },
+        },
+    ),
 };
 
-let GenshinArtifactSetsAlt_ = {};
+let GenshinArtifactSetsAlt_ = lodash.clone(GenshinArtifactSets);
 Object.keys(GenshinArtifactSets).forEach(x => {
-    let y: gs.GenshinArtifactSet = Object.create(GenshinArtifactSets[x]);
+    let y: base.ArtifactSet = Object.create(GenshinArtifactSets[x]);
     y.pieceList = piecesAlt;
     GenshinArtifactSetsAlt_[x] = y;
 });
 export const GenshinArtifactSetsAlt = GenshinArtifactSetsAlt_;
 
+
+
+/* ------------------------ Artifact Domain ------------------------ */
+
+export const GenshinArtifactDomains = [
+    new base.ArtifactDomain(
+        "Momiji-Dyed Court", "椛染之庭",
+        ["绝缘本"],
+        new Lottery<base.ArtifactSet>([
+            GenshinArtifactSets.EmblemOfSeveredFate,
+            GenshinArtifactSets.ShimenawasReminiscence,
+        ])
+    ),
+    new base.ArtifactDomain(
+        "Spire of Solitary Enlightenment", "缘觉塔",
+        ["草本"],
+        new Lottery<base.ArtifactSet>([
+            GenshinArtifactSets.DeepwoodMemories,
+            GenshinArtifactSets.GildedDreams,
+        ])
+    ),
+    new base.ArtifactDomain(
+        "Denouement of Sin", "罪祸的终末",
+        ["猎人本"],
+        new Lottery<base.ArtifactSet>([
+            GenshinArtifactSets.MarechausseeHunter,
+            GenshinArtifactSets.GoldenTroupe,
+        ])
+    ),
+];
+
+export const GenshinArtifactDomainsAlt = [
+    new base.ArtifactDomain(
+        "Momiji-Dyed Court", "椛染之庭",
+        ["绝缘本"],
+        new Lottery<base.ArtifactSet>([
+            GenshinArtifactSetsAlt.EmblemOfSeveredFate,
+            GenshinArtifactSetsAlt.ShimenawasReminiscence,
+        ])
+    ),
+    new base.ArtifactDomain(
+        "Spire of Solitary Enlightenment", "缘觉塔",
+        ["草本"],
+        new Lottery<base.ArtifactSet>([
+            GenshinArtifactSetsAlt.DeepwoodMemories,
+            GenshinArtifactSetsAlt.GildedDreams,
+        ])
+    ),
+    new base.ArtifactDomain(
+        "Denouement of Sin", "罪祸的终末",
+        ["猎人本"],
+        new Lottery<base.ArtifactSet>([
+            GenshinArtifactSetsAlt.MarechausseeHunter,
+            GenshinArtifactSetsAlt.GoldenTroupe,
+        ])
+    ),
+];
