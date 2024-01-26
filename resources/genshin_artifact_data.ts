@@ -289,13 +289,13 @@ export const GenshinArtifactScore_BaseMultipler: gs.GenshinArtifactScoreRule = {
 export const GenshinArtifactScore_TempMultipler: gs.GenshinArtifactScoreRule = { // Noelle
     "CRIT Rate": 1,
     "CRIT Damage": 1,
-    "Elemental Mastery": 0.25,
-    "Energy Recharge": 0.25,
-    "ATK": 0.2,
-    "HP": 0.2,
+    "Elemental Mastery": 0.15,
+    "Energy Recharge": 0.15,
+    "ATK": 0.1,
+    "HP": 0.1,
     "DEF": 0,
-    "FlatATK": 0.2,
-    "FlatHP": 0.2,
+    "FlatATK": 0.05,
+    "FlatHP": 0.05,
     "FlatDEF": 0
 };
 
