@@ -1,36 +1,18 @@
 import lodash from 'lodash';
 import puppeteer from '../../../lib/puppeteer/puppeteer.js';
 
-import * as cpath from '../resources/cpath.js';
 import * as base from './base_artifact.js';
-import Lottery from './lottery.js';
+import * as cpath from '../resources/cpath.js';
+
 import { DisplayModes } from './utils.js';
 
-export class GenshinArtifactPiece extends base.ArtifactPiece {
+export class Genshin_ArtifactPiece extends base.ArtifactPiece<Genshin_ArtifactSet> {
 
-    constructor(
-        name: string,
-        displayName: string,
-        mainStatList: Lottery<base.ArtifactStat>,
-        subStatList: Lottery<base.ArtifactStat>,
-        subStatCount: Lottery<number>
-    ) {
-        super(name, displayName, mainStatList, subStatList, subStatCount);
-        this.upgradeCount = 0;
-    }
-
-    get imagePath(): string {
-        if (!(this.artifactSet)) return null;
-        if (!(this.name in this.artifactSet.pieceData)) return null;
-
-        return cpath.ImagePath + this.artifactSet.pieceData[this.name].image;
-    }
-
-    get level(): number {
+    override get level(): number {
         return 0 + this.upgradeCount * 4;
     }
 
-    rollSubStats() {
+    override rollSubStats() {
         this.subStats = [];
         this.subStatList
             .filter(x => x.name != this.mainStat.name)
@@ -40,7 +22,7 @@ export class GenshinArtifactPiece extends base.ArtifactPiece {
             });
     }
 
-    rollUpgrade() {
+    override rollUpgrade() {
         if (this.upgradeCount >= 5)
             return;
 
@@ -61,7 +43,7 @@ export class GenshinArtifactPiece extends base.ArtifactPiece {
         this.upgradeCount += 1;
     }
 
-    async generateImage(score: number): Promise<string> {
+    override async generateImage(score: number): Promise<string> {
         if (!this.artifactSet)
             return null;
         if (!(this.name in this.artifactSet.pieceData))
@@ -79,9 +61,16 @@ export class GenshinArtifactPiece extends base.ArtifactPiece {
     }
 };
 
+export class Genshin_ArtifactSet extends base.ArtifactSet<Genshin_ArtifactPiece> {
 
-export interface GenshinArtifactScorer {
-    (piece: base.ArtifactPiece): number
 };
 
-export interface GenshinArtifactScoreRule { [stat: string]: number };
+export class Genshin_ArtifactDomain extends base.ArtifactDomain<Genshin_ArtifactPiece, Genshin_ArtifactSet> {
+
+};
+
+export interface Genshin_ArtifactScorer {
+    (piece: Genshin_ArtifactPiece): number
+};
+
+export interface Genshin_ArtifactScoreRule { [stat: string]: number };
