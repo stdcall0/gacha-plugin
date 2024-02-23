@@ -45,7 +45,7 @@ export class StarRail_RelicPiece extends base.ArtifactPiece {
         let res = `${this.displayName} ${this.artifactSet.pieceData[this.name].displayName}\n\n`;
         res += `${this.mainStat.displayName} ${this.mainStat.displayValue}\n\n`;
         this.subStats.forEach(subStat => res += `${subStat.displayName} ${subStat.displayValue}\n`);
-        return res;
+        return res.trimEnd();
     }
     async generateImage(score) {
         // TODO: generate Artifact Image for Star Rail

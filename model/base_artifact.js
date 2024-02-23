@@ -101,6 +101,7 @@ export class ArtifactPiece {
         this.subStatCount = subStatCount;
         this.mainStat = null;
         this.subStats = [];
+        this.upgradeCount = 0;
     }
     get imagePath() {
         if (!(this.artifactSet))
