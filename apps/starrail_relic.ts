@@ -21,11 +21,11 @@ export class StarRail_RelicPlugin extends plugin {
             priority: '98',
             rule: [
                 {
-                    reg: '^\\**刷遗器.*$',  // 刷遗器量子20
+                    reg: '^#*刷遗器.*$',  // 刷遗器量子20
                     fnc: 'generateRelic'
                 },
                 {
-                    reg: '^\\**(强化|升)遗器(4|8|16|20)?$',
+                    reg: '^#*(强化|升)遗器(4|8|16|20)?$',
                     fnc: 'upgradeRelic'
                 }
             ]
@@ -34,7 +34,7 @@ export class StarRail_RelicPlugin extends plugin {
 
     async generateRelic() {
         let inst: string = this.e.msg;
-        inst = inst.replace("刷遗器", "").replace("*", "").replace("次", "").trim();
+        inst = inst.replace("刷遗器", "").replace("#", "").replace("次", "").trim();
 
         let s_domain = "";
         let s_time = "";

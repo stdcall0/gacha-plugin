@@ -60,7 +60,7 @@ export class StarRail_RelicPiece extends base.ArtifactPiece<StarRail_RelicSet> {
             res += `${subStat.displayName} ${subStat.displayValue}\n`
         );
 
-        return res;
+        return res.trimEnd();
     }
 
     override async generateImage(score: number): Promise<string> {
