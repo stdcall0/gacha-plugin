@@ -1,4 +1,4 @@
-import lodash from 'lodash';
+import * as cpath from '../resources/cpath.js';
 export class ArtifactStat {
     constructor(name, displayName, displayMode) {
         this.name = name;
@@ -9,8 +9,6 @@ export class ArtifactStat {
     get displayValue() {
         return this.displayMode(this.value);
     }
-    rollBase() { }
-    rollUpgrade() { }
     instance() {
         let stat = Object.create(this);
         stat.rollBase();
@@ -39,9 +37,41 @@ export class ArtifactStatConst extends ArtifactStat {
     }
     rollUpgrade() {
         this.value = this.upgradeValues[this.upgradeCount];
-        this.upgradeCount += 1;
-        if (this.upgradeCount == this.upgradeValues.length)
-            this.upgradeCount = 0;
+        if (this.upgradeCount < this.upgradeValues.length)
+            this.upgradeCount += 1;
+    }
+}
+;
+export class ArtifactStatIncrease extends ArtifactStat {
+    constructor(name, displayName, baseValue, upgradeValue, displayMode) {
+        super(name, displayName, displayMode);
+        this.name = name;
+        this.displayName = displayName;
+        this.baseValue = baseValue;
+        this.upgradeValue = upgradeValue;
+        this.displayMode = displayMode;
+    }
+    rollBase() {
+        this.value = this.baseValue;
+    }
+    rollUpgrade() {
+        this.value += this.upgradeValue;
+    }
+}
+;
+export class ArtifactStatRandomS extends ArtifactStat {
+    constructor(name, displayName, values, displayMode) {
+        super(name, displayName, displayMode);
+        this.name = name;
+        this.displayName = displayName;
+        this.values = values;
+        this.displayMode = displayMode;
+    }
+    rollBase() {
+        this.value = this.values.choice();
+    }
+    rollUpgrade() {
+        this.value += this.values.choice();
     }
 }
 ;
@@ -72,8 +102,12 @@ export class ArtifactPiece {
         this.mainStat = null;
         this.subStats = [];
     }
-    get level() {
-        return 0;
+    get imagePath() {
+        if (!(this.artifactSet))
+            return null;
+        if (!(this.name in this.artifactSet.pieceData))
+            return null;
+        return cpath.ImagePath + this.artifactSet.pieceData[this.name].image;
     }
     rollMainStat() {
         this.mainStat = this.mainStatList.choice().instance();
@@ -83,18 +117,6 @@ export class ArtifactPiece {
         this.subStatList.sample(this.subStatCount.choice()).forEach(x => {
             this.subStats.push(x.instance());
         });
-    }
-    rollUpgrade() {
-        if (this.mainStat) {
-            this.mainStat.rollUpgrade();
-        }
-        if (this.subStats) {
-            let l = lodash.random(0, this.subStats.length - 1);
-            this.subStats[l].rollUpgrade();
-        }
-    }
-    async generateImage(t) {
-        return null;
     }
     get setName() {
         if (this.artifactSet && this.name in this.artifactSet.pieceData)

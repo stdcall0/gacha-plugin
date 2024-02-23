@@ -2,13 +2,12 @@
 import plugin from '../../../lib/plugins/plugin.js';
 import common from '../../../lib/common/common.js';
 import { DisplayModes } from '../model/utils.js';
-import { GenshinArtifactScorer } from '../resources/genshin_artifact_data.js';
-import { GenshinArtifactDomains } from '../resources/genshin_artifact_data.js';
-import { GenshinArtifactDomainsAlt } from '../resources/genshin_artifact_data.js';
+import { Genshin_ArtifactScorer as scorer } from '../resources/genshin_artifact_data.js';
+import { Genshin_ArtifactDomains } from '../resources/genshin_artifact_data.js';
+import { Genshin_ArtifactDomainsAlt } from '../resources/genshin_artifact_data.js';
 let throttle = false;
 let lastArtifact = {};
-const scorer = GenshinArtifactScorer;
-export class GenshinArtifactPlugin extends plugin {
+export class Genshin_ArtifactPlugin extends plugin {
     constructor() {
         super({
             name: '刷原神圣遗物',
@@ -44,7 +43,7 @@ export class GenshinArtifactPlugin extends plugin {
         }
         let times = parseInt(s_time);
         let domain = null;
-        GenshinArtifactDomains.forEach(x => {
+        Genshin_ArtifactDomains.forEach(x => {
             if (x.check(s_domain))
                 domain = x;
         });
@@ -66,7 +65,7 @@ export class GenshinArtifactPlugin extends plugin {
         }
         let times = parseInt(s_time);
         let domain = null;
-        GenshinArtifactDomainsAlt.forEach(x => {
+        Genshin_ArtifactDomainsAlt.forEach(x => {
             if (x.check(s_domain))
                 domain = x;
         });
@@ -121,7 +120,7 @@ export class GenshinArtifactPlugin extends plugin {
         let times = parseInt(each.replace("强化圣遗物", "").replace("升圣遗物", "")
             .replace("#", "").trim());
         if (times !== times || !([4, 8, 16, 20].includes(times)))
-            times = 0;
+            times = 4;
         let pieces = lastArtifact[this.e.user_id];
         if (!Array.isArray(pieces)) {
             let artifactPiece = pieces;
