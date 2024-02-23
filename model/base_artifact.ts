@@ -125,6 +125,7 @@ export abstract class ArtifactPiece<ArtifactSetType extends ArtifactSet<any>> {
     ) {
         this.mainStat = null;
         this.subStats = [];
+        this.upgradeCount = 0;
     }
 
     abstract get level(): number;
