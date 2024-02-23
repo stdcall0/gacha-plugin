@@ -119,7 +119,7 @@ export const StarRail_RelicPiecesInner = {
 const piecesOuter = new Lottery(lodash.values(StarRail_RelicPiecesOuter));
 const piecesInner = new Lottery(lodash.values(StarRail_RelicPiecesInner));
 export const StarRail_RelicSets = {
-    GeniusOfBrilliantStars: new sr.StarRail_RelicSet("Genius of Brilliant Stars", "繁星璀璨的天才", ["量子", "量子套"], piecesOuter, {
+    GeniusOfBrilliantStars: new sr.StarRail_RelicSet("Genius of Brilliant Stars", "繁星璀璨的天才", ["量子", "量子套"], sr.StarRail_RelicType.Outer, piecesOuter, {
         "Head": {
             name: "Genius's Ultraremote Sensing Visor",
             displayName: "天才的超距遥感",
@@ -140,11 +140,26 @@ export const StarRail_RelicSets = {
             displayName: "天才的引力漫步",
             image: "量子/4.webp",
         },
+    }),
+    RutilantArena: new sr.StarRail_RelicSet("Rutilant Arena", "繁星竞技场", ["繁星", "繁星套"], sr.StarRail_RelicType.Inner, piecesInner, {
+        "Planar Sphere": {
+            name: "Taikiyan Laser Stadium",
+            displayName: "泰科铵的镭射球场",
+            image: "繁星/1.webp",
+        },
+        "Link Rope": {
+            name: "Taikiyan's Arclight Race Track",
+            displayName: "泰科铵的弧光赛道",
+            image: "繁星/2.webp",
+        },
     })
 };
 /* ------------------------ Relic Domain ------------------------ */
 export const StarRail_RelicDomains = [
     new sr.StarRail_RelicDomain("Path of Providence", "睿治之径", ["量子本"], new Lottery([
         StarRail_RelicSets.GeniusOfBrilliantStars,
+    ])),
+    new sr.StarRail_RelicDomain("World 7", "第七世界", [""], new Lottery([
+        StarRail_RelicSets.RutilantArena,
     ])),
 ];
