@@ -42,7 +42,7 @@ export class StarRail_RelicPiece extends base.ArtifactPiece {
             return null;
         if (!(this.name in this.artifactSet.pieceData))
             return null;
-        let res = `${this.displayName} ${this.artifactSet.pieceData[this.name].displayName}\n\n`;
+        let res = `${this.displayName} ${this.artifactSet.pieceData[this.name].displayName}\nLv ${this.level}\n\n`;
         res += `${this.mainStat.displayName} ${this.mainStat.displayValue}\n\n`;
         this.subStats.forEach(subStat => res += `${subStat.displayName} ${subStat.displayValue}\n`);
         return res.trimEnd();
