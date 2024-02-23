@@ -1,6 +1,8 @@
 import lodash from 'lodash';
 import puppeteer from '../../../lib/puppeteer/puppeteer.js';
 
+import Lottery from './lottery.js';
+
 import * as base from './base_artifact.js';
 import * as cpath from '../resources/cpath.js';
 
@@ -84,8 +86,20 @@ export class StarRail_RelicPiece extends base.ArtifactPiece<StarRail_RelicSet> {
     }
 };
 
+export enum StarRail_RelicType {
+    Inner,
+    Outer
+};
 export class StarRail_RelicSet extends base.ArtifactSet<StarRail_RelicPiece> {
 
+    constructor(
+        public name: string,
+        public displayName: string,
+        public aliases: string[],
+        public type: StarRail_RelicType,
+        public pieceList: Lottery<StarRail_RelicPiece>,
+        public pieceData: { [name: string]: base.ArtifactSetPieceData }
+    ) { super(name, displayName, aliases, pieceList, pieceData); }
 };
 
 export class StarRail_RelicDomain extends base.ArtifactDomain<StarRail_RelicPiece, StarRail_RelicSet> {

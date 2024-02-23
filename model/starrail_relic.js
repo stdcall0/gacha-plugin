@@ -65,7 +65,22 @@ export class StarRail_RelicPiece extends base.ArtifactPiece {
     }
 }
 ;
+export var StarRail_RelicType;
+(function (StarRail_RelicType) {
+    StarRail_RelicType[StarRail_RelicType["Inner"] = 0] = "Inner";
+    StarRail_RelicType[StarRail_RelicType["Outer"] = 1] = "Outer";
+})(StarRail_RelicType || (StarRail_RelicType = {}));
+;
 export class StarRail_RelicSet extends base.ArtifactSet {
+    constructor(name, displayName, aliases, type, pieceList, pieceData) {
+        super(name, displayName, aliases, pieceList, pieceData);
+        this.name = name;
+        this.displayName = displayName;
+        this.aliases = aliases;
+        this.type = type;
+        this.pieceList = pieceList;
+        this.pieceData = pieceData;
+    }
 }
 ;
 export class StarRail_RelicDomain extends base.ArtifactDomain {
