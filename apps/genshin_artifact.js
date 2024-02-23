@@ -120,7 +120,7 @@ export class Genshin_ArtifactPlugin extends plugin {
         let times = parseInt(each.replace("强化圣遗物", "").replace("升圣遗物", "")
             .replace("#", "").trim());
         if (times !== times || !([4, 8, 16, 20].includes(times)))
-            times = 4;
+            times = 0;
         let pieces = lastArtifact[this.e.user_id];
         if (!Array.isArray(pieces)) {
             let artifactPiece = pieces;

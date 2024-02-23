@@ -13,11 +13,11 @@ export class StarRail_RelicPlugin extends plugin {
             priority: '98',
             rule: [
                 {
-                    reg: '^\\**刷遗器.*$', // 刷遗器量子20
+                    reg: '^#*刷遗器.*$', // 刷遗器量子20
                     fnc: 'generateRelic'
                 },
                 {
-                    reg: '^\\**(强化|升)遗器(4|8|16|20)?$',
+                    reg: '^#*(强化|升)遗器(4|8|16|20)?$',
                     fnc: 'upgradeRelic'
                 }
             ]
@@ -25,7 +25,7 @@ export class StarRail_RelicPlugin extends plugin {
     }
     async generateRelic() {
         let inst = this.e.msg;
-        inst = inst.replace("刷遗器", "").replace("*", "").replace("次", "").trim();
+        inst = inst.replace("刷遗器", "").replace("#", "").replace("次", "").trim();
         let s_domain = "";
         let s_time = "";
         for (let i = 0; i < inst.length; ++i) {
@@ -86,7 +86,7 @@ export class StarRail_RelicPlugin extends plugin {
         let times = parseInt(each.replace("强化遗器", "").replace("升遗器", "")
             .replace("#", "").trim());
         if (times !== times || !([4, 8, 16, 20].includes(times)))
-            times = 4;
+            times = 0;
         let pieces = lastRelic[this.e.user_id];
         if (!Array.isArray(pieces)) {
             let relicPiece = pieces;
