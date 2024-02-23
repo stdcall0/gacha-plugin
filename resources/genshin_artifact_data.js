@@ -4,7 +4,7 @@ import * as gs from '../model/genshin_artifact.js';
 import Lottery from '../model/lottery.js';
 import { DisplayModes } from '../model/utils.js';
 /* ------------------------ Artifact Stat ------------------------ */
-export const GenshinArtifactMainStat = {
+export const Genshin_ArtifactMainStat = {
     FlatHP: new base.ArtifactStatConst("FlatHP", "生命值", 717, [1530, 2342, 3155, 3967, 4780], DisplayModes.Integer),
     FlatATK: new base.ArtifactStatConst("FlatATK", "攻击力", 47, [100, 152, 205, 258, 311], DisplayModes.Integer),
     HP: new base.ArtifactStatConst("HP", "生命值", 7.0, [14.9, 22.8, 30.8, 38.7, 46.6], DisplayModes.Percentage1D),
@@ -28,7 +28,7 @@ const DEF = new Lottery([5.10, 5.83, 6.56, 7.29]);
 const FlatDEF = new Lottery([16.2, 18.52, 20.83, 23.15]);
 const ElementalMastery = new Lottery([16.32, 18.65, 20.98, 23.31]);
 const EnergyRecharge = new Lottery([4.53, 5.18, 5.83, 6.48]);
-export const GenshinArtifactSubStat = {
+export const Genshin_ArtifactSubStat = {
     CRITRate: new base.ArtifactStatRandom("CRIT Rate", "暴击率", CRITRate, CRITRate, DisplayModes.Percentage1D),
     CRITDamage: new base.ArtifactStatRandom("CRIT Damage", "暴击伤害", CRITDamage, CRITDamage, DisplayModes.Percentage1D),
     ATK: new base.ArtifactStatRandom("ATK", "攻击力", ATK, ATK, DisplayModes.Percentage1D),
@@ -42,30 +42,30 @@ export const GenshinArtifactSubStat = {
 };
 /* ------------------------ Artifact Piece ------------------------ */
 const subStat1 = new Lottery([
-    GenshinArtifactSubStat.FlatHP,
-    GenshinArtifactSubStat.FlatATK,
-    GenshinArtifactSubStat.FlatDEF,
-    GenshinArtifactSubStat.HP,
-    GenshinArtifactSubStat.ATK,
-    GenshinArtifactSubStat.DEF,
-    GenshinArtifactSubStat.EnergyRecharge,
-    GenshinArtifactSubStat.ElementalMastery,
-    GenshinArtifactSubStat.CRITRate,
-    GenshinArtifactSubStat.CRITDamage,
+    Genshin_ArtifactSubStat.FlatHP,
+    Genshin_ArtifactSubStat.FlatATK,
+    Genshin_ArtifactSubStat.FlatDEF,
+    Genshin_ArtifactSubStat.HP,
+    Genshin_ArtifactSubStat.ATK,
+    Genshin_ArtifactSubStat.DEF,
+    Genshin_ArtifactSubStat.EnergyRecharge,
+    Genshin_ArtifactSubStat.ElementalMastery,
+    Genshin_ArtifactSubStat.CRITRate,
+    Genshin_ArtifactSubStat.CRITDamage,
 ], [
     15.79, 15.79, 15.79, 10.53, 10.53, 10.53, 10.53, 10.53, 7.89, 7.89
 ]);
 const subStat2 = new Lottery([
-    GenshinArtifactSubStat.FlatHP,
-    GenshinArtifactSubStat.FlatATK,
-    GenshinArtifactSubStat.FlatDEF,
-    GenshinArtifactSubStat.HP,
-    GenshinArtifactSubStat.ATK,
-    GenshinArtifactSubStat.DEF,
-    GenshinArtifactSubStat.EnergyRecharge,
-    GenshinArtifactSubStat.ElementalMastery,
-    GenshinArtifactSubStat.CRITRate,
-    GenshinArtifactSubStat.CRITDamage,
+    Genshin_ArtifactSubStat.FlatHP,
+    Genshin_ArtifactSubStat.FlatATK,
+    Genshin_ArtifactSubStat.FlatDEF,
+    Genshin_ArtifactSubStat.HP,
+    Genshin_ArtifactSubStat.ATK,
+    Genshin_ArtifactSubStat.DEF,
+    Genshin_ArtifactSubStat.EnergyRecharge,
+    Genshin_ArtifactSubStat.ElementalMastery,
+    Genshin_ArtifactSubStat.CRITRate,
+    Genshin_ArtifactSubStat.CRITDamage,
 ], [
     15.00, 15.00, 10.00, 10.00, 10.00, 10.00, 10.00, 10.00, 7.50, 7.50
 ]);
@@ -80,53 +80,53 @@ const subCountAlt = new Lottery(// Crafting Table, BOSS drop
 ], [
     2, 1
 ]);
-export const GenshinArtifactPieces = {
-    FlowerOfLife: new gs.GenshinArtifactPiece("Flower of Life", "生之花", new Lottery([GenshinArtifactMainStat.FlatHP]), subStat1, subCount),
-    PlumeOfDeath: new gs.GenshinArtifactPiece("Plume of Death", "死之羽", new Lottery([GenshinArtifactMainStat.FlatATK]), subStat1, subCount),
-    SandsOfEon: new gs.GenshinArtifactPiece("Sands of Eon", "时之沙", new Lottery([
-        GenshinArtifactMainStat.HP,
-        GenshinArtifactMainStat.ATK,
-        GenshinArtifactMainStat.DEF,
-        GenshinArtifactMainStat.EnergyRecharge,
-        GenshinArtifactMainStat.ElementMastery
+export const Genshin_ArtifactPieces = {
+    FlowerOfLife: new gs.Genshin_ArtifactPiece("Flower of Life", "生之花", new Lottery([Genshin_ArtifactMainStat.FlatHP]), subStat1, subCount),
+    PlumeOfDeath: new gs.Genshin_ArtifactPiece("Plume of Death", "死之羽", new Lottery([Genshin_ArtifactMainStat.FlatATK]), subStat1, subCount),
+    SandsOfEon: new gs.Genshin_ArtifactPiece("Sands of Eon", "时之沙", new Lottery([
+        Genshin_ArtifactMainStat.HP,
+        Genshin_ArtifactMainStat.ATK,
+        Genshin_ArtifactMainStat.DEF,
+        Genshin_ArtifactMainStat.EnergyRecharge,
+        Genshin_ArtifactMainStat.ElementMastery
     ], [
         26.68, 26.66, 26.66, 10.00, 10.00
     ]), subStat2, subCount),
-    GobletOfEonothem: new gs.GenshinArtifactPiece("Goblet of Eonothem", "空之杯", new Lottery([
-        GenshinArtifactMainStat.HP,
-        GenshinArtifactMainStat.ATK,
-        GenshinArtifactMainStat.DEF,
-        GenshinArtifactMainStat.ElementalDMGBonus.alterName("Pyro DMG Bonus", "火元素伤害加成"),
-        GenshinArtifactMainStat.ElementalDMGBonus.alterName("Electro DMG Bonus", "雷元素伤害加成"),
-        GenshinArtifactMainStat.ElementalDMGBonus.alterName("Cryo DMG Bonus", "冰元素伤害加成"),
-        GenshinArtifactMainStat.ElementalDMGBonus.alterName("Hydro DMG Bonus", "水元素伤害加成"),
-        GenshinArtifactMainStat.ElementalDMGBonus.alterName("Anemo DMG Bonus", "风元素伤害加成"),
-        GenshinArtifactMainStat.ElementalDMGBonus.alterName("Geo DMG Bonus", "岩元素伤害加成"),
-        GenshinArtifactMainStat.ElementalDMGBonus.alterName("Dendro DMG Bonus", "草元素伤害加成"),
-        GenshinArtifactMainStat.PhysicalDMGBonus,
-        GenshinArtifactMainStat.ElementMastery,
+    GobletOfEonothem: new gs.Genshin_ArtifactPiece("Goblet of Eonothem", "空之杯", new Lottery([
+        Genshin_ArtifactMainStat.HP,
+        Genshin_ArtifactMainStat.ATK,
+        Genshin_ArtifactMainStat.DEF,
+        Genshin_ArtifactMainStat.ElementalDMGBonus.alterName("Pyro DMG Bonus", "火元素伤害加成"),
+        Genshin_ArtifactMainStat.ElementalDMGBonus.alterName("Electro DMG Bonus", "雷元素伤害加成"),
+        Genshin_ArtifactMainStat.ElementalDMGBonus.alterName("Cryo DMG Bonus", "冰元素伤害加成"),
+        Genshin_ArtifactMainStat.ElementalDMGBonus.alterName("Hydro DMG Bonus", "水元素伤害加成"),
+        Genshin_ArtifactMainStat.ElementalDMGBonus.alterName("Anemo DMG Bonus", "风元素伤害加成"),
+        Genshin_ArtifactMainStat.ElementalDMGBonus.alterName("Geo DMG Bonus", "岩元素伤害加成"),
+        Genshin_ArtifactMainStat.ElementalDMGBonus.alterName("Dendro DMG Bonus", "草元素伤害加成"),
+        Genshin_ArtifactMainStat.PhysicalDMGBonus,
+        Genshin_ArtifactMainStat.ElementMastery,
     ], [
         19.175, 19.175, 19.15, 5, 5, 5, 5, 5, 5, 5, 5, 2.5
     ]), subStat2, subCount),
-    CircletOfLogos: new gs.GenshinArtifactPiece("Circlet of Logos", "理之冠", new Lottery([
-        GenshinArtifactMainStat.HP,
-        GenshinArtifactMainStat.ATK,
-        GenshinArtifactMainStat.DEF,
-        GenshinArtifactMainStat.CRITRate,
-        GenshinArtifactMainStat.CRITDamage,
-        GenshinArtifactMainStat.HealingBonus,
-        GenshinArtifactMainStat.ElementMastery
+    CircletOfLogos: new gs.Genshin_ArtifactPiece("Circlet of Logos", "理之冠", new Lottery([
+        Genshin_ArtifactMainStat.HP,
+        Genshin_ArtifactMainStat.ATK,
+        Genshin_ArtifactMainStat.DEF,
+        Genshin_ArtifactMainStat.CRITRate,
+        Genshin_ArtifactMainStat.CRITDamage,
+        Genshin_ArtifactMainStat.HealingBonus,
+        Genshin_ArtifactMainStat.ElementMastery
     ], [
         22, 22, 22, 10, 10, 10, 4
     ]), subStat2, subCount),
 };
-let GenshinArtifactPiecesAlt_ = {};
-Object.keys(GenshinArtifactPieces).forEach(x => {
-    let y = Object.create(GenshinArtifactPieces[x]);
+let Genshin_ArtifactPiecesAlt_ = {};
+Object.keys(Genshin_ArtifactPieces).forEach(x => {
+    let y = Object.create(Genshin_ArtifactPieces[x]);
     y.subStatCount = subCountAlt;
-    GenshinArtifactPiecesAlt_[x] = y;
+    Genshin_ArtifactPiecesAlt_[x] = y;
 });
-export const GenshinArtifactPiecesAlt = GenshinArtifactPiecesAlt_;
+export const Genshin_ArtifactPiecesAlt = Genshin_ArtifactPiecesAlt_;
 /* ------------------------ Resin Drop ------------------------ */
 export const GenshinOriginalResinDropLottery = new Lottery([
     1, 2
@@ -139,7 +139,7 @@ export const GenshinCondensedResinDropLottery = new Lottery([
     86.49, 100 - 86.49
 ]);
 /* ------------------------ Score Calculation ------------------------ */
-export const GenshinArtifactScore_BaseMultipler = {
+export const Genshin_ArtifactScore_BaseMultipler = {
     "CRIT Rate": 2,
     "CRIT Damage": 1,
     "Elemental Mastery": 0.33,
@@ -151,16 +151,16 @@ export const GenshinArtifactScore_BaseMultipler = {
     "FlatHP": 0.026 * 0.66,
     "FlatDEF": 0.335 * 0.66
 };
-export const GenshinArtifactScore_TempMultipler = {
+export const Genshin_ArtifactScore_TempMultipler = {
     "CRIT Rate": 1,
     "CRIT Damage": 1,
-    "Elemental Mastery": 0.25,
-    "Energy Recharge": 0.25,
-    "ATK": 0.2,
-    "HP": 0.2,
+    "Elemental Mastery": 0.15,
+    "Energy Recharge": 0.15,
+    "ATK": 0.1,
+    "HP": 0.1,
     "DEF": 0,
-    "FlatATK": 0.2,
-    "FlatHP": 0.2,
+    "FlatATK": 0.05,
+    "FlatHP": 0.05,
     "FlatDEF": 0
 };
 const findRule = (stat, rule) => {
@@ -169,22 +169,22 @@ const findRule = (stat, rule) => {
     return 0;
 };
 const spStat = ["CRIT Rate", "CRIT Damage"];
-export const GenshinArtifactScorer = (piece) => {
+export const Genshin_ArtifactScorer = (piece) => {
     let score = 0;
     if (spStat.includes(piece.mainStat.name))
         score = 20;
     piece.subStats.forEach(subStat => {
         score += subStat.value
-            * findRule(subStat, GenshinArtifactScore_BaseMultipler)
-            * findRule(subStat, GenshinArtifactScore_TempMultipler);
+            * findRule(subStat, Genshin_ArtifactScore_BaseMultipler)
+            * findRule(subStat, Genshin_ArtifactScore_TempMultipler);
     });
     return score;
 };
 /* ------------------------ Artifact Set ------------------------ */
-const pieces = new Lottery(lodash.values(GenshinArtifactPieces));
-const piecesAlt = new Lottery(lodash.values(GenshinArtifactPiecesAlt));
-export const GenshinArtifactSets = {
-    EmblemOfSeveredFate: new base.ArtifactSet("Emblem of Severed Fate", "绝缘之旗印", ["绝缘"], pieces, {
+const pieces = new Lottery(lodash.values(Genshin_ArtifactPieces));
+const piecesAlt = new Lottery(lodash.values(Genshin_ArtifactPiecesAlt));
+export const Genshin_ArtifactSets = {
+    EmblemOfSeveredFate: new gs.Genshin_ArtifactSet("Emblem of Severed Fate", "绝缘之旗印", ["绝缘"], pieces, {
         "Flower of Life": {
             name: "Magnificent Tsuba",
             displayName: "明威之镡",
@@ -211,7 +211,7 @@ export const GenshinArtifactSets = {
             image: "绝缘之旗印/5.webp",
         },
     }),
-    ShimenawasReminiscence: new base.ArtifactSet("Shimenawa's Reminiscence", "追忆之注连", ["追忆"], pieces, {
+    ShimenawasReminiscence: new gs.Genshin_ArtifactSet("Shimenawa's Reminiscence", "追忆之注连", ["追忆"], pieces, {
         "Flower of Life": {
             name: "Entangling Bloom",
             displayName: "羁缠之花",
@@ -238,7 +238,7 @@ export const GenshinArtifactSets = {
             image: "追忆之注连/5.webp",
         },
     }),
-    DeepwoodMemories: new base.ArtifactSet("Deepwood Memories", "深林的记忆", ["草套", "深林"], pieces, {
+    DeepwoodMemories: new gs.Genshin_ArtifactSet("Deepwood Memories", "深林的记忆", ["草套", "深林"], pieces, {
         "Flower of Life": {
             name: "Labyrinth Wayfarer",
             displayName: "迷宫的游人",
@@ -265,7 +265,7 @@ export const GenshinArtifactSets = {
             image: "深林的记忆/5.webp",
         },
     }),
-    GildedDreams: new base.ArtifactSet("Gilded Dreams", "饰金之梦", ["饰金"], pieces, {
+    GildedDreams: new gs.Genshin_ArtifactSet("Gilded Dreams", "饰金之梦", ["饰金"], pieces, {
         "Flower of Life": {
             name: "Dreaming Steelbloom",
             displayName: "梦中的铁花",
@@ -292,7 +292,7 @@ export const GenshinArtifactSets = {
             image: "饰金之梦/5.webp",
         },
     }),
-    MarechausseeHunter: new base.ArtifactSet("Marechaussee Hunter", "逐影猎人", ["猎人", "逐影"], pieces, {
+    MarechausseeHunter: new gs.Genshin_ArtifactSet("Marechaussee Hunter", "逐影猎人", ["猎人", "逐影"], pieces, {
         "Flower of Life": {
             name: "Hunter's Brooch",
             displayName: "猎人的胸花",
@@ -319,7 +319,7 @@ export const GenshinArtifactSets = {
             image: "逐影猎人/5.webp",
         },
     }),
-    GoldenTroupe: new base.ArtifactSet("Golden Troupe", "黄金剧团", ["黄金", "剧团"], pieces, {
+    GoldenTroupe: new gs.Genshin_ArtifactSet("Golden Troupe", "黄金剧团", ["黄金", "剧团"], pieces, {
         "Flower of Life": {
             name: "Golden Song's Variation",
             displayName: "黄金乐曲的变奏",
@@ -347,39 +347,39 @@ export const GenshinArtifactSets = {
         },
     }),
 };
-let GenshinArtifactSetsAlt_ = lodash.clone(GenshinArtifactSets);
-Object.keys(GenshinArtifactSets).forEach(x => {
-    let y = Object.create(GenshinArtifactSets[x]);
+let Genshin_ArtifactSetsAlt_ = lodash.clone(Genshin_ArtifactSets);
+Object.keys(Genshin_ArtifactSets).forEach(x => {
+    let y = Object.create(Genshin_ArtifactSets[x]);
     y.pieceList = piecesAlt;
-    GenshinArtifactSetsAlt_[x] = y;
+    Genshin_ArtifactSetsAlt_[x] = y;
 });
-export const GenshinArtifactSetsAlt = GenshinArtifactSetsAlt_;
+export const Genshin_ArtifactSetsAlt = Genshin_ArtifactSetsAlt_;
 /* ------------------------ Artifact Domain ------------------------ */
-export const GenshinArtifactDomains = [
-    new base.ArtifactDomain("Momiji-Dyed Court", "椛染之庭", ["绝缘本"], new Lottery([
-        GenshinArtifactSets.EmblemOfSeveredFate,
-        GenshinArtifactSets.ShimenawasReminiscence,
+export const Genshin_ArtifactDomains = [
+    new gs.Genshin_ArtifactDomain("Momiji-Dyed Court", "椛染之庭", ["绝缘本"], new Lottery([
+        Genshin_ArtifactSets.EmblemOfSeveredFate,
+        Genshin_ArtifactSets.ShimenawasReminiscence,
     ])),
-    new base.ArtifactDomain("Spire of Solitary Enlightenment", "缘觉塔", ["草本"], new Lottery([
-        GenshinArtifactSets.DeepwoodMemories,
-        GenshinArtifactSets.GildedDreams,
+    new gs.Genshin_ArtifactDomain("Spire of Solitary Enlightenment", "缘觉塔", ["草本"], new Lottery([
+        Genshin_ArtifactSets.DeepwoodMemories,
+        Genshin_ArtifactSets.GildedDreams,
     ])),
-    new base.ArtifactDomain("Denouement of Sin", "罪祸的终末", ["猎人本"], new Lottery([
-        GenshinArtifactSets.MarechausseeHunter,
-        GenshinArtifactSets.GoldenTroupe,
+    new gs.Genshin_ArtifactDomain("Denouement of Sin", "罪祸的终末", ["猎人本"], new Lottery([
+        Genshin_ArtifactSets.MarechausseeHunter,
+        Genshin_ArtifactSets.GoldenTroupe,
     ])),
 ];
-export const GenshinArtifactDomainsAlt = [
-    new base.ArtifactDomain("Momiji-Dyed Court", "椛染之庭", ["绝缘本"], new Lottery([
-        GenshinArtifactSetsAlt.EmblemOfSeveredFate,
-        GenshinArtifactSetsAlt.ShimenawasReminiscence,
+export const Genshin_ArtifactDomainsAlt = [
+    new gs.Genshin_ArtifactDomain("Momiji-Dyed Court", "椛染之庭", ["绝缘本"], new Lottery([
+        Genshin_ArtifactSetsAlt.EmblemOfSeveredFate,
+        Genshin_ArtifactSetsAlt.ShimenawasReminiscence,
     ])),
-    new base.ArtifactDomain("Spire of Solitary Enlightenment", "缘觉塔", ["草本"], new Lottery([
-        GenshinArtifactSetsAlt.DeepwoodMemories,
-        GenshinArtifactSetsAlt.GildedDreams,
+    new gs.Genshin_ArtifactDomain("Spire of Solitary Enlightenment", "缘觉塔", ["草本"], new Lottery([
+        Genshin_ArtifactSetsAlt.DeepwoodMemories,
+        Genshin_ArtifactSetsAlt.GildedDreams,
     ])),
-    new base.ArtifactDomain("Denouement of Sin", "罪祸的终末", ["猎人本"], new Lottery([
-        GenshinArtifactSetsAlt.MarechausseeHunter,
-        GenshinArtifactSetsAlt.GoldenTroupe,
+    new gs.Genshin_ArtifactDomain("Denouement of Sin", "罪祸的终末", ["猎人本"], new Lottery([
+        Genshin_ArtifactSetsAlt.MarechausseeHunter,
+        Genshin_ArtifactSetsAlt.GoldenTroupe,
     ])),
 ];
