@@ -4,19 +4,19 @@ import plugin from '../../../lib/plugins/plugin.js';
 import puppeteer from '../../../lib/puppeteer/puppeteer.js';
 import common from '../../../lib/common/common.js';
 
-import { ArtifactPiece, ArtifactDomain } from '../model/base_artifact.js';
 import { DisplayModes } from '../model/utils.js';
-import { GenshinArtifactScorer } from '../resources/genshin_artifact_data.js';
-import { GenshinArtifactDomains } from '../resources/genshin_artifact_data.js';
-import { GenshinArtifactDomainsAlt } from '../resources/genshin_artifact_data.js';
-import { GenshinArtifactPiece } from '../model/genshin_artifact.js';
+
+import { Genshin_ArtifactPiece, Genshin_ArtifactDomain } from '../model/genshin_artifact.js';
+import { Genshin_ArtifactScorer as scorer } from '../resources/genshin_artifact_data.js';
+import { Genshin_ArtifactDomains } from '../resources/genshin_artifact_data.js';
+import { Genshin_ArtifactDomainsAlt } from '../resources/genshin_artifact_data.js';
 
 let throttle: boolean = false;
-let lastArtifact: { [key: string]: ArtifactPiece | ArtifactPiece[] } = {};
 
-const scorer = GenshinArtifactScorer;
+type ArtifactStorage = Genshin_ArtifactPiece | Genshin_ArtifactPiece[];
+let lastArtifact: { [key: string]: ArtifactStorage } = {};
 
-export class GenshinArtifactPlugin extends plugin {
+export class Genshin_ArtifactPlugin extends plugin {
     constructor() {
         super({
             name: '刷原神圣遗物',
@@ -54,9 +54,9 @@ export class GenshinArtifactPlugin extends plugin {
                 s_domain = s_domain + inst[i];
         }
         let times = parseInt(s_time);
-        let domain: ArtifactDomain = null;
+        let domain: Genshin_ArtifactDomain = null;
 
-        GenshinArtifactDomains.forEach(x => {
+        Genshin_ArtifactDomains.forEach(x => {
             if (x.check(s_domain))
                 domain = x;
         });
@@ -81,9 +81,9 @@ export class GenshinArtifactPlugin extends plugin {
                 s_domain = s_domain + inst[i];
         }
         let times = parseInt(s_time);
-        let domain: ArtifactDomain = null;
+        let domain: Genshin_ArtifactDomain = null;
 
-        GenshinArtifactDomainsAlt.forEach(x => {
+        Genshin_ArtifactDomainsAlt.forEach(x => {
             if (x.check(s_domain))
                 domain = x;
         });
@@ -93,7 +93,7 @@ export class GenshinArtifactPlugin extends plugin {
         await this.makeArtifact(times, domain);
     }
 
-    async makeArtifact(times: number, domain: ArtifactDomain) {
+    async makeArtifact(times: number, domain: Genshin_ArtifactDomain) {
         if (throttle) return;
         throttle = true;
 
@@ -104,6 +104,7 @@ export class GenshinArtifactPlugin extends plugin {
     
             const msg = await artifactPiece.generateImage(scorer(artifactPiece));
             await this.reply(msg, false, { at: false, recallMsg: 0 });
+
         } else if (times <= 20) {
             let imgs = [];
             let pieces = domain.rollPieceMulti(times);
@@ -127,7 +128,7 @@ export class GenshinArtifactPlugin extends plugin {
         throttle = false;
     }
 
-    private upgradeTimes(artifactPiece: ArtifactPiece, times: number) {
+    private upgradeTimes(artifactPiece: Genshin_ArtifactPiece, times: number) {
         if (times == 0) {
             artifactPiece.rollUpgrade();
             return;
