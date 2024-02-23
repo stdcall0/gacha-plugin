@@ -9,67 +9,67 @@ import { DisplayModes } from '../model/utils.js';
 export const StarRail_RelicMainStat = {
     FlatHP: new base.ArtifactStatIncrease(
         "FlatHP", "生命值",
-        112.896, 39.5136,
+        112.896, 39.5136 * 3,
         DisplayModes.Integer
     ),
     FlatATK: new base.ArtifactStatIncrease(
         "FlatATK", "攻击力",
-        56.448, 19.7568,
+        56.448, 19.7568 * 3,
         DisplayModes.Integer
     ),
     HP: new base.ArtifactStatIncrease(
         "HP", "生命值",
-        6.9120, 2.4192,
+        6.9120, 2.4192 * 3,
         DisplayModes.Percentage1D
     ),
     ATK: new base.ArtifactStatIncrease(
         "ATK", "攻击力",
-        6.9120, 2.4192,
+        6.9120, 2.4192 * 3,
         DisplayModes.Percentage1D
     ),
     DEF: new base.ArtifactStatIncrease(
         "DEF", "防御力",
-        8.64, 3.024,
+        8.64, 3.024 * 3,
         DisplayModes.Percentage1D
     ),
     SPD: new base.ArtifactStatIncrease(
         "SPD", "速度",
-        4.032, 1.4,
+        4.032, 1.4 * 3,
         DisplayModes.Integer
     ),
     BreakEffect: new base.ArtifactStatIncrease(
         "Break Effect", "击破特攻",
-        10.368,	3.6277,
+        10.368,	3.6277 * 3,
         DisplayModes.Percentage1D
     ),
     EffectHitRate: new base.ArtifactStatIncrease(
         "Effect Hit Rate", "效果命中",
-        6.912, 2.4192,
+        6.912, 2.4192 * 3,
         DisplayModes.Percentage1D
     ),
     EnergyRegenerationRate: new base.ArtifactStatIncrease(
         "Energy Regeneration Rate", "能量恢复效率",
-        3.1104, 1.0886,
+        3.1104, 1.0886 * 3,
         DisplayModes.Percentage1D
     ),
     OutgoingHealingBoost: new base.ArtifactStatIncrease(
         "Outgoing Healing Boost", "治疗量加成",
-        5.5296, 1.9354,
+        5.5296, 1.9354 * 3,
         DisplayModes.Percentage1D
     ),
     DMGBoost: new base.ArtifactStatIncrease(
         "DMG Boost", "属性伤害提高",
-        6.2208, 2.1773,
+        6.2208, 2.1773 * 3,
         DisplayModes.Percentage1D
     ), // requires alterName later
     CRITRate: new base.ArtifactStatIncrease(
         "CRIT Rate", "暴击率",
-        5.184, 1.8144,
+        5.184, 1.8144 * 3,
         DisplayModes.Percentage1D
     ),
     CRITDMG: new base.ArtifactStatIncrease(
         "CRIT DMG", "暴击伤害",
-        10.368, 3.6288,
+        10.368, 3.6288 * 3,
         DisplayModes.Percentage1D
     ),
 };
