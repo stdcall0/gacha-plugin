@@ -6,13 +6,17 @@ import * as cpath from '../resources/cpath.js';
 
 import { DisplayModes } from './utils.js';
 
-export class Genshin_ArtifactPiece extends base.ArtifactPiece<Genshin_ArtifactSet> {
+export class StarRail_RelicPiece extends base.ArtifactPiece<StarRail_RelicSet> {
 
     override get level(): number {
         return 0 + this.upgradeCount * 4;
     }
 
     override rollSubStats() {
+        // This is (almost) the same as Genshin method, but I decided to
+        // seperate it from Genshin's for better extensivity.
+        // Also rings true for rollUpgrade().
+
         this.subStats = [];
         this.subStatList
             .filter(x => x.name != this.mainStat.name)
@@ -49,37 +53,47 @@ export class Genshin_ArtifactPiece extends base.ArtifactPiece<Genshin_ArtifactSe
         if (!(this.name in this.artifactSet.pieceData))
             return null;
 
+        let res: string = `${this.displayName} ${this.artifactSet.pieceData[this.name].displayName}\n\n`;
+        res += `${this.mainStat.displayName} ${this.mainStat.displayValue}\n\n`;
 
+        this.subStats.forEach(subStat =>
+            res += `${subStat.displayName} ${subStat.displayValue}\n`
+        );
+
+        return res;
     }
 
-    override async generateImage(score: number): Promise<string> { 
+    override async generateImage(score: number): Promise<string> {
+        // TODO: generate Artifact Image for Star Rail
+        // Might need to check for relic type (inner & outer)
+
         if (!this.artifactSet)
             return null;
         if (!(this.name in this.artifactSet.pieceData))
             return null;
 
         const data = {
-            tplFile: cpath.HTMLPath + 'genshin_artifact.html',
+            tplFile: cpath.HTMLPath + 'starrail_relic.html',
             pluResPath: cpath.ProcessPath,
             artifactPiece: this,
             artifactScore: DisplayModes.Float1D(score),
             locked: false
         };
 
-        return puppeteer.screenshot("genshin_artifact", data);
+        return puppeteer.screenshot("starrail_relic", data);
     }
 };
 
-export class Genshin_ArtifactSet extends base.ArtifactSet<Genshin_ArtifactPiece> {
+export class StarRail_RelicSet extends base.ArtifactSet<StarRail_RelicPiece> {
 
 };
 
-export class Genshin_ArtifactDomain extends base.ArtifactDomain<Genshin_ArtifactPiece, Genshin_ArtifactSet> {
+export class StarRail_RelicDomain extends base.ArtifactDomain<StarRail_RelicPiece, StarRail_RelicSet> {
 
 };
 
-export interface Genshin_ArtifactScorer {
-    (piece: Genshin_ArtifactPiece): number
+export interface StarRail_RelicScorer {
+    (piece: StarRail_RelicPiece): number
 };
 
-export interface Genshin_ArtifactScoreRule { [stat: string]: number };
+export interface StarRail_RelicScoreRule { [stat: string]: number };

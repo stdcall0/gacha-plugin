@@ -58,6 +58,41 @@ export class ArtifactStatConst extends ArtifactStat {
     }
 };
 
+export class ArtifactStatIncrease extends ArtifactStat {
+    constructor(
+        public name: string,
+        public displayName: string,
+        public baseValue: number,
+        public upgradeValue: number,
+        public displayMode: DisplayMode
+    ) {
+        super(name, displayName, displayMode);
+    }
+
+    override rollBase() {
+        this.value = this.baseValue;
+    }
+    override rollUpgrade() {
+        this.value += this.upgradeValue;
+    }
+};
+
+export class ArtifactStatRandomS extends ArtifactStat {
+    constructor(
+        public name: string,
+        public displayName: string,
+        public values: Lottery<number>,
+        public displayMode: DisplayMode
+    ) { super(name, displayName, displayMode); }
+
+    override rollBase() {
+        this.value = this.values.choice();
+    }
+    override rollUpgrade() {
+        this.value += this.values.choice();
+    }
+};
+
 export class ArtifactStatRandom extends ArtifactStat {
     constructor(
         public name: string,
@@ -113,7 +148,8 @@ export abstract class ArtifactPiece<ArtifactSetType extends ArtifactSet<any>> {
 
     abstract rollUpgrade(): void;
 
-    abstract generateImage(t: any): Promise<string>;
+    abstract generateText(score: number): string;
+    abstract generateImage(score: number): Promise<string>;
 
     get setName(): string {
         if (this.artifactSet && this.name in this.artifactSet.pieceData)
