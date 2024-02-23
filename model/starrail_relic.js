@@ -5,7 +5,7 @@ import * as cpath from '../resources/cpath.js';
 import { DisplayModes } from './utils.js';
 export class StarRail_RelicPiece extends base.ArtifactPiece {
     get level() {
-        return 0 + this.upgradeCount * 4;
+        return 0 + this.upgradeCount * 3;
     }
     rollSubStats() {
         // This is (almost) the same as Genshin method, but I decided to
