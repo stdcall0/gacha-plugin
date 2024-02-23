@@ -2,8 +2,9 @@ import lodash from 'lodash';
 import Lottery from './lottery.js';
 import { DisplayMode } from './utils.js';
 
+import * as cpath from '../resources/cpath.js';
 
-export class ArtifactStat {
+export abstract class ArtifactStat {
     value: number;
 
     constructor(
@@ -16,15 +17,15 @@ export class ArtifactStat {
         return this.displayMode(this.value);
     }
 
-    rollBase(): void { }
-    rollUpgrade(): void { }
+    abstract rollBase(): void;
+    abstract rollUpgrade(): void;
 
-    instance(): ArtifactStat {
+    instance(): this {
         let stat = Object.create(this);
         stat.rollBase();
         return stat;
     }
-    alterName(name: string, displayName: string): ArtifactStat {
+    alterName(name: string, displayName: string): this {
         let stat = Object.create(this);
         stat.name = name;
         stat.displayName = displayName;
@@ -47,14 +48,13 @@ export class ArtifactStatConst extends ArtifactStat {
         this.upgradeCount = 0;
     }
 
-    rollBase() {
+    override rollBase() {
         this.value = this.baseValue;
     }
-    rollUpgrade() {
+    override rollUpgrade() {
         this.value = this.upgradeValues[this.upgradeCount];
-        this.upgradeCount += 1;
-        if (this.upgradeCount == this.upgradeValues.length)
-            this.upgradeCount = 0;
+        if (this.upgradeCount < this.upgradeValues.length)
+            this.upgradeCount += 1;
     }
 };
 
@@ -67,19 +67,19 @@ export class ArtifactStatRandom extends ArtifactStat {
         public displayMode: DisplayMode
     ) { super(name, displayName, displayMode); }
 
-    rollBase() {
+    override rollBase() {
         this.value = this.baseValues.choice();
     }
-    rollUpgrade() {
+    override rollUpgrade() {
         this.value += this.upgradeValues.choice();
     }
 };
 
-export class ArtifactPiece {
+export abstract class ArtifactPiece<ArtifactSetType extends ArtifactSet<any>> {
     mainStat: ArtifactStat;
     subStats: ArtifactStat[];
     upgradeCount: number;
-    artifactSet: ArtifactSet;
+    artifactSet: ArtifactSetType;
 
     constructor(
         public name: string,
@@ -92,8 +92,13 @@ export class ArtifactPiece {
         this.subStats = [];
     }
 
-    get level(): number {
-        return 0;
+    abstract get level(): number;
+
+    get imagePath(): string {
+        if (!(this.artifactSet)) return null;
+        if (!(this.name in this.artifactSet.pieceData)) return null;
+
+        return cpath.ImagePath + this.artifactSet.pieceData[this.name].image;
     }
 
     rollMainStat(): void {
@@ -105,19 +110,10 @@ export class ArtifactPiece {
             this.subStats.push(x.instance());
         });
     }
-    rollUpgrade(): void { // NOTE: this method should be overriden for subStat thingsv                                                                                                                                                                                                                                                                                               
-        if (this.mainStat) {
-            this.mainStat.rollUpgrade();
-        }
-        if (this.subStats) {
-            let l = lodash.random(0, this.subStats.length - 1);
-            this.subStats[l].rollUpgrade();
-        }
-    }
 
-    async generateImage(t: any): Promise<string> {
-        return null
-    }
+    abstract rollUpgrade(): void;
+
+    abstract generateImage(t: any): Promise<string>;
 
     get setName(): string {
         if (this.artifactSet && this.name in this.artifactSet.pieceData)
@@ -130,7 +126,7 @@ export class ArtifactPiece {
         return this.displayName;
     }
 
-    instance(artifactSet: ArtifactSet): ArtifactPiece {
+    instance(artifactSet: ArtifactSetType): this {
         let piece = Object.create(this);
 
         piece.artifactSet = artifactSet;
@@ -140,26 +136,26 @@ export class ArtifactPiece {
     }
 };
 
-export interface ArtifactPieceData {
+export interface ArtifactSetPieceData {
     name: string;
     displayName: string;
     image: string;
 };
 
-export class ArtifactSet {
+export abstract class ArtifactSet<ArtifactPieceType extends ArtifactPiece<any>> {
 
     constructor(
         public name: string,
         public displayName: string,
         public aliases: string[],
-        public pieceList: Lottery<ArtifactPiece>,
-        public pieceData: { [name: string]: ArtifactPieceData }
+        public pieceList: Lottery<ArtifactPieceType>,
+        public pieceData: { [name: string]: ArtifactSetPieceData }
     ) { }
 
-    rollPiece(): ArtifactPiece {
+    rollPiece(): ArtifactPieceType {
         return this.pieceList.choice().instance(this);
     }
-    rollPieceMulti(n: number): ArtifactPiece[] {
+    rollPieceMulti(n: number): ArtifactPieceType[] {
         let res = [];
         this.pieceList.choiceMulti(n).forEach(x => {
             res.push(x.instance(this));
@@ -168,13 +164,15 @@ export class ArtifactSet {
     }
 };
 
-export class ArtifactDomain {
+export abstract class ArtifactDomain<
+    ArtifactPieceType extends ArtifactPiece<ArtifactSetType>,
+    ArtifactSetType extends ArtifactSet<ArtifactPieceType> > {
 
     constructor(
         public name: string,
         public displayName: string,
         public aliases: string[],
-        public setList: Lottery<ArtifactSet>
+        public setList: Lottery<ArtifactSetType>
     ) {
         setList.objList.forEach(set => {
             this.aliases = this.aliases.concat(set.aliases);
@@ -187,10 +185,10 @@ export class ArtifactDomain {
         return this.aliases.includes(s);
     }
 
-    rollPiece(): ArtifactPiece {
+    rollPiece(): ArtifactPieceType {
         return this.setList.choice().rollPiece();
     }
-    rollPieceMulti(n: number): ArtifactPiece[] {
+    rollPieceMulti(n: number): ArtifactPieceType[] {
         let res = [];
         this.setList.choiceMulti(n).forEach(x => {
             res.push(x.rollPiece());
