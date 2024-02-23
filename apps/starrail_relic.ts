@@ -108,7 +108,7 @@ export class StarRail_RelicPlugin extends plugin {
         let times = parseInt(each.replace("强化遗器", "").replace("升遗器", "")
             .replace("#", "").trim());
 
-        if (times !== times || !([4, 8, 16, 20].includes(times))) times = 4;
+        if (times !== times || !([4, 8, 16, 20].includes(times))) times = 0;
 
         let pieces = lastRelic[this.e.user_id];
         if (!Array.isArray(pieces)) {
