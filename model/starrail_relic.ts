@@ -9,7 +9,7 @@ import { DisplayModes } from './utils.js';
 export class StarRail_RelicPiece extends base.ArtifactPiece<StarRail_RelicSet> {
 
     override get level(): number {
-        return 0 + this.upgradeCount * 4;
+        return 0 + this.upgradeCount * 3;
     }
 
     override rollSubStats() {
