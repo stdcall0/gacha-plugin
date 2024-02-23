@@ -33,7 +33,7 @@ export class Genshin_ArtifactPlugin extends plugin {
                     fnc: 'generateArtifactAlt'
                 },
                 {
-                    reg: '^#*(强化|升)圣遗物(4|8|16|20)?$',
+                    reg: '^#*(强化|升)圣遗物(4|8|12|16|20)?$',
                     fnc: 'upgradeArtifact'
                 }
             ]
@@ -150,7 +150,7 @@ export class Genshin_ArtifactPlugin extends plugin {
         let times = parseInt(each.replace("强化圣遗物", "").replace("升圣遗物", "")
             .replace("#", "").trim());
 
-        if (times !== times || !([4, 8, 16, 20].includes(times))) times = 0;
+        if (times !== times || !([4, 8, 12, 16, 20].includes(times))) times = 0;
 
         let pieces = lastArtifact[this.e.user_id];
         if (!Array.isArray(pieces)) {
