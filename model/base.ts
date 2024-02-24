@@ -131,7 +131,7 @@ export abstract class Piece<SetType extends Set<any>> {
         if (!(this.parentSet)) return null;
         if (!(this.name in this.parentSet.pieceData)) return null;
 
-        return Path.Image + this.parentSet.pieceData[this.name].image;
+        return Path.Image + "/" + this.parentSet.pieceData[this.name].image;
     }
 
     rollMainStat(): void {

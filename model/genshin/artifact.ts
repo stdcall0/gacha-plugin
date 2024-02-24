@@ -25,7 +25,7 @@ export class Piece extends Base.Piece<Set> {
         if (!this.pieceData) return null;
 
         const data = {
-            tplFile: Path.HTML + 'genshin_artifact.html',
+            tplFile: Path.HTML + '/genshin_artifact.html',
             resPath: Path.Resource,
             htmlPath: Path.HTML,
             artifactPiece: this,
