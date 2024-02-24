@@ -37,10 +37,8 @@ export class Set extends base.Set<Piece> { };
 
 export class Domain extends base.Domain<Piece, Set> { };
 
-/*
-export interface Genshin_ArtifactScorer {
-    (piece: Genshin_ArtifactPiece): number
+export interface Scorer extends base.Scorer {
+    (piece: Piece): number
 };
 
-export interface Genshin_ArtifactScoreRule { [stat: string]: number };
-*/
+export interface ScoreRule extends base.ScoreRule { [stat: string]: number };

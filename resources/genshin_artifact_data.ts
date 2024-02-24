@@ -1,149 +1,140 @@
 import lodash from 'lodash';
-import * as base from '../model/base_artifact.js';
-import * as gs from '../model/genshin_artifact.js';
+
 import Lottery from '../model/lottery.js';
 import { DisplayModes } from '../model/utils.js';
 
+import * as base from '../model/base.js';
+import * as gs from '../model/genshin_artifact.js';
+
+
 /* ------------------------ Artifact Stat ------------------------ */
-export const Genshin_ArtifactMainStat = {
-    FlatHP: new base.ArtifactStatConst(
-        "FlatHP", "生命值",
-        717, [1530, 2342, 3155, 3967, 4780],
-        DisplayModes.Integer
+export const MainStat = {
+    FlatHP: new base.ArrayStat(
+        "FlatHP", "生命值", DisplayModes.Integer,
+        [717, 1530, 2342, 3155, 3967, 4780]
     ),
-    FlatATK: new base.ArtifactStatConst(
-        "FlatATK", "攻击力",
-        47, [100, 152, 205, 258, 311],
-        DisplayModes.Integer
+    FlatATK: new base.ArrayStat(
+        "FlatATK", "攻击力", DisplayModes.Integer,
+        [47, 100, 152, 205, 258, 311]
     ),
-    HP: new base.ArtifactStatConst(
-        "HP", "生命值",
-        7.0, [14.9, 22.8, 30.8, 38.7, 46.6],
-        DisplayModes.Percentage1D
+    HP: new base.ArrayStat(
+        "HP", "生命值", DisplayModes.Percentage1D,
+        [7.0, 14.9, 22.8, 30.8, 38.7, 46.6]
     ),
-    ATK: new base.ArtifactStatConst(
-        "ATK", "攻击力",
-        7.0, [14.9, 22.8, 30.8, 38.7, 46.6],
-        DisplayModes.Percentage1D
+    ATK: new base.ArrayStat(
+        "ATK", "攻击力", DisplayModes.Percentage1D,
+        [7.0, 14.9, 22.8, 30.8, 38.7, 46.6]
     ),
-    DEF: new base.ArtifactStatConst(
-        "DEF", "防御力",
-        8.7, [18.6, 28.6, 38.5, 48.4, 58.3],
-        DisplayModes.Percentage1D
+    DEF: new base.ArrayStat(
+        "DEF", "防御力", DisplayModes.Percentage1D,
+        [8.7, 18.6, 28.6, 38.5, 48.4, 58.3],
     ),
-    ElementMastery: new base.ArtifactStatConst(
-        "Elemental Mastery", "元素精通",
-        28, [60, 91, 123, 155, 187],
-        DisplayModes.Integer
+    ElementMastery: new base.ArrayStat(
+        "Elemental Mastery", "元素精通", DisplayModes.Integer,
+        [28, 60, 91, 123, 155, 187]
     ),
-    EnergyRecharge: new base.ArtifactStatConst(
-        "Energy Recharge", "元素充能效率",
-        7.8, [16.6, 25.4, 34.2, 43.0, 51.8],
-        DisplayModes.Percentage1D
+    EnergyRecharge: new base.ArrayStat(
+        "Energy Recharge", "元素充能效率", DisplayModes.Percentage1D,
+        [7.8, 16.6, 25.4, 34.2, 43.0, 51.8]
     ),
-    ElementalDMGBonus: new base.ArtifactStatConst(
-        "Elemental DMG Bonus", "元素伤害加成",
-        7.0, [14.9, 22.8, 30.8, 38.7, 46.6],
-        DisplayModes.Percentage1D
+    ElementalDMGBonus: new base.ArrayStat(
+        "Elemental DMG Bonus", "元素伤害加成", DisplayModes.Percentage1D,
+        [7.0, 14.9, 22.8, 30.8, 38.7, 46.6]
     ), // requires alterName later
-    PhysicalDMGBonus: new base.ArtifactStatConst(
-        "Physical DMG Bonus", "物理伤害加成",
-        8.7, [18.6, 28.6, 38.5, 48.4, 58.3],
-        DisplayModes.Percentage1D
+    PhysicalDMGBonus: new base.ArrayStat(
+        "Physical DMG Bonus", "物理伤害加成", DisplayModes.Percentage1D,
+        [8.7, 18.6, 28.6, 38.5, 48.4, 58.3]
     ),
-    CRITRate: new base.ArtifactStatConst(
-        "CRIT Rate", "暴击率",
-        4.7, [9.9, 15.2, 20.5, 25.8, 31.1],
-        DisplayModes.Percentage1D
+    CRITRate: new base.ArrayStat(
+        "CRIT Rate", "暴击率", DisplayModes.Percentage1D,
+        [4.7, 9.9, 15.2, 20.5, 25.8, 31.1]
     ),
-    CRITDamage: new base.ArtifactStatConst(
-        "CRIT Damage", "暴击伤害",
-        9.3, [19.9, 30.5, 41.0, 51.6, 62.2],
-        DisplayModes.Percentage1D
+    CRITDamage: new base.ArrayStat(
+        "CRIT Damage", "暴击伤害", DisplayModes.Percentage1D,
+        [9.3, 19.9, 30.5, 41.0, 51.6, 62.2]
     ),
-    HealingBonus: new base.ArtifactStatConst(
-        "Healing Bonus", "治疗加成",
-        5.4, [11.5, 17.6, 23.7, 29.8, 35.9],
-        DisplayModes.Percentage1D
+    HealingBonus: new base.ArrayStat(
+        "Healing Bonus", "治疗加成", DisplayModes.Percentage1D,
+        [5.4, 11.5, 17.6, 23.7, 29.8, 35.9]
     ),
 };
 
-const CRITRate = new Lottery<number>([2.70, 3.11, 3.50, 3.89]);
-const CRITDamage = new Lottery<number>([5.44, 6.22, 6.99, 7.77]);
-const ATK = new Lottery<number>([4.08, 4.66, 5.25, 5.83]);
-const FlatATK = new Lottery<number>([13.62, 15.56, 17.51, 19.45]);
-const HP = new Lottery<number>([4.08, 4.66, 5.25, 5.83]);
-const FlatHP = new Lottery<number>([209.13, 239, 268.88, 298.75]);
-const DEF = new Lottery<number>([5.10, 5.83, 6.56, 7.29]);
-const FlatDEF = new Lottery<number>([16.2, 18.52, 20.83, 23.15]);
-const ElementalMastery = new Lottery<number>([16.32, 18.65, 20.98, 23.31]);
-const EnergyRecharge = new Lottery<number>([4.53, 5.18, 5.83, 6.48]);
+const CRITRate = new Lottery([2.70, 3.11, 3.50, 3.89]);
+const CRITDamage = new Lottery([5.44, 6.22, 6.99, 7.77]);
+const ATK = new Lottery([4.08, 4.66, 5.25, 5.83]);
+const FlatATK = new Lottery([13.62, 15.56, 17.51, 19.45]);
+const HP = new Lottery([4.08, 4.66, 5.25, 5.83]);
+const FlatHP = new Lottery([209.13, 239, 268.88, 298.75]);
+const DEF = new Lottery([5.10, 5.83, 6.56, 7.29]);
+const FlatDEF = new Lottery([16.2, 18.52, 20.83, 23.15]);
+const ElementalMastery = new Lottery([16.32, 18.65, 20.98, 23.31]);
+const EnergyRecharge = new Lottery([4.53, 5.18, 5.83, 6.48]);
 
-export const Genshin_ArtifactSubStat = {
-    CRITRate: new base.ArtifactStatRandom(
-        "CRIT Rate", "暴击率", CRITRate, CRITRate, DisplayModes.Percentage1D
+export const SubStat = {
+    CRITRate: new base.RandomStat(
+        "CRIT Rate", "暴击率", DisplayModes.Percentage1D, CRITRate
     ),
-    CRITDamage: new base.ArtifactStatRandom(
-        "CRIT Damage", "暴击伤害", CRITDamage, CRITDamage, DisplayModes.Percentage1D
+    CRITDamage: new base.RandomStat(
+        "CRIT Damage", "暴击伤害", DisplayModes.Percentage1D, CRITDamage
     ),
-    ATK: new base.ArtifactStatRandom(
-        "ATK", "攻击力", ATK, ATK, DisplayModes.Percentage1D
+    ATK: new base.RandomStat(
+        "ATK", "攻击力", DisplayModes.Percentage1D, ATK
     ),
-    FlatATK: new base.ArtifactStatRandom(
-        "FlatATK", "攻击力", FlatATK, FlatATK, DisplayModes.Integer
+    FlatATK: new base.RandomStat(
+        "FlatATK", "攻击力", DisplayModes.Integer, FlatATK
     ),
-    HP: new base.ArtifactStatRandom(
-        "HP", "生命值", HP, HP, DisplayModes.Percentage1D
+    HP: new base.RandomStat(
+        "HP", "生命值", DisplayModes.Percentage1D, HP
     ),
-    FlatHP: new base.ArtifactStatRandom(
-        "FlatHP", "生命值", FlatHP, FlatHP, DisplayModes.Integer
+    FlatHP: new base.RandomStat(
+        "FlatHP", "生命值", DisplayModes.Integer, FlatHP
     ),
-    DEF: new base.ArtifactStatRandom(
-        "DEF", "防御力", DEF, DEF, DisplayModes.Percentage1D
+    DEF: new base.RandomStat(
+        "DEF", "防御力", DisplayModes.Percentage1D, DEF
     ),
-    FlatDEF: new base.ArtifactStatRandom(
-        "FlatDEF", "防御力", FlatDEF, FlatDEF, DisplayModes.Integer
+    FlatDEF: new base.RandomStat(
+        "FlatDEF", "防御力", DisplayModes.Integer, FlatDEF
     ),
-    ElementalMastery: new base.ArtifactStatRandom(
-        "Elemental Mastery", "元素精通", ElementalMastery, ElementalMastery, DisplayModes.Integer
+    ElementalMastery: new base.RandomStat(
+        "Elemental Mastery", "元素精通", DisplayModes.Integer, ElementalMastery
     ),
-    EnergyRecharge: new base.ArtifactStatRandom(
-        "Energy Recharge", "元素充能效率", EnergyRecharge, EnergyRecharge, DisplayModes.Percentage1D
+    EnergyRecharge: new base.RandomStat(
+        "Energy Recharge", "元素充能效率", DisplayModes.Percentage1D, EnergyRecharge
     ),
 };
 
 
 /* ------------------------ Artifact Piece ------------------------ */
 
-const subStat1 = new Lottery<base.ArtifactStat>(
+const subStat1 = new Lottery(
     [
-        Genshin_ArtifactSubStat.FlatHP,
-        Genshin_ArtifactSubStat.FlatATK,
-        Genshin_ArtifactSubStat.FlatDEF,
-        Genshin_ArtifactSubStat.HP,
-        Genshin_ArtifactSubStat.ATK,
-        Genshin_ArtifactSubStat.DEF,
-        Genshin_ArtifactSubStat.EnergyRecharge,
-        Genshin_ArtifactSubStat.ElementalMastery,
-        Genshin_ArtifactSubStat.CRITRate,
-        Genshin_ArtifactSubStat.CRITDamage,
+        SubStat.FlatHP,
+        SubStat.FlatATK,
+        SubStat.FlatDEF,
+        SubStat.HP,
+        SubStat.ATK,
+        SubStat.DEF,
+        SubStat.EnergyRecharge,
+        SubStat.ElementalMastery,
+        SubStat.CRITRate,
+        SubStat.CRITDamage,
     ],
     [
         15.79, 15.79, 15.79, 10.53, 10.53, 10.53, 10.53, 10.53, 7.89, 7.89
     ]
 );
-const subStat2 = new Lottery<base.ArtifactStat>(
+const subStat2 = new Lottery(
     [
-        Genshin_ArtifactSubStat.FlatHP,
-        Genshin_ArtifactSubStat.FlatATK,
-        Genshin_ArtifactSubStat.FlatDEF,
-        Genshin_ArtifactSubStat.HP,
-        Genshin_ArtifactSubStat.ATK,
-        Genshin_ArtifactSubStat.DEF,
-        Genshin_ArtifactSubStat.EnergyRecharge,
-        Genshin_ArtifactSubStat.ElementalMastery,
-        Genshin_ArtifactSubStat.CRITRate,
-        Genshin_ArtifactSubStat.CRITDamage,
+        SubStat.FlatHP,
+        SubStat.FlatATK,
+        SubStat.FlatDEF,
+        SubStat.HP,
+        SubStat.ATK,
+        SubStat.DEF,
+        SubStat.EnergyRecharge,
+        SubStat.ElementalMastery,
+        SubStat.CRITRate,
+        SubStat.CRITDamage,
     ],
     [
         15.00, 15.00, 10.00, 10.00, 10.00, 10.00, 10.00, 10.00, 7.50, 7.50
@@ -167,26 +158,26 @@ const subCountAlt = new Lottery<number>( // Crafting Table, BOSS drop
 );
 
 
-export const Genshin_ArtifactPieces = {
-    FlowerOfLife: new gs.Genshin_ArtifactPiece(
+export const Pieces = {
+    FlowerOfLife: new gs.Piece(
         "Flower of Life", "生之花",
-        new Lottery<base.ArtifactStat>([Genshin_ArtifactMainStat.FlatHP]),
+        new Lottery([MainStat.FlatHP]),
         subStat1, subCount
     ),
-    PlumeOfDeath: new gs.Genshin_ArtifactPiece(
+    PlumeOfDeath: new gs.Piece(
         "Plume of Death", "死之羽",
-        new Lottery<base.ArtifactStat>([Genshin_ArtifactMainStat.FlatATK]),
+        new Lottery([MainStat.FlatATK]),
         subStat1, subCount
     ),
-    SandsOfEon: new gs.Genshin_ArtifactPiece(
+    SandsOfEon: new gs.Piece(
         "Sands of Eon", "时之沙",
-        new Lottery<base.ArtifactStat>(
+        new Lottery(
             [
-                Genshin_ArtifactMainStat.HP,
-                Genshin_ArtifactMainStat.ATK,
-                Genshin_ArtifactMainStat.DEF,
-                Genshin_ArtifactMainStat.EnergyRecharge,
-                Genshin_ArtifactMainStat.ElementMastery
+                MainStat.HP,
+                MainStat.ATK,
+                MainStat.DEF,
+                MainStat.EnergyRecharge,
+                MainStat.ElementMastery
             ],
             [
                 26.68, 26.66, 26.66, 10.00, 10.00
@@ -194,22 +185,22 @@ export const Genshin_ArtifactPieces = {
         ),
         subStat2, subCount
     ),
-    GobletOfEonothem: new gs.Genshin_ArtifactPiece(
+    GobletOfEonothem: new gs.Piece(
         "Goblet of Eonothem", "空之杯",
-        new Lottery<base.ArtifactStat>(
+        new Lottery(
             [
-                Genshin_ArtifactMainStat.HP,
-                Genshin_ArtifactMainStat.ATK,
-                Genshin_ArtifactMainStat.DEF,
-                Genshin_ArtifactMainStat.ElementalDMGBonus.alterName("Pyro DMG Bonus", "火元素伤害加成"),
-                Genshin_ArtifactMainStat.ElementalDMGBonus.alterName("Electro DMG Bonus", "雷元素伤害加成"),
-                Genshin_ArtifactMainStat.ElementalDMGBonus.alterName("Cryo DMG Bonus", "冰元素伤害加成"),
-                Genshin_ArtifactMainStat.ElementalDMGBonus.alterName("Hydro DMG Bonus", "水元素伤害加成"),
-                Genshin_ArtifactMainStat.ElementalDMGBonus.alterName("Anemo DMG Bonus", "风元素伤害加成"),
-                Genshin_ArtifactMainStat.ElementalDMGBonus.alterName("Geo DMG Bonus", "岩元素伤害加成"),
-                Genshin_ArtifactMainStat.ElementalDMGBonus.alterName("Dendro DMG Bonus", "草元素伤害加成"),
-                Genshin_ArtifactMainStat.PhysicalDMGBonus,
-                Genshin_ArtifactMainStat.ElementMastery,
+                MainStat.HP,
+                MainStat.ATK,
+                MainStat.DEF,
+                MainStat.ElementalDMGBonus.alterName("Pyro DMG Bonus", "火元素伤害加成"),
+                MainStat.ElementalDMGBonus.alterName("Electro DMG Bonus", "雷元素伤害加成"),
+                MainStat.ElementalDMGBonus.alterName("Cryo DMG Bonus", "冰元素伤害加成"),
+                MainStat.ElementalDMGBonus.alterName("Hydro DMG Bonus", "水元素伤害加成"),
+                MainStat.ElementalDMGBonus.alterName("Anemo DMG Bonus", "风元素伤害加成"),
+                MainStat.ElementalDMGBonus.alterName("Geo DMG Bonus", "岩元素伤害加成"),
+                MainStat.ElementalDMGBonus.alterName("Dendro DMG Bonus", "草元素伤害加成"),
+                MainStat.PhysicalDMGBonus,
+                MainStat.ElementMastery,
             ],
             [
                 19.175, 19.175, 19.15, 5,5,5,5,5,5,5,5, 2.5
@@ -217,17 +208,17 @@ export const Genshin_ArtifactPieces = {
         ),
         subStat2, subCount
     ),
-    CircletOfLogos: new gs.Genshin_ArtifactPiece(
+    CircletOfLogos: new gs.Piece(
         "Circlet of Logos", "理之冠",
-        new Lottery<base.ArtifactStat>(
+        new Lottery(
             [
-                Genshin_ArtifactMainStat.HP,
-                Genshin_ArtifactMainStat.ATK,
-                Genshin_ArtifactMainStat.DEF,
-                Genshin_ArtifactMainStat.CRITRate,
-                Genshin_ArtifactMainStat.CRITDamage,
-                Genshin_ArtifactMainStat.HealingBonus,
-                Genshin_ArtifactMainStat.ElementMastery
+                MainStat.HP,
+                MainStat.ATK,
+                MainStat.DEF,
+                MainStat.CRITRate,
+                MainStat.CRITDamage,
+                MainStat.HealingBonus,
+                MainStat.ElementMastery
             ],
             [
                 22, 22, 22, 10, 10, 10, 4
@@ -237,19 +228,19 @@ export const Genshin_ArtifactPieces = {
     ),
 };
 
-let Genshin_ArtifactPiecesAlt_ = {};
-Object.keys(Genshin_ArtifactPieces).forEach(x => {
-    let y: gs.Genshin_ArtifactPiece = Object.create(Genshin_ArtifactPieces[x]);
+let piecesAlt_ = {};
+Object.keys(Pieces).forEach(x => {
+    let y: gs.Piece = Object.create(Pieces[x]);
     y.subStatCount = subCountAlt;
-    Genshin_ArtifactPiecesAlt_[x] = y;
+    piecesAlt_[x] = y;
 });
-export const Genshin_ArtifactPiecesAlt = Genshin_ArtifactPiecesAlt_;
+export const PiecesAlt = piecesAlt_;
 
 
 
 /* ------------------------ Resin Drop ------------------------ */
 
-export const GenshinOriginalResinDropLottery = new Lottery<number>(
+export const OriginalResinDrop = new Lottery(
     [
         1, 2
     ],
@@ -258,7 +249,7 @@ export const GenshinOriginalResinDropLottery = new Lottery<number>(
     ]
 );
 
-export const GenshinCondensedResinDropLottery = new Lottery<number>(
+export const CondensedResinDrop = new Lottery(
     [
         2, 3
     ],
@@ -269,11 +260,10 @@ export const GenshinCondensedResinDropLottery = new Lottery<number>(
 
 
 
-
 /* ------------------------ Score Calculation ------------------------ */
 
 
-export const Genshin_ArtifactScore_BaseMultipler: gs.Genshin_ArtifactScoreRule = {
+const BaseScoreMultipler: gs.ScoreRule = {
     "CRIT Rate": 2,
     "CRIT Damage": 1,
     "Elemental Mastery": 0.33,
@@ -286,7 +276,7 @@ export const Genshin_ArtifactScore_BaseMultipler: gs.Genshin_ArtifactScoreRule =
     "FlatDEF": 0.335 * 0.66
 };
 
-export const Genshin_ArtifactScore_TempMultipler: gs.Genshin_ArtifactScoreRule = {
+const TempScoreMultipler: gs.ScoreRule = {
     "CRIT Rate": 1,
     "CRIT Damage": 1,
     "Elemental Mastery": 0.15,
@@ -299,21 +289,21 @@ export const Genshin_ArtifactScore_TempMultipler: gs.Genshin_ArtifactScoreRule =
     "FlatDEF": 0
 };
 
-const findRule = (stat: base.ArtifactStat, rule: gs.Genshin_ArtifactScoreRule): number => {
+const findRule = (stat: base.Stat, rule: gs.ScoreRule): number => {
     if (stat.name in rule) return rule[stat.name];
     return 0;
 };
 
 const spStat = ["CRIT Rate", "CRIT Damage"];
 
-export const Genshin_ArtifactScorer: gs.Genshin_ArtifactScorer =
-    (piece) => {
+export const Scorer: gs.Scorer =
+    (piece: gs.Piece) => {
         let score = 0;
         if (spStat.includes(piece.mainStat.name)) score = 20;
         piece.subStats.forEach(subStat => {
             score += subStat.value
-                * findRule(subStat, Genshin_ArtifactScore_BaseMultipler)
-                * findRule(subStat, Genshin_ArtifactScore_TempMultipler);
+                * findRule(subStat, BaseScoreMultipler)
+                * findRule(subStat, TempScoreMultipler);
         });
         return score;
     };
@@ -322,11 +312,11 @@ export const Genshin_ArtifactScorer: gs.Genshin_ArtifactScorer =
 
 /* ------------------------ Artifact Set ------------------------ */
 
-const pieces = new Lottery<gs.Genshin_ArtifactPiece>(lodash.values(Genshin_ArtifactPieces));
-const piecesAlt = new Lottery<gs.Genshin_ArtifactPiece>(lodash.values(Genshin_ArtifactPiecesAlt));
+const pieces = new Lottery<gs.Piece>(lodash.values(Pieces));
+const piecesAlt = new Lottery<gs.Piece>(lodash.values(PiecesAlt));
 
-export const Genshin_ArtifactSets = {
-    EmblemOfSeveredFate: new gs.Genshin_ArtifactSet(
+export const Sets = {
+    EmblemOfSeveredFate: new gs.Set(
         "Emblem of Severed Fate", "绝缘之旗印",
         ["绝缘"],
         pieces,
@@ -358,7 +348,7 @@ export const Genshin_ArtifactSets = {
             },
         },
     ),
-    ShimenawasReminiscence: new gs.Genshin_ArtifactSet(
+    ShimenawasReminiscence: new gs.Set(
         "Shimenawa's Reminiscence", "追忆之注连",
         ["追忆"],
         pieces,
@@ -390,7 +380,7 @@ export const Genshin_ArtifactSets = {
             },
         },
     ),
-    DeepwoodMemories: new gs.Genshin_ArtifactSet(
+    DeepwoodMemories: new gs.Set(
         "Deepwood Memories", "深林的记忆",
         ["草套", "深林"],
         pieces,
@@ -422,7 +412,7 @@ export const Genshin_ArtifactSets = {
             },
         },
     ),
-    GildedDreams: new gs.Genshin_ArtifactSet(
+    GildedDreams: new gs.Set(
         "Gilded Dreams", "饰金之梦",
         ["饰金"],
         pieces,
@@ -454,7 +444,7 @@ export const Genshin_ArtifactSets = {
             },
         },
     ),
-    MarechausseeHunter: new gs.Genshin_ArtifactSet(
+    MarechausseeHunter: new gs.Set(
         "Marechaussee Hunter", "逐影猎人",
         ["猎人", "逐影"],
         pieces,
@@ -486,7 +476,7 @@ export const Genshin_ArtifactSets = {
             },
         },
     ),
-    GoldenTroupe: new gs.Genshin_ArtifactSet(
+    GoldenTroupe: new gs.Set(
         "Golden Troupe", "黄金剧团",
         ["黄金", "剧团"],
         pieces,
@@ -520,68 +510,68 @@ export const Genshin_ArtifactSets = {
     ),
 };
 
-let Genshin_ArtifactSetsAlt_ = lodash.clone(Genshin_ArtifactSets);
-Object.keys(Genshin_ArtifactSets).forEach(x => {
-    let y: gs.Genshin_ArtifactSet = Object.create(Genshin_ArtifactSets[x]);
+let setsAlt_ = lodash.clone(Sets);
+Object.keys(Sets).forEach(x => {
+    let y: gs.Set = Object.create(Sets[x]);
     y.pieceList = piecesAlt;
-    Genshin_ArtifactSetsAlt_[x] = y;
+    setsAlt_[x] = y;
 });
-export const Genshin_ArtifactSetsAlt = Genshin_ArtifactSetsAlt_;
+export const SetsAlt = setsAlt_;
 
 
 
 /* ------------------------ Artifact Domain ------------------------ */
 
-export const Genshin_ArtifactDomains = [
-    new gs.Genshin_ArtifactDomain(
+export const Domains = [
+    new gs.Domain(
         "Momiji-Dyed Court", "椛染之庭",
         ["绝缘本"],
-        new Lottery<gs.Genshin_ArtifactSet>([
-            Genshin_ArtifactSets.EmblemOfSeveredFate,
-            Genshin_ArtifactSets.ShimenawasReminiscence,
+        new Lottery([
+            Sets.EmblemOfSeveredFate,
+            Sets.ShimenawasReminiscence,
         ])
     ),
-    new gs.Genshin_ArtifactDomain(
+    new gs.Domain(
         "Spire of Solitary Enlightenment", "缘觉塔",
         ["草本"],
-        new Lottery<gs.Genshin_ArtifactSet>([
-            Genshin_ArtifactSets.DeepwoodMemories,
-            Genshin_ArtifactSets.GildedDreams,
+        new Lottery([
+            Sets.DeepwoodMemories,
+            Sets.GildedDreams,
         ])
     ),
-    new gs.Genshin_ArtifactDomain(
+    new gs.Domain(
         "Denouement of Sin", "罪祸的终末",
         ["猎人本"],
-        new Lottery<gs.Genshin_ArtifactSet>([
-            Genshin_ArtifactSets.MarechausseeHunter,
-            Genshin_ArtifactSets.GoldenTroupe,
+        new Lottery([
+            Sets.MarechausseeHunter,
+            Sets.GoldenTroupe,
         ])
     ),
 ];
 
-export const Genshin_ArtifactDomainsAlt = [
-    new gs.Genshin_ArtifactDomain(
+export const DomainsAlt = [
+    new gs.Domain(
         "Momiji-Dyed Court", "椛染之庭",
         ["绝缘本"],
-        new Lottery<gs.Genshin_ArtifactSet>([
-            Genshin_ArtifactSetsAlt.EmblemOfSeveredFate,
-            Genshin_ArtifactSetsAlt.ShimenawasReminiscence,
+        new Lottery([
+            SetsAlt.EmblemOfSeveredFate,
+            SetsAlt.ShimenawasReminiscence,
         ])
     ),
-    new gs.Genshin_ArtifactDomain(
+    new gs.Domain(
         "Spire of Solitary Enlightenment", "缘觉塔",
         ["草本"],
-        new Lottery<gs.Genshin_ArtifactSet>([
-            Genshin_ArtifactSetsAlt.DeepwoodMemories,
-            Genshin_ArtifactSetsAlt.GildedDreams,
+        new Lottery([
+            SetsAlt.DeepwoodMemories,
+            SetsAlt.GildedDreams,
         ])
     ),
-    new gs.Genshin_ArtifactDomain(
+    new gs.Domain(
         "Denouement of Sin", "罪祸的终末",
         ["猎人本"],
-        new Lottery<gs.Genshin_ArtifactSet>([
-            Genshin_ArtifactSetsAlt.MarechausseeHunter,
-            Genshin_ArtifactSetsAlt.GoldenTroupe,
+        new Lottery([
+            SetsAlt.MarechausseeHunter,
+            SetsAlt.GoldenTroupe,
         ])
     ),
 ];
