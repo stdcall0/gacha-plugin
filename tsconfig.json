@@ -14,9 +14,9 @@
       "paths": {
          "#@/*": ["./*"],
          "#gc": ["./components/index.js"],
-         "#gc.models": ["./models/index.js"],
+         "#gc.models": ["./models/index.js"]
       }
    },
    "include": ["**/*"],
-   "exclude": [],
+   "exclude": []
 }
