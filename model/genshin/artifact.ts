@@ -21,6 +21,7 @@ export class Piece extends Base.Piece<Set> {
             tplFile: Path.HTML + 'genshin_artifact.html',
             pluResPath: Path.Process,
             artifactPiece: this,
+            setDisplayName: this.pieceData.displayName,
             artifactScore: DisplayModes.Float1D(score),
             locked: false
         };
