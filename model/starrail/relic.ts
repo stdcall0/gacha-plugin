@@ -12,7 +12,7 @@ export class Piece extends Base.Piece<Set> {
     override generateText(score: number): string {
         if (!this.pieceData) return null;
 
-        let res: string = `${this.displayName} ${this.pieceData.displayName}\nLv. ${this.level}\n\n`;
+        let res: string = `${this.displayName} ${this.pieceData.displayName}\nLv. ${this.level}  |  ${score}\n\n`;
         res += `${this.mainStat.displayName} ${this.mainStat.displayValue}\n\n`;
 
         this.subStats.forEach(subStat =>
@@ -25,6 +25,7 @@ export class Piece extends Base.Piece<Set> {
     override async generateImage(score: number): Promise<string> {
         // TODO: generate Artifact Image for Star Rail
         // Might need to check for relic type (inner & outer)
+        throw new Error("Not Implemented"); // not implemented yet
 
         if (!this.pieceData) return null;
 

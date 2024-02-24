@@ -16,7 +16,7 @@ class PluginClass {
     rule: any;
     e: any;
 
-    reply(msg?: any, quote?: boolean, data?: any): void {};
+    async reply(msg?: any, quote?: boolean, data?: any) {};
     constructor(t: any) {};
 };
 

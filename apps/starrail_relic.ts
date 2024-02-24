@@ -64,15 +64,16 @@ export class SRPlugin extends Plugin {
 
             lastRelic[this.e.user_id] = piece;
     
-            const msg = await piece.generateText(0);
+            const msg = piece.generateText(scorer(piece));
             await this.reply(msg, false, { at: false, recallMsg: 0 });
 
         } else if (times <= 20) {
             let msgs = [];
             let pieces = domain.rollPieceMulti(times);
 
+            pieces.sort((a, b) => scorer(b) - scorer(a));
             for (const piece of pieces)
-                msgs.push(await piece.generateText(0));
+                msgs.push(piece.generateText(scorer(piece)));
 
             lastRelic[this.e.user_id] = pieces;
 
@@ -114,7 +115,7 @@ export class SRPlugin extends Plugin {
             this.upgradeTimes(piece, times);
             lastRelic[this.e.user_id] = piece;
             
-            const msg = await piece.generateText(0);
+            const msg = piece.generateText(scorer(piece));
             await this.reply(msg, false, { at: false, recallMsg: 0 });
         } else {
             let msgs = [];
@@ -122,8 +123,9 @@ export class SRPlugin extends Plugin {
                 this.upgradeTimes(piece, times);
             }
 
+            pieces.sort((a, b) => scorer(b) - scorer(a));
             for (let piece of pieces) {
-                msgs.push(await piece.generateText(0));
+                msgs.push(piece.generateText(scorer(piece)));
             }
             lastRelic[this.e.user_id] = pieces;
 
