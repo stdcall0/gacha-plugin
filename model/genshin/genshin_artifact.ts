@@ -1,12 +1,12 @@
 import lodash from 'lodash';
 
 // @ts-ignore
-import puppeteer from '../../../lib/puppeteer/puppeteer.js';
+import puppeteer from '../../../../lib/puppeteer/puppeteer.js';
 
-import * as base from './base.js';
-import * as cpath from '../resources/cpath.js';
+import * as base from '../base.js';
+import * as cpath from '../cpath.js';
 
-import { DisplayModes } from './utils.js';
+import { DisplayModes } from '../utils.js';
 
 export class Piece extends base.Piece<Set> {
 

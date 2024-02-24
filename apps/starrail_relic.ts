@@ -10,8 +10,9 @@ import common from '../../../lib/common/common.js';
 import * as sr from '../model/starrail_relic.js';
 import * as data from '../resources/starrail_relic_data.js';
 
-let throttle: boolean = false;
+const scorer: sr.Scorer = data.Scorer;
 
+let throttle: boolean = false;
 let lastRelic: { [key: string]: sr.Piece | sr.Piece[] } = {};
 
 export class Plugin extends (plugin as any) {
