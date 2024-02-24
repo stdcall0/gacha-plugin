@@ -36,7 +36,7 @@ const spStat = ["CRIT Rate", "CRIT Damage"];
 export const Scorer: Genshin.Scorer =
     (piece: Genshin.Piece) => {
         let score = 0;
-        if (spStat.includes(piece.mainStat.name)) score = 20;
+        if (spStat.includes(piece.mainStat.name)) score = 12;
         piece.subStats.forEach(subStat => {
             score += subStat.value
                 * findRule(subStat, BaseScoreMultipler)
