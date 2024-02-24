@@ -10,7 +10,7 @@ jobs:
             - name: Checkout project
               uses: actions/checkout@v3
             - name: Build and push
-              uses: alexthemaster/action-build-typescript@v1.3.1
+              uses: stdcall0/action-build-typescript@master
               with:
                 pushToBranch: true
                 branch: 'dist'
