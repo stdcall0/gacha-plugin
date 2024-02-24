@@ -3,6 +3,14 @@
 
 ---
 
+#### Usage
+
+克隆命令：
+
+```bash
+git clone -b dist --single-branch https://github.com/stdcall0/gacha-plugin ./plugins/gacha-plugin
+```
+
 #### To-do List
 将依次增加的功能：
 
