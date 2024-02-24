@@ -1,5 +1,5 @@
-import { Base } from '#gc.model';
 import { DisplayModes, Render, Path } from '#gc';
+import { Base } from '#gc.model';
 export class Piece extends Base.Piece {
     get level() {
         return 0 + this.upgradeCount * 4;
@@ -7,16 +7,19 @@ export class Piece extends Base.Piece {
     generateText(score) {
         if (!this.pieceData)
             return null;
-        // TODO: Genshin Piece Text
+        let res = `${this.displayName} ${this.pieceData.displayName}\nLv. ${this.level}\n\n`;
+        res += `${this.mainStat.displayName} ${this.mainStat.displayValue}\n\n`;
+        this.subStats.forEach(subStat => res += `${subStat.displayName} ${subStat.displayValue}\n`);
+        return res.trimEnd();
     }
     async generateImage(score) {
         if (!this.pieceData)
             return null;
         const data = {
             tplFile: Path.HTML + 'genshin_artifact.html',
-            pluResPath: Path.Process,
+            resPath: Path.Resource,
+            htmlPath: Path.HTML,
             artifactPiece: this,
-            setDisplayName: this.pieceData.displayName,
             artifactScore: DisplayModes.Float1D(score),
             locked: false
         };
