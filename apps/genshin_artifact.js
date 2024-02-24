@@ -1,23 +1,14 @@
 // Genshin Artifact Generation
-
 // @ts-ignore
 import plugin from '../../../lib/plugins/plugin.js';
 // @ts-ignore
-import puppeteer from '../../../lib/puppeteer/puppeteer.js';
-// @ts-ignore
 import common from '../../../lib/common/common.js';
-
 import { DisplayModes } from '../model/utils.js';
-
-import * as gs from '../model/genshin_artifact.js';
 import * as data from '../resources/genshin_artifact_data.js';
-
 const scorer = data.Scorer;
-
-let throttle: boolean = false;
-let lastArtifact: { [key: string]: gs.Piece | gs.Piece[] } = {};
-
-export class Genshin_ArtifactPlugin extends (plugin as any) {
+let throttle = false;
+let lastArtifact = {};
+export class Genshin_ArtifactPlugin extends plugin {
     constructor() {
         super({
             name: '刷原神圣遗物',
@@ -26,11 +17,11 @@ export class Genshin_ArtifactPlugin extends (plugin as any) {
             priority: '98',
             rule: [
                 {
-                    reg: '^#*刷圣遗物.*$',  // 刷圣遗物绝缘20
+                    reg: '^#*刷圣遗物.*$', // 刷圣遗物绝缘20
                     fnc: 'generateArtifact'
                 },
                 {
-                    reg: '^#*(合成|合)圣遗物.*$',  // 合成圣遗物绝缘20
+                    reg: '^#*(合成|合)圣遗物.*$', // 合成圣遗物绝缘20
                     fnc: 'generateArtifactAlt'
                 },
                 {
@@ -40,22 +31,17 @@ export class Genshin_ArtifactPlugin extends (plugin as any) {
             ]
         });
     }
-
     async generateArtifact() {
         await this.generateArtifactM(data.Domains);
     }
-
     async generateArtifactAlt() {
         await this.generateArtifactM(data.DomainsAlt);
     }
-
-    async generateArtifactM(domains: gs.Domain[]) {
-        let inst: string = this.e.msg;
+    async generateArtifactM(domains) {
+        let inst = this.e.msg;
         inst = inst.replace("刷圣遗物", "").replace("#", "").replace("次", "").trim();
-
         let s_domain = "";
         let s_time = "";
-
         for (let i = 0; i < inst.length; ++i) {
             if ("0" <= inst[i] && inst[i] <= "9")
                 s_time = s_time + inst[i];
@@ -63,108 +49,89 @@ export class Genshin_ArtifactPlugin extends (plugin as any) {
                 s_domain = s_domain + inst[i];
         }
         let times = parseInt(s_time);
-        let domain: gs.Domain = null;
-
+        let domain = null;
         domains.forEach(x => {
             if (x.is(s_domain))
                 domain = x;
         });
-
-        if (domain == null) return;
-
+        if (domain == null)
+            return;
         await this.makeArtifact(times, domain);
     }
-
-    async makeArtifact(times: number, domain: gs.Domain) {
-        if (throttle) return;
+    async makeArtifact(times, domain) {
+        if (throttle)
+            return;
         throttle = true;
-
         if (times !== times || times <= 1) {
             let piece = domain.rollPiece();
-
             lastArtifact[this.e.user_id] = piece;
-    
             const msg = await piece.generateImage(scorer(piece));
             await this.reply(msg, false, { at: false, recallMsg: 0 });
-
-        } else if (times <= 20) {
+        }
+        else if (times <= 20) {
             let imgs = [];
             let pieces = domain.rollPieceMulti(times);
-
             pieces.sort((a, b) => scorer(b) - scorer(a));
             for (const piece of pieces)
                 imgs.push(await piece.generateImage(scorer(piece)));
-
             lastArtifact[this.e.user_id] = pieces;
-
-            let scores: number[] = [];
+            let scores = [];
             pieces.forEach(x => scores.push(scorer(x)));
-
             let max = DisplayModes.Float1D(Math.max(...scores));
-            let avg = DisplayModes.Float1D(scores.reduce((a, b) => a+b, 0) / scores.length);
-
+            let avg = DisplayModes.Float1D(scores.reduce((a, b) => a + b, 0) / scores.length);
             const msg = await common.makeForwardMsg(this.e, imgs, `点击查看圣遗物\n最高分: ${max}; 平均分: ${avg}`);
             await this.reply(msg, false, { at: false, recallMsg: 0 });
         }
-
         throttle = false;
     }
-
-    private upgradeTimes(piece: gs.Piece, times: number) {
+    upgradeTimes(piece, times) {
         if (times == 0) {
             piece.rollUpgrade();
             return;
         }
-
         let count = 0;
         while (count <= 5 && piece.level < times) {
             piece.rollUpgrade();
             ++count;
         }
     }
-
     async upgradeArtifact() {
-        if (throttle) return;
-        if (!(this.e.user_id in lastArtifact)) return;
+        if (throttle)
+            return;
+        if (!(this.e.user_id in lastArtifact))
+            return;
         throttle = true;
-
-        let each: string = this.e.msg;
+        let each = this.e.msg;
         let times = parseInt(each.replace("强化圣遗物", "").replace("升圣遗物", "")
             .replace("#", "").trim());
-
-        if (times !== times || !([4, 8, 12, 16, 20].includes(times))) times = 0;
-
+        if (times !== times || !([4, 8, 12, 16, 20].includes(times)))
+            times = 0;
         let pieces = lastArtifact[this.e.user_id];
         if (!Array.isArray(pieces)) {
             let piece = pieces;
-
             this.upgradeTimes(piece, times);
             lastArtifact[this.e.user_id] = piece;
-            
             const msg = await piece.generateImage(scorer(piece));
             await this.reply(msg, false, { at: false, recallMsg: 0 });
-        } else {
+        }
+        else {
             let imgs = [];
             for (let piece of pieces) {
                 this.upgradeTimes(piece, times);
             }
-
             pieces.sort((a, b) => scorer(b) - scorer(a));
             for (let piece of pieces) {
                 imgs.push(await piece.generateImage(scorer(piece)));
             }
             lastArtifact[this.e.user_id] = pieces;
-
-            let scores: number[] = [];
+            let scores = [];
             pieces.forEach(x => scores.push(scorer(x)));
-
             let max = DisplayModes.Float1D(Math.max(...scores));
-            let avg = DisplayModes.Float1D(scores.reduce((a, b) => a+b, 0) / scores.length);
-
+            let avg = DisplayModes.Float1D(scores.reduce((a, b) => a + b, 0) / scores.length);
             const msg = await common.makeForwardMsg(this.e, imgs, `点击查看强化结果\n最高分: ${max}; 平均分: ${avg}`);
             await this.reply(msg, false, { at: false, recallMsg: 0 });
         }
-
         throttle = false;
     }
-};
+}
+;

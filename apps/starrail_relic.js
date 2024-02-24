@@ -1,20 +1,12 @@
 // StarRail Relic Generation
-
 // @ts-ignore
 import plugin from '../../../lib/plugins/plugin.js';
 // @ts-ignore
-import puppeteer from '../../../lib/puppeteer/puppeteer.js';
-// @ts-ignore
 import common from '../../../lib/common/common.js';
-
-import * as sr from '../model/starrail_relic.js';
 import * as data from '../resources/starrail_relic_data.js';
-
-let throttle: boolean = false;
-
-let lastRelic: { [key: string]: sr.Piece | sr.Piece[] } = {};
-
-export class Plugin extends (plugin as any) {
+let throttle = false;
+let lastRelic = {};
+export class Plugin extends plugin {
     constructor() {
         super({
             name: '刷星铁遗器',
@@ -23,7 +15,7 @@ export class Plugin extends (plugin as any) {
             priority: '98',
             rule: [
                 {
-                    reg: '^#*刷遗器.*$',  // 刷遗器量子20
+                    reg: '^#*刷遗器.*$', // 刷遗器量子20
                     fnc: 'generateRelic'
                 },
                 {
@@ -33,14 +25,11 @@ export class Plugin extends (plugin as any) {
             ]
         });
     }
-
     async generateRelic() {
-        let inst: string = this.e.msg;
+        let inst = this.e.msg;
         inst = inst.replace("刷遗器", "").replace("#", "").replace("次", "").trim();
-
         let s_domain = "";
         let s_time = "";
-
         for (let i = 0; i < inst.length; ++i) {
             if ("0" <= inst[i] && inst[i] <= "9")
                 s_time = s_time + inst[i];
@@ -48,94 +37,79 @@ export class Plugin extends (plugin as any) {
                 s_domain = s_domain + inst[i];
         }
         let times = parseInt(s_time);
-        let domain: sr.Domain = null;
-
+        let domain = null;
         data.Domains.forEach(x => {
             if (x.is(s_domain))
                 domain = x;
         });
-
-        if (domain == null) return;
-
+        if (domain == null)
+            return;
         await this.makeRelic(times, domain);
     }
-
-    async makeRelic(times: number, domain: sr.Domain) {
-        if (throttle) return;
+    async makeRelic(times, domain) {
+        if (throttle)
+            return;
         throttle = true;
-
         if (times !== times || times <= 1) {
             let piece = domain.rollPiece();
-
             lastRelic[this.e.user_id] = piece;
-    
             const msg = await piece.generateText(0);
             await this.reply(msg, false, { at: false, recallMsg: 0 });
-
-        } else if (times <= 20) {
+        }
+        else if (times <= 20) {
             let msgs = [];
             let pieces = domain.rollPieceMulti(times);
-
             for (const piece of pieces)
                 msgs.push(await piece.generateText(0));
-
             lastRelic[this.e.user_id] = pieces;
-
             const msg = await common.makeForwardMsg(this.e, msgs, `点击查看遗器`);
             await this.reply(msg, false, { at: false, recallMsg: 0 });
         }
-
         throttle = false;
     }
-
-    private upgradeTimes(piece: sr.Piece, times: number) {
+    upgradeTimes(piece, times) {
         if (times == 0) {
             piece.rollUpgrade();
             return;
         }
-
         let count = 0;
         while (count <= 5 && piece.level < times) {
             piece.rollUpgrade();
             ++count;
         }
     }
-
     async upgradeRelic() {
-        if (throttle) return;
-        if (!(this.e.user_id in lastRelic)) return;
+        if (throttle)
+            return;
+        if (!(this.e.user_id in lastRelic))
+            return;
         throttle = true;
-
-        let each: string = this.e.msg;
+        let each = this.e.msg;
         let times = parseInt(each.replace("强化遗器", "").replace("升遗器", "")
             .replace("#", "").trim());
-
-        if (times !== times || !([3, 6, 9, 12, 15].includes(times))) times = 0;
-
+        if (times !== times || !([3, 6, 9, 12, 15].includes(times)))
+            times = 0;
         let pieces = lastRelic[this.e.user_id];
         if (!Array.isArray(pieces)) {
             let piece = pieces;
-
             this.upgradeTimes(piece, times);
             lastRelic[this.e.user_id] = piece;
-            
             const msg = await piece.generateText(0);
             await this.reply(msg, false, { at: false, recallMsg: 0 });
-        } else {
+        }
+        else {
             let msgs = [];
             for (let piece of pieces) {
                 this.upgradeTimes(piece, times);
             }
-
             for (let piece of pieces) {
                 msgs.push(await piece.generateText(0));
             }
             lastRelic[this.e.user_id] = pieces;
-
             const msg = await common.makeForwardMsg(this.e, msgs, `点击查看强化结果`);
             await this.reply(msg, false, { at: false, recallMsg: 0 });
         }
-
         throttle = false;
     }
-};
+}
+;
