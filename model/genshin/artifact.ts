@@ -1,6 +1,6 @@
 
-import { Base } from '#gc.model';
 import { DisplayModes, Render, Path } from '#gc';
+import { Base } from '#gc.model';
 
 export class Piece extends Base.Piece<Set> {
 
@@ -11,7 +11,14 @@ export class Piece extends Base.Piece<Set> {
     override generateText(score: number): string {
         if (!this.pieceData) return null;
 
-        // TODO: Genshin Piece Text
+        let res: string = `${this.displayName} ${this.pieceData.displayName}\nLv. ${this.level}\n\n`;
+        res += `${this.mainStat.displayName} ${this.mainStat.displayValue}\n\n`;
+
+        this.subStats.forEach(subStat =>
+            res += `${subStat.displayName} ${subStat.displayValue}\n`
+        );
+
+        return res.trimEnd();
     }
 
     override async generateImage(score: number): Promise<string> { 
@@ -19,9 +26,9 @@ export class Piece extends Base.Piece<Set> {
 
         const data = {
             tplFile: Path.HTML + 'genshin_artifact.html',
-            pluResPath: Path.Process,
+            resPath: Path.Resource,
+            htmlPath: Path.HTML,
             artifactPiece: this,
-            setDisplayName: this.pieceData.displayName,
             artifactScore: DisplayModes.Float1D(score),
             locked: false
         };
