@@ -1,48 +1,15 @@
-import lodash from 'lodash';
 import puppeteer from '../../../lib/puppeteer/puppeteer.js';
-import * as base from './base_artifact.js';
+import * as base from './base.js';
 import * as cpath from '../resources/cpath.js';
 import { DisplayModes } from './utils.js';
-export class StarRail_RelicPiece extends base.ArtifactPiece {
+export class Piece extends base.Piece {
     get level() {
         return 0 + this.upgradeCount * 3;
     }
-    rollSubStats() {
-        // This is (almost) the same as Genshin method, but I decided to
-        // seperate it from Genshin's for better extensivity.
-        // Also rings true for rollUpgrade().
-        this.subStats = [];
-        this.subStatList
-            .filter(x => x.name != this.mainStat.name)
-            .sample(this.subStatCount.choice())
-            .forEach(x => {
-            this.subStats.push(x.instance());
-        });
-    }
-    rollUpgrade() {
-        if (this.upgradeCount >= 5)
-            return;
-        this.mainStat.rollUpgrade();
-        if (this.subStats.length < Math.max(...this.subStatCount.objList)) {
-            let names = [this.mainStat.name];
-            this.subStats.forEach(x => names.push(x.name));
-            this.subStats.push(this.subStatList
-                .filter(x => !(names.includes(x.name)))
-                .choice()
-                .instance());
-        }
-        else {
-            let l = lodash.random(0, this.subStats.length - 1);
-            this.subStats[l].rollUpgrade();
-        }
-        this.upgradeCount += 1;
-    }
     generateText(score) {
-        if (!this.artifactSet)
+        if (!this.pieceData)
             return null;
-        if (!(this.name in this.artifactSet.pieceData))
-            return null;
-        let res = `${this.displayName} ${this.artifactSet.pieceData[this.name].displayName}\nLv ${this.level}\n\n`;
+        let res = `${this.displayName} ${this.pieceData.displayName}\nLv. ${this.level}\n\n`;
         res += `${this.mainStat.displayName} ${this.mainStat.displayValue}\n\n`;
         this.subStats.forEach(subStat => res += `${subStat.displayName} ${subStat.displayValue}\n`);
         return res.trimEnd();
@@ -50,9 +17,7 @@ export class StarRail_RelicPiece extends base.ArtifactPiece {
     async generateImage(score) {
         // TODO: generate Artifact Image for Star Rail
         // Might need to check for relic type (inner & outer)
-        if (!this.artifactSet)
-            return null;
-        if (!(this.name in this.artifactSet.pieceData))
+        if (!this.pieceData)
             return null;
         const data = {
             tplFile: cpath.HTMLPath + 'starrail_relic.html',
@@ -65,13 +30,13 @@ export class StarRail_RelicPiece extends base.ArtifactPiece {
     }
 }
 ;
-export var StarRail_RelicType;
-(function (StarRail_RelicType) {
-    StarRail_RelicType[StarRail_RelicType["Inner"] = 0] = "Inner";
-    StarRail_RelicType[StarRail_RelicType["Outer"] = 1] = "Outer";
-})(StarRail_RelicType || (StarRail_RelicType = {}));
+export var RelicType;
+(function (RelicType) {
+    RelicType[RelicType["Inner"] = 0] = "Inner";
+    RelicType[RelicType["Outer"] = 1] = "Outer";
+})(RelicType || (RelicType = {}));
 ;
-export class StarRail_RelicSet extends base.ArtifactSet {
+export class Set extends base.Set {
     constructor(name, displayName, aliases, type, pieceList, pieceData) {
         super(name, displayName, aliases, pieceList, pieceData);
         this.name = name;
@@ -83,7 +48,7 @@ export class StarRail_RelicSet extends base.ArtifactSet {
     }
 }
 ;
-export class StarRail_RelicDomain extends base.ArtifactDomain {
+export class Domain extends base.Domain {
 }
 ;
 ;
