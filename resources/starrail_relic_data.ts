@@ -10,7 +10,7 @@ import * as sr from '../model/starrail_relic.js';
 
 export const MainStat = {
     FlatHP: new base.ConstantStat(
-        "FlatHP", "生命值", DisplayModes.Integer
+        "FlatHP", "生命值", DisplayModes.Integer,
         112.896, 39.5136 * 3
     ),
     FlatATK: new base.ConstantStat(

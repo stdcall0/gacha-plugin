@@ -4,15 +4,14 @@ import plugin from '../../../lib/plugins/plugin.js';
 import puppeteer from '../../../lib/puppeteer/puppeteer.js';
 import common from '../../../lib/common/common.js';
 
-import { StarRail_RelicPiece, StarRail_RelicDomain } from '../model/starrail_relic.js';
-import { StarRail_RelicDomains } from '../resources/starrail_relic_data.js';
+import * as sr from '../model/starrail_relic.js';
+import * as data from '../resources/starrail_relic_data.js';
 
 let throttle: boolean = false;
 
-type RelicStorage = StarRail_RelicPiece | StarRail_RelicPiece[];
-let lastRelic: { [key: string]: RelicStorage } = {};
+let lastRelic: { [key: string]: sr.Piece | sr.Piece[] } = {};
 
-export class StarRail_RelicPlugin extends plugin {
+export class Plugin extends plugin {
     constructor() {
         super({
             name: '刷星铁遗器',
@@ -46,10 +45,10 @@ export class StarRail_RelicPlugin extends plugin {
                 s_domain = s_domain + inst[i];
         }
         let times = parseInt(s_time);
-        let domain: StarRail_RelicDomain = null;
+        let domain: sr.Domain = null;
 
-        StarRail_RelicDomains.forEach(x => {
-            if (x.check(s_domain))
+        data.Domains.forEach(x => {
+            if (x.is(s_domain))
                 domain = x;
         });
 
@@ -58,24 +57,24 @@ export class StarRail_RelicPlugin extends plugin {
         await this.makeRelic(times, domain);
     }
 
-    async makeRelic(times: number, domain: StarRail_RelicDomain) {
+    async makeRelic(times: number, domain: sr.Domain) {
         if (throttle) return;
         throttle = true;
 
         if (times !== times || times <= 1) {
-            let relicPiece = domain.rollPiece();
+            let piece = domain.rollPiece();
 
-            lastRelic[this.e.user_id] = relicPiece;
+            lastRelic[this.e.user_id] = piece;
     
-            const msg = await relicPiece.generateText(0);
+            const msg = await piece.generateText(0);
             await this.reply(msg, false, { at: false, recallMsg: 0 });
 
         } else if (times <= 20) {
             let msgs = [];
             let pieces = domain.rollPieceMulti(times);
 
-            for (const relicPiece of pieces)
-                msgs.push(await relicPiece.generateText(0));
+            for (const piece of pieces)
+                msgs.push(await piece.generateText(0));
 
             lastRelic[this.e.user_id] = pieces;
 
@@ -86,15 +85,15 @@ export class StarRail_RelicPlugin extends plugin {
         throttle = false;
     }
 
-    private upgradeTimes(relicPiece: StarRail_RelicPiece, times: number) {
+    private upgradeTimes(piece: sr.Piece, times: number) {
         if (times == 0) {
-            relicPiece.rollUpgrade();
+            piece.rollUpgrade();
             return;
         }
 
         let count = 0;
-        while (count <= 5 && relicPiece.level < times) {
-            relicPiece.rollUpgrade();
+        while (count <= 5 && piece.level < times) {
+            piece.rollUpgrade();
             ++count;
         }
     }
@@ -112,21 +111,21 @@ export class StarRail_RelicPlugin extends plugin {
 
         let pieces = lastRelic[this.e.user_id];
         if (!Array.isArray(pieces)) {
-            let relicPiece = pieces;
+            let piece = pieces;
 
-            this.upgradeTimes(relicPiece, times);
-            lastRelic[this.e.user_id] = relicPiece;
+            this.upgradeTimes(piece, times);
+            lastRelic[this.e.user_id] = piece;
             
-            const msg = await relicPiece.generateText(0);
+            const msg = await piece.generateText(0);
             await this.reply(msg, false, { at: false, recallMsg: 0 });
         } else {
             let msgs = [];
-            for (let relicPiece of pieces) {
-                this.upgradeTimes(relicPiece, times);
+            for (let piece of pieces) {
+                this.upgradeTimes(piece, times);
             }
 
-            for (let relicPiece of pieces) {
-                msgs.push(await relicPiece.generateText(0));
+            for (let piece of pieces) {
+                msgs.push(await piece.generateText(0));
             }
             lastRelic[this.e.user_id] = pieces;
 
