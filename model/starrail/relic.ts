@@ -12,7 +12,9 @@ export class Piece extends Base.Piece<Set> {
     override generateText(score: number): string {
         if (!this.pieceData) return null;
 
-        let res: string = `${this.displayName} ${this.pieceData.displayName}\nLv. ${this.level}  |  ${score}\n\n`;
+        let res: string;
+        res = `${this.displayName} ${this.pieceData.displayName}\nLv. ${this.level}`;
+        res += `  |  ${DisplayModes.Float2D(score)}\n\n`;
         res += `${this.mainStat.displayName} ${this.mainStat.displayValue}\n\n`;
 
         this.subStats.forEach(subStat =>
