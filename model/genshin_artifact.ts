@@ -1,4 +1,6 @@
 import lodash from 'lodash';
+
+// @ts-ignore
 import puppeteer from '../../../lib/puppeteer/puppeteer.js';
 
 import * as base from './base.js';
