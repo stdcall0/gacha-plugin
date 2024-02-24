@@ -1,10 +1,10 @@
 // StarRail Relic Generation
 import plugin from '../../../lib/plugins/plugin.js';
 import common from '../../../lib/common/common.js';
-import { StarRail_RelicDomains } from '../resources/starrail_relic_data.js';
+import * as data from '../resources/starrail_relic_data.js';
 let throttle = false;
 let lastRelic = {};
-export class StarRail_RelicPlugin extends plugin {
+export class Plugin extends plugin {
     constructor() {
         super({
             name: '刷星铁遗器',
@@ -36,8 +36,8 @@ export class StarRail_RelicPlugin extends plugin {
         }
         let times = parseInt(s_time);
         let domain = null;
-        StarRail_RelicDomains.forEach(x => {
-            if (x.check(s_domain))
+        data.Domains.forEach(x => {
+            if (x.is(s_domain))
                 domain = x;
         });
         if (domain == null)
@@ -49,30 +49,30 @@ export class StarRail_RelicPlugin extends plugin {
             return;
         throttle = true;
         if (times !== times || times <= 1) {
-            let relicPiece = domain.rollPiece();
-            lastRelic[this.e.user_id] = relicPiece;
-            const msg = await relicPiece.generateText(0);
+            let piece = domain.rollPiece();
+            lastRelic[this.e.user_id] = piece;
+            const msg = await piece.generateText(0);
             await this.reply(msg, false, { at: false, recallMsg: 0 });
         }
         else if (times <= 20) {
             let msgs = [];
             let pieces = domain.rollPieceMulti(times);
-            for (const relicPiece of pieces)
-                msgs.push(await relicPiece.generateText(0));
+            for (const piece of pieces)
+                msgs.push(await piece.generateText(0));
             lastRelic[this.e.user_id] = pieces;
             const msg = await common.makeForwardMsg(this.e, msgs, `点击查看遗器`);
             await this.reply(msg, false, { at: false, recallMsg: 0 });
         }
         throttle = false;
     }
-    upgradeTimes(relicPiece, times) {
+    upgradeTimes(piece, times) {
         if (times == 0) {
-            relicPiece.rollUpgrade();
+            piece.rollUpgrade();
             return;
         }
         let count = 0;
-        while (count <= 5 && relicPiece.level < times) {
-            relicPiece.rollUpgrade();
+        while (count <= 5 && piece.level < times) {
+            piece.rollUpgrade();
             ++count;
         }
     }
@@ -89,19 +89,19 @@ export class StarRail_RelicPlugin extends plugin {
             times = 0;
         let pieces = lastRelic[this.e.user_id];
         if (!Array.isArray(pieces)) {
-            let relicPiece = pieces;
-            this.upgradeTimes(relicPiece, times);
-            lastRelic[this.e.user_id] = relicPiece;
-            const msg = await relicPiece.generateText(0);
+            let piece = pieces;
+            this.upgradeTimes(piece, times);
+            lastRelic[this.e.user_id] = piece;
+            const msg = await piece.generateText(0);
             await this.reply(msg, false, { at: false, recallMsg: 0 });
         }
         else {
             let msgs = [];
-            for (let relicPiece of pieces) {
-                this.upgradeTimes(relicPiece, times);
+            for (let piece of pieces) {
+                this.upgradeTimes(piece, times);
             }
-            for (let relicPiece of pieces) {
-                msgs.push(await relicPiece.generateText(0));
+            for (let piece of pieces) {
+                msgs.push(await piece.generateText(0));
             }
             lastRelic[this.e.user_id] = pieces;
             const msg = await common.makeForwardMsg(this.e, msgs, `点击查看强化结果`);
