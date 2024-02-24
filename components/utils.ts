@@ -11,3 +11,8 @@ export class DisplayModes {
     private constructor(private readonly key: string, public readonly value: any) { }
     toString() { return this.key; }
 };
+
+export function StrReplace(str: string, inst: string[]): string {
+    inst.forEach(x => str = str.replace(x, ""));
+    return str.trim();
+}

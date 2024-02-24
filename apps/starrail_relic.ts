@@ -1,6 +1,6 @@
 // StarRail Relic Generation
 
-import { Plugin, Common } from '#gc';
+import { Plugin, Common, StrReplace } from '#gc';
 
 import { StarRail as sr, StarRailData as data } from '#gc.model';
 
@@ -18,11 +18,11 @@ export class SRPlugin extends Plugin {
             priority: '98',
             rule: [
                 {
-                    reg: '^#*刷遗器.*$',  // 刷遗器量子20
+                    reg: '^(刷遗器|#星铁刷).*$',  // 刷遗器量子20
                     fnc: 'generateRelic'
                 },
                 {
-                    reg: '^#*(强化|升)遗器(3|6|9|12|15)?$',
+                    reg: '^(#*(强化|升)遗器|#星铁(强化|升)(遗器)?)(3|6|9|12|15)?$',
                     fnc: 'upgradeRelic'
                 }
             ]
@@ -31,7 +31,7 @@ export class SRPlugin extends Plugin {
 
     async generateRelic() {
         let inst: string = this.e.msg;
-        inst = inst.replace("刷遗器", "").replace("#", "").replace("次", "").trim();
+        inst = StrReplace(inst, ["刷","遗器","#","星铁","次"]);
 
         let s_domain = "";
         let s_time = "";
@@ -102,10 +102,10 @@ export class SRPlugin extends Plugin {
         throttle = true;
 
         let each: string = this.e.msg;
-        let times = parseInt(each.replace("强化遗器", "").replace("升遗器", "")
-            .replace("#", "").trim());
+        each = StrReplace(each, ["强化","升","遗器","#","星铁"]);
+        let times = parseInt(each);
 
-        if (times !== times || !([3, 6, 9, 12, 15].includes(times))) times = 0;
+        if (times !== times || !([3, 6, 9, 12, 15].includes(times))) times = 15;
 
         let pieces = lastRelic[this.e.user_id];
         if (!Array.isArray(pieces)) {
