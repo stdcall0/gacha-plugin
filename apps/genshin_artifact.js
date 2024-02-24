@@ -1,5 +1,5 @@
 // Genshin Artifact Generation
-import { Plugin, Common, DisplayModes } from '#gc';
+import { Plugin, Common, DisplayModes, StrReplace } from '#gc';
 import { GenshinData as data } from '#gc.model';
 const scorer = data.Scorer;
 let throttle = false;
@@ -13,15 +13,15 @@ export class GSPlugin extends Plugin {
             priority: '98',
             rule: [
                 {
-                    reg: '^#*刷圣遗物.*$', // 刷圣遗物绝缘20
+                    reg: '^(刷圣遗物|#刷).*$', // 刷圣遗物绝缘20
                     fnc: 'generateArtifact'
                 },
                 {
-                    reg: '^#*(合成|合)圣遗物.*$', // 合成圣遗物绝缘20
+                    reg: '^((合成|合)圣遗物|#(合成|合)).*$', // 合成圣遗物绝缘20
                     fnc: 'generateArtifactAlt'
                 },
                 {
-                    reg: '^#*(强化|升)圣遗物(4|8|12|16|20)?$',
+                    reg: '^((强化|升)圣遗物|#(强化|升))(4|8|12|16|20)?$',
                     fnc: 'upgradeArtifact'
                 }
             ]
@@ -35,7 +35,7 @@ export class GSPlugin extends Plugin {
     }
     async generateArtifactM(domains) {
         let inst = this.e.msg;
-        inst = inst.replace("刷圣遗物", "").replace("#", "").replace("次", "").trim();
+        inst = StrReplace(inst, ["刷", "合成", "合", "圣遗物", "#", "次"]);
         let s_domain = "";
         let s_time = "";
         for (let i = 0; i < inst.length; ++i) {
@@ -98,10 +98,10 @@ export class GSPlugin extends Plugin {
             return;
         throttle = true;
         let each = this.e.msg;
-        let times = parseInt(each.replace("强化圣遗物", "").replace("升圣遗物", "")
-            .replace("#", "").trim());
+        each = StrReplace(each, ["强化", "升", "圣遗物", "#"]);
+        let times = parseInt(each);
         if (times !== times || !([4, 8, 12, 16, 20].includes(times)))
-            times = 0;
+            times = 20;
         let pieces = lastArtifact[this.e.user_id];
         if (!Array.isArray(pieces)) {
             let piece = pieces;
