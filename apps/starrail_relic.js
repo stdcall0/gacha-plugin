@@ -51,14 +51,15 @@ export class SRPlugin extends Plugin {
         if (times !== times || times <= 1) {
             let piece = domain.rollPiece();
             lastRelic[this.e.user_id] = piece;
-            const msg = await piece.generateText(0);
+            const msg = piece.generateText(scorer(piece));
             await this.reply(msg, false, { at: false, recallMsg: 0 });
         }
         else if (times <= 20) {
             let msgs = [];
             let pieces = domain.rollPieceMulti(times);
+            pieces.sort((a, b) => scorer(b) - scorer(a));
             for (const piece of pieces)
-                msgs.push(await piece.generateText(0));
+                msgs.push(piece.generateText(scorer(piece)));
             lastRelic[this.e.user_id] = pieces;
             const msg = await Common.makeForwardMsg(this.e, msgs, `点击查看遗器`);
             await this.reply(msg, false, { at: false, recallMsg: 0 });
@@ -92,7 +93,7 @@ export class SRPlugin extends Plugin {
             let piece = pieces;
             this.upgradeTimes(piece, times);
             lastRelic[this.e.user_id] = piece;
-            const msg = await piece.generateText(0);
+            const msg = piece.generateText(scorer(piece));
             await this.reply(msg, false, { at: false, recallMsg: 0 });
         }
         else {
@@ -100,8 +101,9 @@ export class SRPlugin extends Plugin {
             for (let piece of pieces) {
                 this.upgradeTimes(piece, times);
             }
+            pieces.sort((a, b) => scorer(b) - scorer(a));
             for (let piece of pieces) {
-                msgs.push(await piece.generateText(0));
+                msgs.push(piece.generateText(scorer(piece)));
             }
             lastRelic[this.e.user_id] = pieces;
             const msg = await Common.makeForwardMsg(this.e, msgs, `点击查看强化结果`);

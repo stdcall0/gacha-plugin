@@ -7,7 +7,7 @@ export class Piece extends Base.Piece {
     generateText(score) {
         if (!this.pieceData)
             return null;
-        let res = `${this.displayName} ${this.pieceData.displayName}\nLv. ${this.level}\n\n`;
+        let res = `${this.displayName} ${this.pieceData.displayName}\nLv. ${this.level}  |  ${score}\n\n`;
         res += `${this.mainStat.displayName} ${this.mainStat.displayValue}\n\n`;
         this.subStats.forEach(subStat => res += `${subStat.displayName} ${subStat.displayValue}\n`);
         return res.trimEnd();
@@ -15,6 +15,7 @@ export class Piece extends Base.Piece {
     async generateImage(score) {
         // TODO: generate Artifact Image for Star Rail
         // Might need to check for relic type (inner & outer)
+        throw new Error("Not Implemented"); // not implemented yet
         if (!this.pieceData)
             return null;
         const data = {
