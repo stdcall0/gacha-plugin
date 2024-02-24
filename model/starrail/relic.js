@@ -7,7 +7,9 @@ export class Piece extends Base.Piece {
     generateText(score) {
         if (!this.pieceData)
             return null;
-        let res = `${this.displayName} ${this.pieceData.displayName}\nLv. ${this.level}  |  ${score}\n\n`;
+        let res;
+        res = `${this.displayName} ${this.pieceData.displayName}\nLv. ${this.level}`;
+        res += `  |  ${DisplayModes.Float2D(score)}\n\n`;
         res += `${this.mainStat.displayName} ${this.mainStat.displayValue}\n\n`;
         this.subStats.forEach(subStat => res += `${subStat.displayName} ${subStat.displayValue}\n`);
         return res.trimEnd();
