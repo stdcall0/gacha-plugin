@@ -250,3 +250,9 @@ export abstract class Domain<
         return res;
     }
 };
+
+export interface Scorer {
+    (piece: Piece<any>): number
+};
+
+export interface ScoreRule { [stat: string]: number };

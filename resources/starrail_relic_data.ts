@@ -1,76 +1,65 @@
 import lodash from 'lodash';
-import * as base from '../model/base_artifact.js';
-import * as sr from '../model/starrail_relic.js';
+
 import Lottery from '../model/lottery.js';
 import { DisplayModes } from '../model/utils.js';
 
+import * as base from '../model/base.js';
+import * as sr from '../model/starrail_relic.js';
+
 /* ------------------------  Relic Main Stat ------------------------ */
 
-export const StarRail_RelicMainStat = {
-    FlatHP: new base.ArtifactStatIncrease(
-        "FlatHP", "生命值",
-        112.896, 39.5136 * 3,
-        DisplayModes.Integer
+export const MainStat = {
+    FlatHP: new base.ConstantStat(
+        "FlatHP", "生命值", DisplayModes.Integer
+        112.896, 39.5136 * 3
     ),
-    FlatATK: new base.ArtifactStatIncrease(
-        "FlatATK", "攻击力",
-        56.448, 19.7568 * 3,
-        DisplayModes.Integer
+    FlatATK: new base.ConstantStat(
+        "FlatATK", "攻击力", DisplayModes.Integer,
+        56.448, 19.7568 * 3
     ),
-    HP: new base.ArtifactStatIncrease(
-        "HP", "生命值",
-        6.9120, 2.4192 * 3,
-        DisplayModes.Percentage1D
+    HP: new base.ConstantStat(
+        "HP", "生命值", DisplayModes.Percentage1D,
+        6.9120, 2.4192 * 3
     ),
-    ATK: new base.ArtifactStatIncrease(
-        "ATK", "攻击力",
-        6.9120, 2.4192 * 3,
-        DisplayModes.Percentage1D
+    ATK: new base.ConstantStat(
+        "ATK", "攻击力", DisplayModes.Percentage1D,
+        6.9120, 2.4192 * 3
     ),
-    DEF: new base.ArtifactStatIncrease(
-        "DEF", "防御力",
-        8.64, 3.024 * 3,
-        DisplayModes.Percentage1D
+    DEF: new base.ConstantStat(
+        "DEF", "防御力", DisplayModes.Percentage1D,
+        8.64, 3.024 * 3
     ),
-    SPD: new base.ArtifactStatIncrease(
-        "SPD", "速度",
-        4.032, 1.4 * 3,
-        DisplayModes.Integer
+    SPD: new base.ConstantStat(
+        "SPD", "速度", DisplayModes.Integer,
+        4.032, 1.4 * 3
     ),
-    BreakEffect: new base.ArtifactStatIncrease(
-        "Break Effect", "击破特攻",
-        10.368,	3.6277 * 3,
-        DisplayModes.Percentage1D
+    BreakEffect: new base.ConstantStat(
+        "Break Effect", "击破特攻", DisplayModes.Percentage1D,
+        10.368,	3.6277 * 3
     ),
-    EffectHitRate: new base.ArtifactStatIncrease(
-        "Effect Hit Rate", "效果命中",
-        6.912, 2.4192 * 3,
-        DisplayModes.Percentage1D
+    EffectHitRate: new base.ConstantStat(
+        "Effect Hit Rate", "效果命中", DisplayModes.Percentage1D,
+        6.912, 2.4192 * 3
     ),
-    EnergyRegenerationRate: new base.ArtifactStatIncrease(
-        "Energy Regeneration Rate", "能量恢复效率",
-        3.1104, 1.0886 * 3,
-        DisplayModes.Percentage1D
+    EnergyRegenerationRate: new base.ConstantStat(
+        "Energy Regeneration Rate", "能量恢复效率", DisplayModes.Percentage1D,
+        3.1104, 1.0886 * 3
     ),
-    OutgoingHealingBoost: new base.ArtifactStatIncrease(
-        "Outgoing Healing Boost", "治疗量加成",
-        5.5296, 1.9354 * 3,
-        DisplayModes.Percentage1D
+    OutgoingHealingBoost: new base.ConstantStat(
+        "Outgoing Healing Boost", "治疗量加成", DisplayModes.Percentage1D,
+        5.5296, 1.9354 * 3
     ),
-    DMGBoost: new base.ArtifactStatIncrease(
-        "DMG Boost", "属性伤害提高",
-        6.2208, 2.1773 * 3,
-        DisplayModes.Percentage1D
+    DMGBoost: new base.ConstantStat(
+        "DMG Boost", "属性伤害提高", DisplayModes.Percentage1D,
+        6.2208, 2.1773 * 3
     ), // requires alterName later
-    CRITRate: new base.ArtifactStatIncrease(
-        "CRIT Rate", "暴击率",
-        5.184, 1.8144 * 3,
-        DisplayModes.Percentage1D
+    CRITRate: new base.ConstantStat(
+        "CRIT Rate", "暴击率", DisplayModes.Percentage1D,
+        5.184, 1.8144 * 3
     ),
-    CRITDMG: new base.ArtifactStatIncrease(
-        "CRIT DMG", "暴击伤害",
-        10.368, 3.6288 * 3,
-        DisplayModes.Percentage1D
+    CRITDMG: new base.ConstantStat(
+        "CRIT DMG", "暴击伤害", DisplayModes.Percentage1D,
+        10.368, 3.6288 * 3
     ),
 };
 
@@ -90,42 +79,42 @@ const EffectRES = new Lottery([3.456, 3.888, 4.32]);
 const CRITRate = new Lottery([2.592, 2.916, 3.24]);
 const CRITDMG = new Lottery([5.184, 5.832, 6.48]);
 
-export const StarRail_RelicSubStat = {
-    SPD: new base.ArtifactStatRandomS(
-        "SPD", "速度", SPD, DisplayModes.Integer
+export const SubStat = {
+    SPD: new base.RandomStat(
+        "SPD", "速度", DisplayModes.Integer, SPD
     ),
-    FlatHP: new base.ArtifactStatRandomS(
-        "FlatHP", "生命值", FlatHP, DisplayModes.Integer
+    FlatHP: new base.RandomStat(
+        "FlatHP", "生命值", DisplayModes.Integer, FlatHP
     ),
-    FlatATK: new base.ArtifactStatRandomS(
-        "FlatATK", "攻击力", FlatATK, DisplayModes.Integer
+    FlatATK: new base.RandomStat(
+        "FlatATK", "攻击力", DisplayModes.Integer, FlatATK
     ),
-    FlatDEF: new base.ArtifactStatRandomS(
-        "FlatDEF", "防御力", FlatDEF, DisplayModes.Integer
+    FlatDEF: new base.RandomStat(
+        "FlatDEF", "防御力", DisplayModes.Integer, FlatDEF
     ),
-    HP: new base.ArtifactStatRandomS(
-        "HP", "生命值", HP, DisplayModes.Percentage1D
+    HP: new base.RandomStat(
+        "HP", "生命值", DisplayModes.Percentage1D, HP
     ),
-    ATK: new base.ArtifactStatRandomS(
-        "ATK", "攻击力", ATK, DisplayModes.Percentage1D
+    ATK: new base.RandomStat(
+        "ATK", "攻击力", DisplayModes.Percentage1D, ATK
     ),
-    DEF: new base.ArtifactStatRandomS(
-        "DEF", "防御力", DEF, DisplayModes.Percentage1D
+    DEF: new base.RandomStat(
+        "DEF", "防御力", DisplayModes.Percentage1D, DEF
     ),
-    BreakEffect: new base.ArtifactStatRandomS(
-        "Break Effect", "击破特攻", BreakEffect, DisplayModes.Percentage1D
+    BreakEffect: new base.RandomStat(
+        "Break Effect", "击破特攻", DisplayModes.Percentage1D, BreakEffect
     ),
-    EffectHitRate: new base.ArtifactStatRandomS(
-        "Effect Hit Rate", "效果命中", EffectHitRate, DisplayModes.Percentage1D
+    EffectHitRate: new base.RandomStat(
+        "Effect Hit Rate", "效果命中", DisplayModes.Percentage1D, EffectHitRate
     ),
-    EffectRES: new base.ArtifactStatRandomS(
-        "Effect RES", "效果抵抗", EffectRES, DisplayModes.Percentage1D
+    EffectRES: new base.RandomStat(
+        "Effect RES", "效果抵抗", DisplayModes.Percentage1D, EffectRES
     ),
-    CRITRate: new base.ArtifactStatRandomS(
-        "CRIT Rate", "暴击率", CRITRate, DisplayModes.Percentage1D
+    CRITRate: new base.RandomStat(
+        "CRIT Rate", "暴击率", DisplayModes.Percentage1D, CRITRate
     ),
-    CRITDMG: new base.ArtifactStatRandomS(
-        "CRIT DMG", "暴击伤害", CRITDMG, DisplayModes.Percentage1D
+    CRITDMG: new base.RandomStat(
+        "CRIT DMG", "暴击伤害", DisplayModes.Percentage1D, CRITDMG
     ),
 };
 
@@ -134,18 +123,18 @@ export const StarRail_RelicSubStat = {
 
 const subStat = new Lottery(
     [
-        StarRail_RelicSubStat.FlatHP,
-        StarRail_RelicSubStat.FlatATK,
-        StarRail_RelicSubStat.FlatDEF,
-        StarRail_RelicSubStat.HP,
-        StarRail_RelicSubStat.ATK,
-        StarRail_RelicSubStat.DEF,
-        StarRail_RelicSubStat.EffectHitRate,
-        StarRail_RelicSubStat.EffectRES,
-        StarRail_RelicSubStat.BreakEffect,
-        StarRail_RelicSubStat.CRITRate,
-        StarRail_RelicSubStat.CRITDMG,
-        StarRail_RelicSubStat.SPD,
+        SubStat.FlatHP,
+        SubStat.FlatATK,
+        SubStat.FlatDEF,
+        SubStat.HP,
+        SubStat.ATK,
+        SubStat.DEF,
+        SubStat.EffectHitRate,
+        SubStat.EffectRES,
+        SubStat.BreakEffect,
+        SubStat.CRITRate,
+        SubStat.CRITDMG,
+        SubStat.SPD,
     ],
     [
         125, 125, 125, 125, 125, 125, 100, 100, 100, 75, 75, 50
@@ -163,41 +152,41 @@ const subCount = new Lottery(
 
 /* ------------------------ Relic Piece ------------------------ */
 
-export const StarRail_RelicPiecesOuter = { // [Cavern Relics]
-    Head: new sr.StarRail_RelicPiece(
+export const PiecesOuter = { // [Cavern Relics]
+    Head: new sr.Piece(
         "Head", "头部",
-        new Lottery([StarRail_RelicMainStat.FlatHP]),
+        new Lottery([MainStat.FlatHP]),
         subStat, subCount
     ),
-    Hands: new sr.StarRail_RelicPiece(
+    Hands: new sr.Piece(
         "Hands", "手部",
-        new Lottery([StarRail_RelicMainStat.FlatATK]),
+        new Lottery([MainStat.FlatATK]),
         subStat, subCount
     ),
-    Body: new sr.StarRail_RelicPiece(
+    Body: new sr.Piece(
         "Body", "躯干",
         new Lottery(
             [
-                StarRail_RelicMainStat.HP,
-                StarRail_RelicMainStat.ATK,
-                StarRail_RelicMainStat.DEF,
-                StarRail_RelicMainStat.CRITRate,
-                StarRail_RelicMainStat.CRITDMG,
-                StarRail_RelicMainStat.OutgoingHealingBoost,
-                StarRail_RelicMainStat.EffectHitRate,
+                MainStat.HP,
+                MainStat.ATK,
+                MainStat.DEF,
+                MainStat.CRITRate,
+                MainStat.CRITDMG,
+                MainStat.OutgoingHealingBoost,
+                MainStat.EffectHitRate,
             ],
             [20, 20, 20, 10, 10, 10, 10]
         ),
         subStat, subCount
     ),
-    Feet: new sr.StarRail_RelicPiece(
+    Feet: new sr.Piece(
         "Feet", "脚部",
         new Lottery(
             [
-                StarRail_RelicMainStat.HP,
-                StarRail_RelicMainStat.ATK,
-                StarRail_RelicMainStat.DEF,
-                StarRail_RelicMainStat.SPD
+                MainStat.HP,
+                MainStat.ATK,
+                MainStat.DEF,
+                MainStat.SPD
             ],
             [30, 30, 30, 10]
         ),
@@ -205,35 +194,35 @@ export const StarRail_RelicPiecesOuter = { // [Cavern Relics]
     ),
 };
 
-export const StarRail_RelicPiecesInner = { // [Planar Ornaments]
-    PlanarSphere: new sr.StarRail_RelicPiece(
+export const PiecesInner = { // [Planar Ornaments]
+    PlanarSphere: new sr.Piece(
         "Planar Sphere", "位面球",
         new Lottery(
             [
-                StarRail_RelicMainStat.HP,
-                StarRail_RelicMainStat.ATK,
-                StarRail_RelicMainStat.DEF,
-                StarRail_RelicMainStat.DMGBoost.alterName("Physical DMG Boost", "物理属性伤害提高"),
-                StarRail_RelicMainStat.DMGBoost.alterName("Fire DMG Boost", "火属性伤害提高"),
-                StarRail_RelicMainStat.DMGBoost.alterName("Ice DMG Boost", "冰属性伤害提高"),
-                StarRail_RelicMainStat.DMGBoost.alterName("Wind DMG Boost", "风属性伤害提高"),
-                StarRail_RelicMainStat.DMGBoost.alterName("Lightning DMG Boost", "雷属性伤害提高"),
-                StarRail_RelicMainStat.DMGBoost.alterName("Quantum DMG Boost", "量子属性伤害提高"),
-                StarRail_RelicMainStat.DMGBoost.alterName("Imaginary DMG Boost", "虚数属性伤害提高"),
+                MainStat.HP,
+                MainStat.ATK,
+                MainStat.DEF,
+                MainStat.DMGBoost.alterName("Physical DMG Boost", "物理属性伤害提高"),
+                MainStat.DMGBoost.alterName("Fire DMG Boost", "火属性伤害提高"),
+                MainStat.DMGBoost.alterName("Ice DMG Boost", "冰属性伤害提高"),
+                MainStat.DMGBoost.alterName("Wind DMG Boost", "风属性伤害提高"),
+                MainStat.DMGBoost.alterName("Lightning DMG Boost", "雷属性伤害提高"),
+                MainStat.DMGBoost.alterName("Quantum DMG Boost", "量子属性伤害提高"),
+                MainStat.DMGBoost.alterName("Imaginary DMG Boost", "虚数属性伤害提高"),
             ],
             [12.33, 12.33, 12.33, 9,9,9,9,9,9,9]
         ),
         subStat, subCount
     ),
-    LinkRope: new sr.StarRail_RelicPiece(
+    LinkRope: new sr.Piece(
         "Link Rope", "连结绳",
         new Lottery(
             [
-                StarRail_RelicMainStat.HP,
-                StarRail_RelicMainStat.ATK,
-                StarRail_RelicMainStat.DEF,
-                StarRail_RelicMainStat.BreakEffect,
-                StarRail_RelicMainStat.EnergyRegenerationRate,
+                MainStat.HP,
+                MainStat.ATK,
+                MainStat.DEF,
+                MainStat.BreakEffect,
+                MainStat.EnergyRegenerationRate,
             ],
             [26.67, 26.67, 26.67, 15, 5]
         ),
@@ -251,20 +240,37 @@ export const StarRail_RelicPiecesInner = { // [Planar Ornaments]
 
 /* ------------------------ Score Calculation ------------------------ */
 
-// Will later implement a score calculator for SR.
+const ScoreMultipler: sr.ScoreRule = {
+    "CRIT Rate": 2,
+    "CRIT DMG": 1
+}; // a very simple multipler
 
+const findRule = (stat: base.Stat, rule: sr.ScoreRule): number => {
+    if (stat.name in rule) return rule[stat.name];
+    return 0;
+};
+
+export const Scorer: sr.Scorer =
+    (piece: sr.Piece) => {
+        let score = 0;
+        piece.subStats.forEach(subStat => {
+            score += subStat.value
+                * findRule(subStat, ScoreMultipler);
+        });
+        return score;
+    };
 
 
 /* ------------------------ Relic Set ------------------------ */
 
-const piecesOuter = new Lottery(lodash.values(StarRail_RelicPiecesOuter));
-const piecesInner = new Lottery(lodash.values(StarRail_RelicPiecesInner));
+const piecesOuter = new Lottery(lodash.values(PiecesOuter));
+const piecesInner = new Lottery(lodash.values(PiecesInner));
 
-export const StarRail_RelicSets = {
-    GeniusOfBrilliantStars: new sr.StarRail_RelicSet(
+export const Sets = {
+    GeniusOfBrilliantStars: new sr.Set(
         "Genius of Brilliant Stars", "繁星璀璨的天才",
         ["量子", "量子套"],
-        sr.StarRail_RelicType.Outer,
+        sr.RelicType.Outer,
         piecesOuter,
         {
             "Head": {
@@ -289,10 +295,10 @@ export const StarRail_RelicSets = {
             },
         },
     ),
-    RutilantArena: new sr.StarRail_RelicSet(
+    RutilantArena: new sr.Set(
         "Rutilant Arena", "繁星竞技场",
         ["繁星", "繁星套"],
-        sr.StarRail_RelicType.Inner,
+        sr.RelicType.Inner,
         piecesInner,
         {
             "Planar Sphere": {
@@ -312,19 +318,19 @@ export const StarRail_RelicSets = {
 
 /* ------------------------ Relic Domain ------------------------ */
 
-export const StarRail_RelicDomains = [
-    new sr.StarRail_RelicDomain(
+export const Domains = [
+    new sr.Domain(
         "Path of Providence", "睿治之径",
         ["量子本"],
         new Lottery([
-            StarRail_RelicSets.GeniusOfBrilliantStars,
+            Sets.GeniusOfBrilliantStars,
         ])
     ),
-    new sr.StarRail_RelicDomain(
+    new sr.Domain(
         "World 7", "第七世界",
         [""],
         new Lottery([
-            StarRail_RelicSets.RutilantArena,
+            Sets.RutilantArena,
         ])
     ),
 ];
