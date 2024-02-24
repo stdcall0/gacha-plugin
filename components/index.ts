@@ -5,6 +5,7 @@ import Common from './common.js';
 import Path from './cpath.js';
 import Plugin from './plugin.js';
 
+export * from './displaymode.js';
 export * from './utils.js';
 
 export {
