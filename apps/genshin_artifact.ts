@@ -6,15 +6,13 @@ import common from '../../../lib/common/common.js';
 
 import { DisplayModes } from '../model/utils.js';
 
-import { Genshin_ArtifactPiece, Genshin_ArtifactDomain } from '../model/genshin_artifact.js';
-import { Genshin_ArtifactScorer as scorer } from '../resources/genshin_artifact_data.js';
-import { Genshin_ArtifactDomains } from '../resources/genshin_artifact_data.js';
-import { Genshin_ArtifactDomainsAlt } from '../resources/genshin_artifact_data.js';
+import * as gs from '../model/genshin_artifact.js';
+import * as data from '../resources/genshin_artifact_data.js';
+
+const scorer = data.Scorer;
 
 let throttle: boolean = false;
-
-type ArtifactStorage = Genshin_ArtifactPiece | Genshin_ArtifactPiece[];
-let lastArtifact: { [key: string]: ArtifactStorage } = {};
+let lastArtifact: { [key: string]: gs.Piece | gs.Piece[] } = {};
 
 export class Genshin_ArtifactPlugin extends plugin {
     constructor() {
@@ -41,6 +39,14 @@ export class Genshin_ArtifactPlugin extends plugin {
     }
 
     async generateArtifact() {
+        await this.generateArtifactM(data.Domains);
+    }
+
+    async generateArtifactAlt() {
+        await this.generateArtifactM(data.DomainsAlt);
+    }
+
+    async generateArtifactM(domains: gs.Domain[]) {
         let inst: string = this.e.msg;
         inst = inst.replace("刷圣遗物", "").replace("#", "").replace("次", "").trim();
 
@@ -54,10 +60,10 @@ export class Genshin_ArtifactPlugin extends plugin {
                 s_domain = s_domain + inst[i];
         }
         let times = parseInt(s_time);
-        let domain: Genshin_ArtifactDomain = null;
+        let domain: gs.Domain = null;
 
-        Genshin_ArtifactDomains.forEach(x => {
-            if (x.check(s_domain))
+        domains.forEach(x => {
+            if (x.is(s_domain))
                 domain = x;
         });
 
@@ -66,43 +72,16 @@ export class Genshin_ArtifactPlugin extends plugin {
         await this.makeArtifact(times, domain);
     }
 
-    async generateArtifactAlt() {
-        let inst: string = this.e.msg;
-        inst = inst.replace("合圣遗物", "").replace("合成圣遗物", "")
-            .replace("#", "").replace("次", "").trim();
-
-        let s_domain = "";
-        let s_time = "";
-
-        for (let i = 0; i < inst.length; ++i) {
-            if ("0" <= inst[i] && inst[i] <= "9")
-                s_time = s_time + inst[i];
-            else
-                s_domain = s_domain + inst[i];
-        }
-        let times = parseInt(s_time);
-        let domain: Genshin_ArtifactDomain = null;
-
-        Genshin_ArtifactDomainsAlt.forEach(x => {
-            if (x.check(s_domain))
-                domain = x;
-        });
-
-        if (domain == null) return;
-        
-        await this.makeArtifact(times, domain);
-    }
-
-    async makeArtifact(times: number, domain: Genshin_ArtifactDomain) {
+    async makeArtifact(times: number, domain: gs.Domain) {
         if (throttle) return;
         throttle = true;
 
         if (times !== times || times <= 1) {
-            let artifactPiece = domain.rollPiece();
+            let piece = domain.rollPiece();
 
-            lastArtifact[this.e.user_id] = artifactPiece;
+            lastArtifact[this.e.user_id] = piece;
     
-            const msg = await artifactPiece.generateImage(scorer(artifactPiece));
+            const msg = await piece.generateImage(scorer(piece));
             await this.reply(msg, false, { at: false, recallMsg: 0 });
 
         } else if (times <= 20) {
@@ -110,8 +89,8 @@ export class Genshin_ArtifactPlugin extends plugin {
             let pieces = domain.rollPieceMulti(times);
 
             pieces.sort((a, b) => scorer(b) - scorer(a));
-            for (const artifactPiece of pieces)
-                imgs.push(await artifactPiece.generateImage(scorer(artifactPiece)));
+            for (const piece of pieces)
+                imgs.push(await piece.generateImage(scorer(piece)));
 
             lastArtifact[this.e.user_id] = pieces;
 
@@ -128,15 +107,15 @@ export class Genshin_ArtifactPlugin extends plugin {
         throttle = false;
     }
 
-    private upgradeTimes(artifactPiece: Genshin_ArtifactPiece, times: number) {
+    private upgradeTimes(piece: gs.Piece, times: number) {
         if (times == 0) {
-            artifactPiece.rollUpgrade();
+            piece.rollUpgrade();
             return;
         }
 
         let count = 0;
-        while (count <= 5 && artifactPiece.level < times) {
-            artifactPiece.rollUpgrade();
+        while (count <= 5 && piece.level < times) {
+            piece.rollUpgrade();
             ++count;
         }
     }
@@ -154,22 +133,22 @@ export class Genshin_ArtifactPlugin extends plugin {
 
         let pieces = lastArtifact[this.e.user_id];
         if (!Array.isArray(pieces)) {
-            let artifactPiece = pieces;
+            let piece = pieces;
 
-            this.upgradeTimes(artifactPiece, times);
-            lastArtifact[this.e.user_id] = artifactPiece;
+            this.upgradeTimes(piece, times);
+            lastArtifact[this.e.user_id] = piece;
             
-            const msg = await artifactPiece.generateImage(scorer(artifactPiece));
+            const msg = await piece.generateImage(scorer(piece));
             await this.reply(msg, false, { at: false, recallMsg: 0 });
         } else {
             let imgs = [];
-            for (let artifactPiece of pieces) {
-                this.upgradeTimes(artifactPiece, times);
+            for (let piece of pieces) {
+                this.upgradeTimes(piece, times);
             }
 
             pieces.sort((a, b) => scorer(b) - scorer(a));
-            for (let artifactPiece of pieces) {
-                imgs.push(await artifactPiece.generateImage(scorer(artifactPiece)));
+            for (let piece of pieces) {
+                imgs.push(await piece.generateImage(scorer(piece)));
             }
             lastArtifact[this.e.user_id] = pieces;
 
