@@ -12,13 +12,13 @@
 
 <body>
     <div class="body">
-        <div class="name">{{artifactPiece.setDisplayName}}</div>
+        <div class="name">{{ setDisplayName }}</div>
         <div class="img">
             <div class="artifactImg"><img src="{{pluResPath}}/{{artifactPiece.imagePath}}"><span id="block"></span></div>
         </div>
-        <div class="buwei">{{artifactPiece.displayName}}</div>
-        <div class="zhucitiao">{{artifactPiece.mainStat.displayName}}</div>
-        <div class="zhucitiaoData">{{artifactPiece.mainStat.displayValue}}</div>
+        <div class="buwei">{{ artifactPiece.displayName }}</div>
+        <div class="zhucitiao">{{ artifactPiece.mainStat.displayName }}</div>
+        <div class="zhucitiaoData">{{ artifactPiece.mainStat.displayValue }}</div>
         <div class="star">
             <img src="{{pluResPath}}/plugins/gacha-plugin/resources/html/img/x.png" alt="">
             <img src="{{pluResPath}}/plugins/gacha-plugin/resources/html/img/x.png" alt="">
@@ -27,7 +27,7 @@
             <img src="{{pluResPath}}/plugins/gacha-plugin/resources/html/img/x.png" alt="">
         </div>
         <div class="level">+{{artifactPiece.level}}</div>
-        <div class="score">[ {{artifactScore}} ]</div>
+        <div class="score">{{artifactScore}}</div>
         {{if locked}}
         <div class="suo"><img class="suoimg" src="{{pluResPath}}/plugins/gacha-plugin/resources/html/img/2.png"
                 alt=""></div>
