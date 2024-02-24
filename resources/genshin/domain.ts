@@ -29,6 +29,14 @@ export const Domains = [
             Sets.GoldenTroupe,
         ])
     ),
+    new Genshin.Domain(
+        "Midsummer Courtyard", "仲夏庭园",
+        ["如雷本", "雷本", "平雷本"],
+        new Lottery([
+            Sets.ThunderingFury,
+            Sets.Thundersoother,
+        ])
+    ),
 ];
 
 export const DomainsAlt = [
@@ -54,6 +62,14 @@ export const DomainsAlt = [
         new Lottery([
             SetsAlt.MarechausseeHunter,
             SetsAlt.GoldenTroupe,
+        ])
+    ),
+    new Genshin.Domain(
+        "Midsummer Courtyard", "仲夏庭园",
+        ["如雷本", "雷本", "平雷本"],
+        new Lottery([
+            SetsAlt.ThunderingFury,
+            SetsAlt.Thundersoother,
         ])
     ),
 ];

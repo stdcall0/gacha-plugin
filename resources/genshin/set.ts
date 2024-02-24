@@ -201,6 +201,70 @@ export const Sets = {
             },
         },
     ),
+    ThunderingFury: new Genshin.Set(
+        "Thundering Fury", "如雷的盛怒",
+        ["如雷", "如雷套", "雷套"],
+        pieces,
+        {
+            "Flower of Life": {
+                name: "Thunderbird's Mercy",
+                displayName: "雷鸟的怜悯",
+                image: "如雷的盛怒/1.webp",
+            },
+            "Plume of Death": {
+                name: "Survivor of Catastrophe",
+                displayName: "雷灾的孑遗",
+                image: "如雷的盛怒/2.webp",
+            },
+            "Sands of Eon": {
+                name: "Hourglass of Thunder",
+                displayName: "雷霆的时计",
+                image: "如雷的盛怒/3.webp",
+            },
+            "Goblet of Eonothem": {
+                name: "Omen of Thunderstorm",
+                displayName: "降雷的凶兆",
+                image: "如雷的盛怒/4.webp",
+            },
+            "Circlet of Logos": {
+                name: "Thunder Summoner's Crown",
+                displayName: "唤雷的头冠",
+                image: "如雷的盛怒/5.webp",
+            },
+        },
+    ),
+    Thundersoother: new Genshin.Set(
+        "Thundersoother", "平息鸣雷的尊者",
+        ["平雷", "平雷套"],
+        pieces,
+        {
+            "Flower of Life": {
+                name: "Thundersoother's Heart",
+                displayName: "平雷之心",
+                image: "平息鸣雷的尊者/1.webp",
+            },
+            "Plume of Death": {
+                name: "Thundersoother's Plume",
+                displayName: "平雷之羽",
+                image: "平息鸣雷的尊者/2.webp",
+            },
+            "Sands of Eon": {
+                name: "Hour of Soothing Thunder",
+                displayName: "平雷之刻",
+                image: "平息鸣雷的尊者/3.webp",
+            },
+            "Goblet of Eonothem": {
+                name: "Thundersoother's Goblet",
+                displayName: "平雷之器",
+                image: "平息鸣雷的尊者/4.webp",
+            },
+            "Circlet of Logos": {
+                name: "Thundersoother's Diadem",
+                displayName: "平雷之冠",
+                image: "平息鸣雷的尊者/5.webp",
+            },
+        },
+    )
 };
 
 let setsAlt_ = lodash.clone(Sets);
