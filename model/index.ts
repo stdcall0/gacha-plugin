@@ -1,12 +1,16 @@
 
 import * as Base from './base.js';
-import * as Path from './cpath.js';
-import Lottery from './lottery.js';
-import { DisplayModes } from './utils.js';
+
+import * as Genshin from './genshin/index.js';
+import * as StarRail from './starrail/index.js';
+
+import * as GenshinData from '#@/resources/genshin/index.js';
+import * as StarRailData from '#@/resources/starrail/index.js';
 
 export {
     Base,
-    Path,
-    Lottery,
-    DisplayModes
+    Genshin,
+    StarRail,
+    GenshinData,
+    StarRailData,
 };

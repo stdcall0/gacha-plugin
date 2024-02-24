@@ -1,21 +1,15 @@
 // StarRail Relic Generation
 
-// @ts-ignore
-import plugin from '../../../lib/plugins/plugin.js';
-// @ts-ignore
-import puppeteer from '../../../lib/puppeteer/puppeteer.js';
-// @ts-ignore
-import common from '../../../lib/common/common.js';
+import { Plugin, Common } from '#gc';
 
-import * as sr from '../model/starrail_relic.js';
-import * as data from '../resources/starrail_relic_data.js';
+import { StarRail as sr, StarRailData as data } from '#gc.model';
 
 const scorer: sr.Scorer = data.Scorer;
 
 let throttle: boolean = false;
 let lastRelic: { [key: string]: sr.Piece | sr.Piece[] } = {};
 
-export class Plugin extends (plugin as any) {
+export class SRPlugin extends Plugin {
     constructor() {
         super({
             name: '刷星铁遗器',
@@ -82,7 +76,7 @@ export class Plugin extends (plugin as any) {
 
             lastRelic[this.e.user_id] = pieces;
 
-            const msg = await common.makeForwardMsg(this.e, msgs, `点击查看遗器`);
+            const msg = await Common.makeForwardMsg(this.e, msgs, `点击查看遗器`);
             await this.reply(msg, false, { at: false, recallMsg: 0 });
         }
 
@@ -133,7 +127,7 @@ export class Plugin extends (plugin as any) {
             }
             lastRelic[this.e.user_id] = pieces;
 
-            const msg = await common.makeForwardMsg(this.e, msgs, `点击查看强化结果`);
+            const msg = await Common.makeForwardMsg(this.e, msgs, `点击查看强化结果`);
             await this.reply(msg, false, { at: false, recallMsg: 0 });
         }
 

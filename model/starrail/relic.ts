@@ -1,16 +1,9 @@
-import lodash from 'lodash';
 
-// @ts-ignore
-import puppeteer from '../../../lib/puppeteer/puppeteer.js';
+import { Base } from '#gc.model';
+import { DisplayModes, Render, Path, Lottery } from '#gc';
 
-import Lottery from './lottery.js';
 
-import * as base from './base.js';
-import * as cpath from '../resources/cpath.js';
-
-import { DisplayModes } from './utils.js';
-
-export class Piece extends base.Piece<Set> {
+export class Piece extends Base.Piece<Set> {
 
     override get level(): number {
         return 0 + this.upgradeCount * 3;
@@ -36,14 +29,14 @@ export class Piece extends base.Piece<Set> {
         if (!this.pieceData) return null;
 
         const data = {
-            tplFile: cpath.HTMLPath + 'starrail_relic.html',
-            pluResPath: cpath.ProcessPath,
+            tplFile: Path.HTML + 'starrail_relic.html',
+            pluResPath: Path.Process,
             artifactPiece: this,
             artifactScore: DisplayModes.Float1D(score),
             locked: false
         };
 
-        return puppeteer.screenshot("starrail_relic", data);
+        return Render.render("starrail_relic", data);
     }
 };
 
@@ -52,7 +45,7 @@ export enum RelicType {
     Outer
 };
 
-export class Set extends base.Set<Piece> {
+export class Set extends Base.Set<Piece> {
 
     constructor(
         public name: string,
@@ -60,14 +53,14 @@ export class Set extends base.Set<Piece> {
         public aliases: string[],
         public type: RelicType,
         public pieceList: Lottery<Piece>,
-        public pieceData: { [name: string]: base.PieceData }
+        public pieceData: { [name: string]: Base.PieceData }
     ) { super(name, displayName, aliases, pieceList, pieceData); }
 };
 
-export class Domain extends base.Domain<Piece, Set> { };
+export class Domain extends Base.Domain<Piece, Set> { };
 
-export interface Scorer extends base.Scorer {
+export interface Scorer extends Base.Scorer {
     (piece: Piece): number
 };
 
-export interface ScoreRule extends base.ScoreRule { [stat: string]: number };
+export interface ScoreRule extends Base.ScoreRule { [stat: string]: number };

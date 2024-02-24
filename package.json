@@ -7,5 +7,10 @@
   "devDependencies": {
     "@types/lodash": "^4.14.202",
     "@types/node": "^20.11.2"
+  },
+  "imports": {
+    "#gc": "./components/index.js",
+    "#gc.model": "./model/index.js",
+    "#@/*": "./*"
   }
 }

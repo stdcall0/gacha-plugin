@@ -1,9 +1,6 @@
 import lodash from 'lodash';
 
-import Lottery from './lottery.js';
-import { DisplayMode } from './utils.js';
-
-import * as cpath from '../resources/cpath.js';
+import { Lottery, DisplayMode, Path } from '#gc';
 
 export abstract class Stat {
     value: number;
@@ -134,7 +131,7 @@ export abstract class Piece<SetType extends Set<any>> {
         if (!(this.parentSet)) return null;
         if (!(this.name in this.parentSet.pieceData)) return null;
 
-        return cpath.ImagePath + this.parentSet.pieceData[this.name].image;
+        return Path.Image + this.parentSet.pieceData[this.name].image;
     }
 
     rollMainStat(): void {

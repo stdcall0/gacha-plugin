@@ -1,4 +1,6 @@
+
 export type DisplayMode = (x: number) => string;
+
 export class DisplayModes {
     static readonly Integer = (x: number) => x.toFixed(0);
     static readonly Float1D = (x: number) => x.toFixed(1);
