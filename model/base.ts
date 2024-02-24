@@ -1,3 +1,5 @@
+import lodash from 'lodash';
+
 import Lottery from './lottery.js';
 import { DisplayMode } from './utils.js';
 
@@ -140,12 +142,34 @@ export abstract class Piece<SetType extends Set<any>> {
     }
     rollSubStats(): void {
         this.subStats = [];
-        this.subStatList.sample(this.subStatCount.choice()).forEach(x => {
-            this.subStats.push(x.instance());
-        });
+        this.subStatList
+            .filter(x => x.name != this.mainStat.name)
+            .sample(this.subStatCount.choice())
+            .forEach(x => {
+                this.subStats.push(x.instance());
+            });
     }
 
-    abstract rollUpgrade(): void;
+    rollUpgrade(): void {
+        if (this.upgradeCount >= 5)
+            return;
+
+        this.mainStat.rollUpgrade();
+        if (this.subStats.length < Math.max(...this.subStatCount.objList)) {
+            let names = [this.mainStat.name];
+            this.subStats.forEach(x => names.push(x.name));
+            this.subStats.push(
+                this.subStatList
+                    .filter(x => !(names.includes(x.name)))
+                    .choice()
+                    .instance()
+            );
+        } else {
+            let l = lodash.random(0, this.subStats.length - 1);
+            this.subStats[l].rollUpgrade();
+        }
+        this.upgradeCount += 1;
+    }
 
     abstract generateText(score: number): string;
     abstract generateImage(score: number): Promise<string>;
