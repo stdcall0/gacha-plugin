@@ -8,6 +8,9 @@
       ],
       "target": "es2017",
       "module": "nodenext",
-      "moduleResolution": "nodenext"
-   }
+      "moduleResolution": "nodenext",
+      "outDir": "."
+   },
+   "include": ["**/*"],
+   "exclude": []
 }
