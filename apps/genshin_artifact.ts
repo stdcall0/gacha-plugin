@@ -1,7 +1,10 @@
 // Genshin Artifact Generation
 
+// @ts-ignore
 import plugin from '../../../lib/plugins/plugin.js';
+// @ts-ignore
 import puppeteer from '../../../lib/puppeteer/puppeteer.js';
+// @ts-ignore
 import common from '../../../lib/common/common.js';
 
 import { DisplayModes } from '../model/utils.js';
@@ -14,7 +17,7 @@ const scorer = data.Scorer;
 let throttle: boolean = false;
 let lastArtifact: { [key: string]: gs.Piece | gs.Piece[] } = {};
 
-export class Genshin_ArtifactPlugin extends plugin {
+export class Genshin_ArtifactPlugin extends (plugin as any) {
     constructor() {
         super({
             name: '刷原神圣遗物',

@@ -1,7 +1,10 @@
 // StarRail Relic Generation
 
+// @ts-ignore
 import plugin from '../../../lib/plugins/plugin.js';
+// @ts-ignore
 import puppeteer from '../../../lib/puppeteer/puppeteer.js';
+// @ts-ignore
 import common from '../../../lib/common/common.js';
 
 import * as sr from '../model/starrail_relic.js';
@@ -11,7 +14,7 @@ let throttle: boolean = false;
 
 let lastRelic: { [key: string]: sr.Piece | sr.Piece[] } = {};
 
-export class Plugin extends plugin {
+export class Plugin extends (plugin as any) {
     constructor() {
         super({
             name: '刷星铁遗器',
