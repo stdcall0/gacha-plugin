@@ -1,23 +1,15 @@
 // Genshin Artifact Generation
 
-// @ts-ignore
-import plugin from '../../../lib/plugins/plugin.js';
-// @ts-ignore
-import puppeteer from '../../../lib/puppeteer/puppeteer.js';
-// @ts-ignore
-import common from '../../../lib/common/common.js';
+import { Plugin, Common, DisplayModes } from '#gc';
 
-import { DisplayModes } from '../model/utils.js';
-
-import * as gs from '../model/genshin_artifact.js';
-import * as data from '../resources/genshin_artifact_data.js';
+import { Genshin as gs, GenshinData as data } from '#gc.model';
 
 const scorer = data.Scorer;
 
 let throttle: boolean = false;
 let lastArtifact: { [key: string]: gs.Piece | gs.Piece[] } = {};
 
-export class Genshin_ArtifactPlugin extends (plugin as any) {
+export class GSPlugin extends Plugin {
     constructor() {
         super({
             name: '刷原神圣遗物',
@@ -103,7 +95,7 @@ export class Genshin_ArtifactPlugin extends (plugin as any) {
             let max = DisplayModes.Float1D(Math.max(...scores));
             let avg = DisplayModes.Float1D(scores.reduce((a, b) => a+b, 0) / scores.length);
 
-            const msg = await common.makeForwardMsg(this.e, imgs, `点击查看圣遗物\n最高分: ${max}; 平均分: ${avg}`);
+            const msg = await Common.makeForwardMsg(this.e, imgs, `点击查看圣遗物\n最高分: ${max}; 平均分: ${avg}`);
             await this.reply(msg, false, { at: false, recallMsg: 0 });
         }
 
@@ -161,7 +153,7 @@ export class Genshin_ArtifactPlugin extends (plugin as any) {
             let max = DisplayModes.Float1D(Math.max(...scores));
             let avg = DisplayModes.Float1D(scores.reduce((a, b) => a+b, 0) / scores.length);
 
-            const msg = await common.makeForwardMsg(this.e, imgs, `点击查看强化结果\n最高分: ${max}; 平均分: ${avg}`);
+            const msg = await Common.makeForwardMsg(this.e, imgs, `点击查看强化结果\n最高分: ${max}; 平均分: ${avg}`);
             await this.reply(msg, false, { at: false, recallMsg: 0 });
         }
 
