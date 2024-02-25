@@ -51,17 +51,17 @@ export class SRPlugin extends Plugin {
         if (times !== times || times <= 1) {
             let piece = domain.rollPiece();
             lastRelic[this.e.user_id] = piece;
-            const msg = piece.generateText(scorer(piece));
-            await this.reply(msg, false, { at: false, recallMsg: 0 });
+            const img = await piece.generateImage(scorer(piece));
+            await this.reply(img, false, { at: false, recallMsg: 0 });
         }
         else if (times <= 20) {
-            let msgs = [];
+            let imgs = [];
             let pieces = domain.rollPieceMulti(times);
             pieces.sort((a, b) => scorer(b) - scorer(a));
             for (const piece of pieces)
-                msgs.push(piece.generateText(scorer(piece)));
+                imgs.push(await piece.generateImage(scorer(piece)));
             lastRelic[this.e.user_id] = pieces;
-            const msg = await Common.makeForwardMsg(this.e, msgs, `点击查看遗器`);
+            const msg = await Common.makeForwardMsg(this.e, imgs, `点击查看遗器`);
             await this.reply(msg, false, { at: false, recallMsg: 0 });
         }
         throttle = false;
@@ -93,20 +93,20 @@ export class SRPlugin extends Plugin {
             let piece = pieces;
             this.upgradeTimes(piece, times);
             lastRelic[this.e.user_id] = piece;
-            const msg = piece.generateText(scorer(piece));
-            await this.reply(msg, false, { at: false, recallMsg: 0 });
+            const img = await piece.generateImage(scorer(piece));
+            await this.reply(img, false, { at: false, recallMsg: 0 });
         }
         else {
-            let msgs = [];
+            let imgs = [];
             for (let piece of pieces) {
                 this.upgradeTimes(piece, times);
             }
             pieces.sort((a, b) => scorer(b) - scorer(a));
             for (let piece of pieces) {
-                msgs.push(piece.generateText(scorer(piece)));
+                imgs.push(await piece.generateImage(scorer(piece)));
             }
             lastRelic[this.e.user_id] = pieces;
-            const msg = await Common.makeForwardMsg(this.e, msgs, `点击查看强化结果`);
+            const msg = await Common.makeForwardMsg(this.e, imgs, `点击查看强化结果`);
             await this.reply(msg, false, { at: false, recallMsg: 0 });
         }
         throttle = false;

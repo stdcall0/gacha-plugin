@@ -1,0 +1,212 @@
+@font-face {
+    font-family: "starrail";
+    src: url("../font/starrail.ttf");
+    font-weight: normal;
+    font-style: normal;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'starrail';
+}
+
+/* title color: 255, 200, 112 */
+/* bar color: 183, 141, 97 */
+/* pos color: 230, 219, 214 */
+/* mainstat: 242, 163, 60*/
+/* bg mainstat: 65, 65, 65 */
+
+
+body {
+    width: 746px;
+}
+
+.body {
+    width: 746px;
+    background: url(./img/sr_bg.png) no-repeat;
+}
+
+.title {
+    position: relative;
+    margin-top: 23px;
+    color: rgb(255, 200, 112);
+    font-size: 40px;
+}
+
+.name {
+    position: absolute;
+    left: 23px;
+}
+
+.score {
+    position: absolute;
+    right: 23px;
+}
+
+.bar {
+    width: 700px;
+    height: 5px;
+    margin-left: 23px;
+    background: rgb(183, 141, 97);
+    margin-top: 4px;
+    margin-bottom: 35px;
+}
+
+.relicBg {
+    position: relative;
+    width: 700px;
+    margin-left: 23px;
+    background-image: url(./img/FrameItemRarityBg05.png);
+    background-size: contain;
+}
+
+.pieceType {
+    position: absolute;
+    top: 136px;
+    left: 26px;
+    color: rgb(230, 219, 214);
+    font-size: 35px;
+    text-shadow: 0px 1px 1px rgba(0,0,0,200);
+}
+
+.pieceLevel, .pieceLevelSign {
+    position: absolute;
+    top: 180px;
+    margin-left: 26px;
+    color: white;
+    font-size: 50px;
+    text-shadow: 0px 1px 1px rgba(0,0,0,200);
+}
+
+.pieceLevelSpace {
+    display: inline-block;
+    width: 22px;
+}
+
+.relicImg {
+    margin: 0 auto;
+    margin-left: 65%;
+    transform: translateX(-50%);
+    display: inline-block;
+
+    width: 261px;
+    height: 261px;
+}
+
+.relicImg > img {
+    width: 100%;
+    vertical-align: middle;
+}
+
+.lockCircle {
+    position: absolute;
+    height: 40px;
+    width: 40px;
+    top: 50%;
+    transform: translate(0, -50%);
+    right: 30px;
+    background-color: #00000036;
+    border: 2px;
+    border-radius: 50%;
+    border-style: solid;
+    border-color: #00000050;
+    box-shadow: 0px 0px 2px 2px #00000030;
+    display: inline-block;
+}
+.lockCircle > img {
+    height: 85%;
+    width: 85%;
+    margin-top: 7.5%;
+    margin-left: 8.5%;
+    transform: scaleX(-1);
+    filter: drop-shadow(0 1px 1px #00000030);
+}
+
+.lockedCircle {
+    position: absolute;
+    height: 40px;
+    width: 40px;
+    top: 50%;
+    transform: translate(0, -50%);
+    right: 30px;
+    background-color: #FFFFFF;
+    border-radius: 50%;
+    box-shadow: 0px 0px 2px 2px #00000020;
+    display: inline-block;
+}
+.lockedCircle > img {
+    height: 85%;
+    width: 85%;
+    margin-top: 7.5%;
+    margin-left: 7.5%;
+    filter: invert(100%);
+}
+
+.mainStatBox {
+    position: relative;
+    margin-top: 60px;
+    margin-left: 23px;
+    margin-right: 23px;
+    margin-bottom: 0;
+    background-color: #FFFFFF36;
+    height: 60px;
+}
+
+.mainStatIcon {
+    position: absolute;
+    width: 60px;
+    height: 60px;
+    max-width: 100%;
+    filter: invert(29%) sepia(85%) saturate(534%) hue-rotate(329deg)
+        brightness(98%) contrast(94%) drop-shadow(0 1px 1px rgba(0,0,0,200));
+}
+.mainStatName, .mainStatValue {
+    color: rgb(242, 163, 60);
+    text-shadow: 0px 1px 1px rgba(0,0,0,200);
+    font-size: 38px;
+    vertical-align: center;
+    height: 60px;
+    line-height: 60px;
+    position: absolute;
+}
+.mainStatName, .subStatName {
+    left: 68px;
+}
+.mainStatValue, .subStatValue {
+    right: 15px;
+}
+
+.subStatBox {
+    position: relative;
+    margin-left: 23px;
+    margin-right: 23px;
+    height: 60px;
+    background-color: #00000040;
+}
+.subStats .subStatBox:nth-child(even) {
+    background: none;
+}
+.subStatRow {
+    position: relative;
+    padding-top: 2.5px;
+    height: 55px;
+}
+.subStatIcon {
+    position: absolute;
+    margin-top: 2.5px;
+    margin-left: 2.5px;
+    width: 50px;
+    height: 50px;
+    max-width: 100%;
+    filter: drop-shadow(0 1px 1px rgba(0,0,0,200));
+}
+.subStatName, .subStatValue {
+    color: white;
+    text-shadow: 0px 1px 1px rgba(0,0,0,200);
+    font-size: 30px;
+    vertical-align: center;
+    height: 55px;
+    line-height: 55px;
+    position: absolute;
+}
