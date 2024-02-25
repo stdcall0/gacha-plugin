@@ -19,20 +19,25 @@ await (async function loadSRdata() {
         }
     }
 })();
-let ret = [];
-const files = fs.readdirSync('./plugins/gacha-plugin/apps').filter(file => file.endsWith('.js'));
-files.forEach((file) => {
-    ret.push(import(`./apps/${file}`));
-});
-ret = await Promise.allSettled(ret);
-let apps = {};
-for (let i in files) {
-    let name = files[i].replace('.js', '');
-    if (ret[i].status != 'fulfilled') {
-        Logger.error(`载入插件错误：${Logger.red(name)}`);
-        Logger.error(ret[i].reason);
-        continue;
+const apps = await (async function loadApps() {
+    let ret = [];
+    const files = fs
+        .readdirSync('./plugins/gacha-plugin/apps')
+        .filter(file => file.endsWith('.js'));
+    files.forEach((file) => {
+        ret.push(import(`./apps/${file}`));
+    });
+    ret = await Promise.allSettled(ret);
+    let apps = {};
+    for (let i in files) {
+        let name = files[i].replace('.js', '');
+        if (ret[i].status != 'fulfilled') {
+            Logger.error(`[gacha-plugin]：Failed to load ${name}`);
+            Logger.error(ret[i].reason);
+            continue;
+        }
+        apps[name] = ret[i].value[Object.keys(ret[i].value)[0]];
     }
-    apps[name] = ret[i].value[Object.keys(ret[i].value)[0]];
-}
+    return apps;
+})();
 export { apps };

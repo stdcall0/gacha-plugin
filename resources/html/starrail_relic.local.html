@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <title></title>
+    <link rel="preload" href="../font/starrail.ttf" as="font">
+    <link rel="stylesheet" type="text/css" href="./starrail_relic.css" />
+</head>
+
+<body>
+    <div class="body">
+        <div class="title">
+            <div class="name">displayName</div>
+            <div class="score">score</div>
+        </div>
+        <div class="bar"></div>
+        <div class="relicBg">
+            <div class="pieceType">displayName</div>
+            <div class="pieceLevelSign">+</div> 
+            <div class="pieceLevel">
+                <span class="pieceLevelSpace"></span>
+                level
+            </div>
+            <div class="relicImg">
+                <img src="../starrail/World 7/309_0.png">
+            </div>
+        <!--{{ if locked }}-->
+            <div class="lockedCircle">
+                <img src="./img/IconLock.png" />
+            </div>
+        <!--{{ else }}
+            <div class="lockCircle">
+                <img src="{{ htmlPath }}/img/IconUnLock.png" />
+            </div>
+        {{ /if }}-->
+        </div>
+        <div class="mainStatBox">
+            <img class="mainStatIcon" src="../img/sr/ATK.webp" />
+            <div class="mainStatName">
+                displayName
+            </div>
+            <div class="mainStatValue">
+                displayValue
+            </div>
+        </div>
+
+        <div class="subStats">
+            <div class="subStatBox">
+                <div class="subStatRow">
+                    <img class="subStatIcon" src="../img/sr/Imaginary DMG Boost.webp" />
+                    <div class="subStatName">
+                        disName1
+                        <span class="subStatUpgrade">
+                            upText1
+                        </span>
+                    </div>
+                    <div class="subStatValue">
+                        disValue1
+                    </div>
+                </div>
+            </div>
+            <div class="subStatBox">
+                <div class="subStatRow">
+                    <img class="subStatIcon" src="../img/sr/ATK.webp" />
+                    <div class="subStatName">
+                        disName2
+                        <span class="subStatUpgrade">
+                            upText2
+                        </span>
+                    </div>
+                    <div class="subStatValue">
+                        disValue2
+                    </div>
+                </div>
+            </div>
+            <div class="subStatBox">
+                <div class="subStatRow">
+                    <img class="subStatIcon" src="../img/sr/Imaginary DMG Boost.webp" />
+                    <div class="subStatName">
+                        disName3
+                        <span class="subStatUpgrade">
+                            upText3
+                        </span>
+                    </div>
+                    <div class="subStatValue">
+                        disValue3
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+    </div>
+</body>
+
+</html>
