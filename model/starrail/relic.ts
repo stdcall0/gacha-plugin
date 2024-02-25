@@ -59,7 +59,7 @@ export class Piece extends Base.Piece<Set> {
         if (!this.pieceData) return null;
 
         const data = {
-            tplFile: Path.HTML + 'starrail_relic.html',
+            tplFile: Path.HTML + '/starrail_relic.html',
             resPath: Path.Resource,
             htmlPath: Path.HTML,
             piece: this,
