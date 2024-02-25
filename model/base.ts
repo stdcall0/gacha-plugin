@@ -2,7 +2,22 @@ import lodash from 'lodash';
 
 import { Lottery, DisplayMode, Path } from '#gc';
 
-export abstract class Stat {
+export interface Stat {
+    constructor: CallableFunction;
+    name: string;
+    displayName: string;
+    displayMode: DisplayMode;
+
+    get displayValue(): string;
+
+    rollBase(): void;
+    rollUpgrade(): void;
+
+    instance(): this;
+    alterName(name: string, displayName: string): this;
+};
+
+export abstract class BaseStat implements Stat {
     value: number;
 
     constructor(
@@ -31,7 +46,7 @@ export abstract class Stat {
     }
 };
 
-export class ArrayStat extends Stat { // upgrade values specified in a list
+export class ArrayStat extends BaseStat { // upgrade values specified in a list
     upgradeCount: number;
 
     constructor(
@@ -55,7 +70,7 @@ export class ArrayStat extends Stat { // upgrade values specified in a list
     }
 };
 
-export class ConstantStat extends Stat { // all upgrade values are the same
+export class ConstantStat extends BaseStat { // all upgrade values are the same
     constructor(
         public name: string,
         public displayName: string,
@@ -74,7 +89,7 @@ export class ConstantStat extends Stat { // all upgrade values are the same
     }
 };
 
-export class RandomStat extends Stat { // roll base & upgrade value from a list
+export class RandomStat extends BaseStat { // roll base & upgrade value from a list
     constructor(
         public name: string,
         public displayName: string,
@@ -90,7 +105,7 @@ export class RandomStat extends Stat { // roll base & upgrade value from a list
     }
 };
 
-export class RandomBaseStat extends Stat { // roll base & upgrade value from two lists
+export class RandomBaseStat extends BaseStat { // roll base & upgrade value from two lists
     constructor(
         public name: string,
         public displayName: string,
@@ -128,10 +143,15 @@ export abstract class Piece<SetType extends Set<any>> {
     abstract get level(): number;
 
     get imagePath(): string {
-        if (!(this.parentSet)) return null;
-        if (!(this.name in this.parentSet.pieceData)) return null;
+        if (!(this.pieceData)) return null;
 
-        return Path.Image + "/" + this.parentSet.pieceData[this.name].image;
+        return Path.Image + "/" + this.pieceData.image;
+    }
+
+    get pieceData(): PieceData {
+        if (this.parentSet && this.name in this.parentSet.pieceData)
+            return this.parentSet.pieceData[this.name];
+        return null;
     }
 
     rollMainStat(): void {
@@ -170,12 +190,6 @@ export abstract class Piece<SetType extends Set<any>> {
 
     abstract generateText(score: number): string;
     abstract generateImage(score: number): Promise<string>;
-
-    get pieceData(): PieceData {
-        if (this.parentSet && this.name in this.parentSet.pieceData)
-            return this.parentSet.pieceData[this.name];
-        return null;
-    }
 
     instance(set: SetType): this {
         let piece = Object.create(this);

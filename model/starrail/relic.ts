@@ -1,9 +1,40 @@
 
 import { Base } from '#gc.model';
-import { DisplayModes, Render, Path, Lottery } from '#gc';
+import { DisplayMode, DisplayModes, Render, Path, Lottery } from '#gc';
 
+export enum RelicType {
+    Inner,
+    Outer
+};
+export interface Stat extends Base.Stat {
+    get imagePath(): string;
+};
+
+export class ConstantStat extends Base.ConstantStat implements Stat {
+    get imagePath(): string {
+        return Path.Image + "/sr/" + this.name + ".webp";
+    }
+};
+
+export class RandomStat extends Base.RandomStat implements Stat { 
+    get imagePath(): string {
+        return Path.Image + "/sr/" + this.name + ".webp";
+    }
+};
 
 export class Piece extends Base.Piece<Set> {
+    mainStat: Stat;
+    subStats: Stat[];
+
+    constructor(
+        public name: string,
+        public displayName: string,
+        public mainStatList: Lottery<Stat>,
+        public subStatList: Lottery<Stat>,
+        public subStatCount: Lottery<number>
+    ) {
+        super(name, displayName, mainStatList, subStatList, subStatCount);
+    }
 
     override get level(): number {
         return 0 + this.upgradeCount * 3;
@@ -41,11 +72,6 @@ export class Piece extends Base.Piece<Set> {
 
         return Render.render("starrail_relic", data);
     }
-};
-
-export enum RelicType {
-    Inner,
-    Outer
 };
 
 export class Set extends Base.Set<Piece> {
