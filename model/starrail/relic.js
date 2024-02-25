@@ -37,6 +37,11 @@ export class Piece extends Base.Piece {
     get level() {
         return 0 + this.upgradeCount * 3;
     }
+    get imagePath() {
+        if (!(this.pieceData))
+            return null;
+        return Path.Resource + "/starrail/" + this.pieceData.image;
+    }
     generateText(score) {
         if (!this.pieceData)
             return null;
