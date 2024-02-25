@@ -1,6 +1,6 @@
 // StarRail Relic Generation
 import { Plugin, Common, StrReplace } from '#gc';
-import { StarRailData as data } from '#gc.model';
+import { StarRailData as data } from '#gc.res';
 const scorer = data.Scorer;
 let throttle = false;
 let lastRelic = {};

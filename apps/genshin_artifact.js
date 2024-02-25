@@ -1,6 +1,6 @@
 // Genshin Artifact Generation
 import { Plugin, Common, DisplayModes, StrReplace } from '#gc';
-import { GenshinData as data } from '#gc.model';
+import { GenshinData as data } from '#gc.res';
 const scorer = data.Scorer;
 let throttle = false;
 let lastArtifact = {};
