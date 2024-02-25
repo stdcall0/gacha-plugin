@@ -8,11 +8,20 @@ const dirs = fs.readdirSync(Path.Resource + '/starrail', { withFileTypes: true }
     .map(item => item.name);
 for (let i = 0; i < dirs.length; ++i)
     try {
+        // @ts-ignore
+        logger.info(`[gacha-plugin-SR] loading ${dirs[i]}..`);
         await import(`./${dirs[i]}/index.js`);
     }
     catch (e) {
         // @ts-ignore
-        logger.warn(`Failed to load ${dirs[i]}: ${e}`);
+        logger.warn(`[gacha-plugin-SR] Failed to load ${dirs[i]}: ${e}`);
     }
-export * from './set.js';
-export * from './domain.js';
+import { Sets as sets } from './set.js';
+import { Domains as domains } from './domain.js';
+const Sets = sets;
+const Domains = domains;
+// @ts-ignore
+logger.info(`[gacha-plugin-SR] Sets: ${Sets}`);
+// @ts-ignore
+logger.info(`[gacha-plugin-SR] Domains: ${Domains}`);
+export { Sets, Domains };
