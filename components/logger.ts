@@ -1,4 +1,5 @@
 type Log = (...args: any[]) => void;
+type Color = (...args: any[]) => any;
 
 interface ILogger {
     trace: Log;
@@ -8,6 +9,13 @@ interface ILogger {
     error: Log;
     fatal: Log;
     mark: Log;
+    chalk: any;
+    red: Color;
+    green: Color;
+    yellow: Color;
+    blue: Color;
+    magenta: Color;
+    cyan: Color;
 };
 
 // @ts-ignore
