@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import { Path } from '#gc';
-await (async function loadSRmeta() {
+await (async function loadSRdata() {
     await import('#@/resources/starrail/index.js');
     const dirs = fs.readdirSync(Path.Resource + '/starrail', { withFileTypes: true })
         .filter(item => item.isDirectory())
