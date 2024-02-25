@@ -29,9 +29,10 @@ body {
 
 .title {
     position: relative;
-    margin-top: 23px;
+    padding-top: 23px;
     color: rgb(255, 200, 112);
     font-size: 40px;
+    height: 52px;
 }
 
 .name {
