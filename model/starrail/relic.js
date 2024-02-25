@@ -11,11 +11,17 @@ export class ConstantStat extends Base.ConstantStat {
     get imagePath() {
         return Path.Image + "/sr/" + this.name + ".webp";
     }
+    get upgradeText() {
+        return ">".repeat(this.upgradeCount);
+    }
 }
 ;
 export class RandomStat extends Base.RandomStat {
     get imagePath() {
         return Path.Image + "/sr/" + this.name + ".webp";
+    }
+    get upgradeText() {
+        return ">".repeat(this.upgradeCount);
     }
 }
 ;

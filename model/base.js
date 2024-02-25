@@ -6,7 +6,7 @@ export class BaseStat {
         this.name = name;
         this.displayName = displayName;
         this.displayMode = displayMode;
-        this.value = 0.;
+        this.value = this.upgradeCount = 0;
     }
     get displayValue() {
         return this.displayMode(this.value);
@@ -31,9 +31,9 @@ export class ArrayStat extends BaseStat {
         this.displayName = displayName;
         this.displayMode = displayMode;
         this.values = values;
-        this.upgradeCount = 0;
     }
     rollBase() {
+        this.upgradeCount = 0;
         this.value = this.values[0];
     }
     rollUpgrade() {
@@ -53,9 +53,11 @@ export class ConstantStat extends BaseStat {
         this.upgradeValue = upgradeValue;
     }
     rollBase() {
+        this.upgradeCount = 0;
         this.value = this.baseValue;
     }
     rollUpgrade() {
+        this.upgradeCount += 1;
         this.value += this.upgradeValue;
     }
 }
@@ -69,9 +71,11 @@ export class RandomStat extends BaseStat {
         this.values = values;
     }
     rollBase() {
+        this.upgradeCount = 0;
         this.value = this.values.choice();
     }
     rollUpgrade() {
+        this.upgradeCount += 1;
         this.value += this.values.choice();
     }
 }
@@ -86,9 +90,11 @@ export class RandomBaseStat extends BaseStat {
         this.upgradeValues = upgradeValues;
     }
     rollBase() {
+        this.upgradeCount = 0;
         this.value = this.baseValues.choice();
     }
     rollUpgrade() {
+        this.upgradeCount += 1;
         this.value += this.upgradeValues.choice();
     }
 }
