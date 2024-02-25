@@ -4,7 +4,9 @@ import { Lottery, DisplayMode, Path } from '#gc';
 
 export interface Stat {
     constructor: CallableFunction;
+
     name: string;
+    value: number;
     displayName: string;
     displayMode: DisplayMode;
 
