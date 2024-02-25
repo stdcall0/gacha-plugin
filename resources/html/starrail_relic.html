@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+    <title></title>
+    <link rel="preload" href="{{ resPath }}/font/starrail.ttf" as="font">
+    <link rel="stylesheet" type="text/css" href="{{ htmlPath }}/starrail_artifact.css" />
+</head>
+
+<body>
+    <div class="body">
+        <div class="title">
+            <div class="name">{{ piece.pieceData.displayName }}</div>
+            <div class="score">{{ score }}</div>
+        </div>
+        <div class="bar"></div>
+        <div class="relicBg">
+            <div class="pieceType">{{ piece.displayName }}</div>
+            <div class="pieceLevelSign">+</div> 
+            <div class="pieceLevel">
+                <span class="pieceLevelSpace"></span>
+                {{ piece.level }}
+            </div>
+            <div class="relicImg">
+                <img src="{{ piece.imagePath }}">
+            </div>
+        {{ if locked }}
+            <div class="lockedCircle">
+                <img src="img/IconLock.png" />
+            </div>
+        {{ else }}
+            <div class="lockCircle">
+                <img src="img/IconUnLock.png" />
+            </div>
+        {{ /if }}
+        </div>
+        <div class="mainStatBox">
+            <img class="mainStatIcon" src="{{ piece.mainStat.imagePath }}" />
+            <div class="mainStatName">
+                {{ piece.mainStat.displayName }}
+            </div>
+            <div class="mainStatValue">
+                {{ piece.mainStat.displayValue }}
+            </div>
+        </div>
+
+        <div class="subStats">
+        {{ each piece.subStats subStat }}
+            <div class="subStatBox">
+                <div class="subStatRow">
+                    <img class="subStatIcon" src="{{ subStat.imagePath }}" />
+                    <div class="subStatName">
+                        {{ subStat.displayName }}
+                    </div>
+                    <div class="subStatValue">
+                        {{ subStat.displayValue }}
+                    </div>
+                </div>
+            </div>
+        {{ /each }}
+        </div>
+        <br>
+    </div>
+</body>
+
+</html>
