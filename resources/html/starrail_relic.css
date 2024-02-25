@@ -211,3 +211,12 @@ body {
     line-height: 55px;
     position: absolute;
 }
+.subStatUpgrade {
+    margin-left: 30px;
+    color: rgba(255,255,255,175);
+    text-shadow: 0px 1px 1px rgba(0,0,0,200);
+    font-size: 24px;
+    vertical-align: center;
+    height: 55px;
+    line-height: 55px;
+}

@@ -8,17 +8,24 @@ export enum RelicType {
 };
 export interface Stat extends Base.Stat {
     get imagePath(): string;
+    get upgradeText(): string;
 };
 
 export class ConstantStat extends Base.ConstantStat implements Stat {
     get imagePath(): string {
         return Path.Image + "/sr/" + this.name + ".webp";
     }
+    get upgradeText(): string {
+        return ">".repeat(this.upgradeCount);
+    }
 };
 
 export class RandomStat extends Base.RandomStat implements Stat { 
     get imagePath(): string {
         return Path.Image + "/sr/" + this.name + ".webp";
+    }
+    get upgradeText(): string {
+        return ">".repeat(this.upgradeCount);
     }
 };
 
