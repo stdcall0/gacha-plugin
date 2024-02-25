@@ -11,6 +11,7 @@
   "imports": {
     "#gc": "./components/index.js",
     "#gc.model": "./model/index.js",
+    "#gc.res": "./resources/index.js",
     "#@/*": "./*"
   }
 }

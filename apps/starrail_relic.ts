@@ -2,7 +2,8 @@
 
 import { Plugin, Common, StrReplace } from '#gc';
 
-import { StarRail as sr, StarRailData as data } from '#gc.model';
+import { StarRail as sr } from '#gc.model';
+import { StarRailData as data } from '#gc.res';
 
 const scorer: sr.Scorer = data.Scorer;
 

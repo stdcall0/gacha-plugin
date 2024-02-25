@@ -2,7 +2,8 @@
 
 import { Plugin, Common, DisplayModes, StrReplace } from '#gc';
 
-import { Genshin as gs, GenshinData as data } from '#gc.model';
+import { Genshin as gs } from '#gc.model';
+import { GenshinData as data } from '#gc.res';
 
 const scorer = data.Scorer;
 
