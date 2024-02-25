@@ -56,18 +56,15 @@ export class Piece extends Base.Piece<Set> {
     }
 
     override async generateImage(score: number): Promise<string> {
-        // TODO: generate Artifact Image for Star Rail
-        // Might need to check for relic type (inner & outer)
-        throw new Error("Not Implemented"); // not implemented yet
-
         if (!this.pieceData) return null;
 
         const data = {
             tplFile: Path.HTML + 'starrail_relic.html',
-            pluResPath: Path.Process,
-            artifactPiece: this,
-            artifactScore: DisplayModes.Float1D(score),
-            locked: false
+            resPath: Path.Resource,
+            htmlPath: Path.HTML,
+            piece: this,
+            score: DisplayModes.Float1D(score),
+            locked: score >= 20
         };
 
         return Render.render("starrail_relic", data);
