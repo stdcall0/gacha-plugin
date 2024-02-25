@@ -1,6 +1,33 @@
 import { Base } from '#gc.model';
 import { DisplayModes, Render, Path } from '#gc';
+export var RelicType;
+(function (RelicType) {
+    RelicType[RelicType["Inner"] = 0] = "Inner";
+    RelicType[RelicType["Outer"] = 1] = "Outer";
+})(RelicType || (RelicType = {}));
+;
+;
+export class ConstantStat extends Base.ConstantStat {
+    get imagePath() {
+        return Path.Image + "/sr/" + this.name + ".webp";
+    }
+}
+;
+export class RandomStat extends Base.RandomStat {
+    get imagePath() {
+        return Path.Image + "/sr/" + this.name + ".webp";
+    }
+}
+;
 export class Piece extends Base.Piece {
+    constructor(name, displayName, mainStatList, subStatList, subStatCount) {
+        super(name, displayName, mainStatList, subStatList, subStatCount);
+        this.name = name;
+        this.displayName = displayName;
+        this.mainStatList = mainStatList;
+        this.subStatList = subStatList;
+        this.subStatCount = subStatCount;
+    }
     get level() {
         return 0 + this.upgradeCount * 3;
     }
@@ -30,12 +57,6 @@ export class Piece extends Base.Piece {
         return Render.render("starrail_relic", data);
     }
 }
-;
-export var RelicType;
-(function (RelicType) {
-    RelicType[RelicType["Inner"] = 0] = "Inner";
-    RelicType[RelicType["Outer"] = 1] = "Outer";
-})(RelicType || (RelicType = {}));
 ;
 export class Set extends Base.Set {
     constructor(name, displayName, aliases, type, pieceList, pieceData) {
