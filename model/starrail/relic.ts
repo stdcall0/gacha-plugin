@@ -47,6 +47,12 @@ export class Piece extends Base.Piece<Set> {
         return 0 + this.upgradeCount * 3;
     }
 
+    override get imagePath(): string {
+        if (!(this.pieceData)) return null;
+
+        return Path.Resource + "/starrail/" + this.pieceData.image;
+    }
+
     override generateText(score: number): string {
         if (!this.pieceData) return null;
 

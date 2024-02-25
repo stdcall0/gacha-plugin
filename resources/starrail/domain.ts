@@ -1,22 +1,11 @@
 import { Lottery } from '#gc';
 import { StarRail } from '#gc.model';
 
-import { Sets } from './set.js';
+export let Domains: StarRail.Domain[] = [];
 
-
-export const Domains = [
-    new StarRail.Domain(
-        "Path of Providence", "睿治之径",
-        ["量子本"],
-        new Lottery([
-            Sets.GeniusOfBrilliantStars,
-        ])
-    ),
-    new StarRail.Domain(
-        "World 7", "第七世界",
-        [""],
-        new Lottery([
-            Sets.RutilantArena,
-        ])
-    ),
-];
+export function AddDomain(name: string, displayName: string, aliases: string[], sets: StarRail.Set[]) {
+    return new StarRail.Domain(
+        name, displayName, aliases,
+        new Lottery(sets)
+    );
+};
