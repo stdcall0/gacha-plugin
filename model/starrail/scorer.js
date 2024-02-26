@@ -1,4 +1,5 @@
 import { Base } from "#gc.model";
+import { Logger } from "#gc";
 ;
 export class ScoreRule extends Base.ScoreRule {
 }
@@ -16,6 +17,7 @@ export class MainStatWeightRule extends ScoreRule {
         return this.pieceName.includes(piece.name);
     }
     add(piece, weight) {
+        Logger.warn(`[gc] mainrule scale ${this.scale} mul ${findRule(piece.mainStat, weight)}`);
         return this.scale * findRule(piece.mainStat, weight);
     }
 }
@@ -42,6 +44,7 @@ export class SubStatWeightRule extends ScoreRule {
     add(piece, weight) {
         let score = 0;
         piece.subStats.forEach(subStat => {
+            Logger.warn(`[gc] sub ${subStat.displayName} value ${subStat.value} scale ${findRule(subStat, weight)} mul ${findRule(subStat, this.multipler)}`);
             score += subStat.value
                 * findRule(subStat, weight)
                 * findRule(subStat, this.multipler);
