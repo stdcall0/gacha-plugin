@@ -17,9 +17,11 @@
         <div class="bar"></div>
         <div class="title2">
             <div class="score">{{ score }}</div>
+        {{ if showTier }}
             <div class="tier">
                 <span class="tier{{ tier }}">{{ tier }}</span>
             </div>
+        {{ /if }}
         </div>
         <div class="relicBg">
             <div class="pieceType">{{ piece.displayName }}</div>
