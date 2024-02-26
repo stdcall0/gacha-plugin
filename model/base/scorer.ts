@@ -1,6 +1,8 @@
 import { Stat } from "./stat.js";
 import { Piece } from "./piece.js";
 
+import { Logger } from "#gc";
+
 export interface StatWeightTable { [stat: string]: number };
 
 export abstract class ScoreRule<PieceType extends Piece<any>> {
@@ -36,6 +38,7 @@ export abstract class Scorer<PieceType extends Piece<any>> {
         .forEach(rule => {
             score += rule.add(piece, this.weight);
             mul *= rule.mul(piece, this.weight);
+            Logger.warn(`[gc] score ${score} mul ${mul}`);
         });
         return score * mul;
     }
