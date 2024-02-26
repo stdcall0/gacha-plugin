@@ -38,7 +38,6 @@ export abstract class Scorer<PieceType extends Piece<any>> {
         .forEach(rule => {
             score += rule.add(piece, this.weight);
             mul *= rule.mul(piece, this.weight);
-            Logger.warn(`[gc] score ${score} mul ${mul}`);
         });
         return score * mul;
     }

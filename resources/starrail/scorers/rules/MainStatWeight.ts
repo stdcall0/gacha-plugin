@@ -1,6 +1,6 @@
 import { StarRail } from "#gc.model";
 
-export const MainStatWeight = new StarRail.MainStatLevelRule(
+export const MainStatWeight = new StarRail.MainStatWeightRule(
     [
         "Body",
         "Feet",
