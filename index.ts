@@ -5,22 +5,22 @@ import { Path, Logger } from '#gc';
 await (async function loadSRdata() {
     await import('#@/resources/starrail/index.js');
 
-    const dirs = fs.readdirSync(Path.Resource + '/starrail', {withFileTypes: true})
-            .filter(item => item.isDirectory() && item.name != "scorers")
+    const files = fs.readdirSync(Path.Resource + '/starrail/relics', {withFileTypes: true})
+            .filter(item => !item.isDirectory() && item.name.endsWith(".js"))
             .map(item => item.name);
 
     let ret = [];
 
-    for (let i = 0; i < dirs.length; ++i) {
-        Logger.info(`[gacha-plugin-SR] loading ${dirs[i]}..`);
-        ret.push(import(`${Path.Resource}/starrail/${dirs[i]}/index.js`));
+    for (let i = 0; i < files.length; ++i) {
+        Logger.info(`[gacha-plugin-SR] loading relic ${files[i]}..`);
+        ret.push(import(`${Path.Resource}/starrail/relics/${files[i]}.js`));
     }
 
     ret = await Promise.allSettled(ret);
 
-    for (let i = 0; i < dirs.length; ++i) {
+    for (let i = 0; i < files.length; ++i) {
         if (ret[i].status != 'fulfilled') {
-            Logger.error(`[gacha-plugin-SR] Failed to load ${dirs[i]}`);
+            Logger.error(`[gacha-plugin-SR] Failed to load ${files[i]}`);
             Logger.error(ret[i].reason);
         }
     }

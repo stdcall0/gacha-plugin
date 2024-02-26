@@ -56,7 +56,7 @@ export class Piece extends Base.Piece<Set> {
     override get imagePath(): string {
         if (!(this.pieceData)) return null;
 
-        return Path.Resource + "/starrail/" + this.pieceData.image;
+        return Path.MiaoRes + "/" + this.pieceData.image;
     }
 
     private calculateScore(): void {
