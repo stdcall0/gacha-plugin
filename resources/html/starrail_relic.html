@@ -15,14 +15,14 @@
             <div class="score">{{ score }}</div>
         </div>
         <div class="bar"></div>
+        {{ if showTier }}
         <div class="title2">
             <div class="scoreSrc">{{ scoreSrc }}</div>
-        {{ if showTier }}
             <div class="tier">
                 <span class="tier{{ tier }}">{{ tier }}</span>
             </div>
-        {{ /if }}
         </div>
+        {{ /if }}
         <div class="relicBg">
             <div class="pieceType">{{ piece.displayName }}</div>
             <div class="pieceLevelSign">+</div> 
