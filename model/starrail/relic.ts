@@ -106,7 +106,8 @@ export class Piece extends Base.Piece<Set> {
             htmlPath: Path.HTML,
             piece: this,
             score: DisplayModes.Float1D(this.score),
-            scoreSrc: "规则: this.scoreSrc",
+            scoreSrc: `@${this.scoreSrc}`,
+            showTier: this.level >= 15,
             tier: ScoreTier(this.score),
             locked: this.score >= 40
         };
