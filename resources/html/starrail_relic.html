@@ -12,9 +12,15 @@
     <div class="body">
         <div class="title">
             <div class="name">{{ piece.pieceData.displayName }}</div>
-            <div class="score">{{ score }}</div>
+            <div class="scoreSrc">{{ scoreSrc }}</div>
         </div>
         <div class="bar"></div>
+        <div class="title2">
+            <div class="score">{{ score }}</div>
+            <div class="tier">
+                <span class="tier{{ tier }}">{{ tier }}</span>
+            </div>
+        </div>
         <div class="relicBg">
             <div class="pieceType">{{ piece.displayName }}</div>
             <div class="pieceLevelSign">+</div> 

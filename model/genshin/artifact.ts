@@ -41,8 +41,8 @@ export class Set extends Base.Set<Piece> { };
 
 export class Domain extends Base.Domain<Piece, Set> { };
 
-export interface Scorer extends Base.Scorer {
+export interface Scorer {
     (piece: Piece): number
 };
 
-export interface ScoreRule extends Base.ScoreRule { [stat: string]: number };
+export interface ScoreRule { [stat: string]: number };

@@ -5,8 +5,6 @@ import { Plugin, Common, StrReplace } from '#gc';
 import { StarRail as sr } from '#gc.model';
 import { StarRailData as data } from '#gc.res';
 
-const scorer: sr.Scorer = data.Scorer;
-
 let throttle: boolean = false;
 let lastRelic: { [key: string]: sr.Piece | sr.Piece[] } = {};
 
@@ -65,16 +63,16 @@ export class SRPlugin extends Plugin {
 
             lastRelic[this.e.user_id] = piece;
     
-            const img = await piece.generateImage(scorer(piece));
+            const img = await piece.generateImage();
             await this.reply(img, false, { at: false, recallMsg: 0 });
 
         } else if (times <= 20) {
             let imgs = [];
             let pieces = domain.rollPieceMulti(times);
 
-            pieces.sort((a, b) => scorer(b) - scorer(a));
+            pieces.sort((a, b) => b.score - a.score);
             for (const piece of pieces)
-                imgs.push(await piece.generateImage(scorer(piece)));
+                imgs.push(await piece.generateImage());
 
             lastRelic[this.e.user_id] = pieces;
 
@@ -116,7 +114,7 @@ export class SRPlugin extends Plugin {
             this.upgradeTimes(piece, times);
             lastRelic[this.e.user_id] = piece;
             
-            const img = await piece.generateImage(scorer(piece));
+            const img = await piece.generateImage();
             await this.reply(img, false, { at: false, recallMsg: 0 });
         } else {
             let imgs = [];
@@ -124,9 +122,9 @@ export class SRPlugin extends Plugin {
                 this.upgradeTimes(piece, times);
             }
 
-            pieces.sort((a, b) => scorer(b) - scorer(a));
+            pieces.sort((a, b) => b.score - a.score);
             for (let piece of pieces) {
-                imgs.push(await piece.generateImage(scorer(piece)));
+                imgs.push(await piece.generateImage());
             }
             lastRelic[this.e.user_id] = pieces;
 

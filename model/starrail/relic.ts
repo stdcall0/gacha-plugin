@@ -1,6 +1,7 @@
-
 import { Base } from '#gc.model';
-import { DisplayMode, DisplayModes, Render, Path, Lottery } from '#gc';
+import { DisplayModes, Render, Path, Lottery, ScoreTier } from '#gc';
+
+import { Scorer } from './scorer.js';
 
 export enum RelicType {
     Inner,
@@ -32,6 +33,9 @@ export class RandomStat extends Base.RandomStat implements Stat {
 export class Piece extends Base.Piece<Set> {
     mainStat: Stat;
     subStats: Stat[];
+    private _score: number;
+    private _scoreSrc: string;
+    private _lastLevel: number;
 
     constructor(
         public name: string,
@@ -41,6 +45,8 @@ export class Piece extends Base.Piece<Set> {
         public subStatCount: Lottery<number>
     ) {
         super(name, displayName, mainStatList, subStatList, subStatCount);
+        this._score = 0; this._scoreSrc = "/";
+        this._lastLevel = -1;
     }
 
     override get level(): number {
@@ -53,12 +59,35 @@ export class Piece extends Base.Piece<Set> {
         return Path.Resource + "/starrail/" + this.pieceData.image;
     }
 
-    override generateText(score: number): string {
+    private calculateScore(): void {
+        if (!this.parentSet) return;
+        if (this.level == this._lastLevel) return;
+
+        this.parentSet.scorers.forEach(scorer => {
+            const score = scorer.calc(this);
+            if (score > this._score) {
+                this._score = score;
+                this._scoreSrc = scorer.displayName;
+            }
+        });
+        this._lastLevel = this.level;
+    }
+
+    get score(): number {
+        this.calculateScore();
+        return this._score;
+    }
+    get scoreSrc(): string {
+        this.calculateScore();
+        return this._scoreSrc;
+    }
+
+    override generateText(): string {
         if (!this.pieceData) return null;
 
         let res: string;
         res = `${this.displayName} ${this.pieceData.displayName}\nLv. ${this.level}`;
-        res += `  |  ${DisplayModes.Float2D(score)}\n\n`;
+        res += `  |  ${DisplayModes.Float2D(this.score)}\n\n`;
         res += `${this.mainStat.displayName} ${this.mainStat.displayValue}\n\n`;
 
         this.subStats.forEach(subStat =>
@@ -68,7 +97,7 @@ export class Piece extends Base.Piece<Set> {
         return res.trimEnd();
     }
 
-    override async generateImage(score: number): Promise<string> {
+    override async generateImage(): Promise<string> {
         if (!this.pieceData) return null;
 
         const data = {
@@ -76,8 +105,10 @@ export class Piece extends Base.Piece<Set> {
             resPath: Path.Resource,
             htmlPath: Path.HTML,
             piece: this,
-            score: DisplayModes.Float1D(score),
-            locked: score >= 20
+            score: DisplayModes.Float1D(this.score),
+            scoreSrc: "规则: this.scoreSrc",
+            tier: ScoreTier(this.score),
+            locked: this.score >= 40
         };
 
         return Render.render("starrail_relic", data);
@@ -91,15 +122,10 @@ export class Set extends Base.Set<Piece> {
         public displayName: string,
         public aliases: string[],
         public type: RelicType,
+        public scorers: Scorer[],
         public pieceList: Lottery<Piece>,
         public pieceData: { [name: string]: Base.PieceData }
     ) { super(name, displayName, aliases, pieceList, pieceData); }
 };
 
 export class Domain extends Base.Domain<Piece, Set> { };
-
-export interface Scorer extends Base.Scorer {
-    (piece: Piece): number
-};
-
-export interface ScoreRule extends Base.ScoreRule { [stat: string]: number };
