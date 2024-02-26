@@ -43,7 +43,7 @@ export class Piece extends Base.Piece {
     get imagePath() {
         if (!(this.pieceData))
             return null;
-        return Path.Resource + "/starrail/" + this.pieceData.image;
+        return Path.MiaoRes + "/" + this.pieceData.image;
     }
     calculateScore() {
         if (!this.parentSet)
