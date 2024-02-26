@@ -1,8 +1,6 @@
 import { Stat } from "./stat.js";
 import { Piece } from "./piece.js";
 
-import { Logger } from "#gc";
-
 export interface StatWeightTable { [stat: string]: number };
 
 export abstract class ScoreRule<PieceType extends Piece<any>> {

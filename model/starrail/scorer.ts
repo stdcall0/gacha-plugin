@@ -1,8 +1,6 @@
 import { Base } from "#gc.model";
 import { Stat, Piece } from "./relic.js";
 
-import { Logger } from "#gc";
-
 export interface StatWeightTable extends Base.StatWeightTable { };
 
 export class ScoreRule extends Base.ScoreRule<Piece> { };
