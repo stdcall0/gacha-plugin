@@ -1,7 +1,6 @@
 // StarRail Relic Generation
 import { Plugin, Common, StrReplace } from '#gc';
 import { StarRailData as data } from '#gc.res';
-const scorer = data.Scorer;
 let throttle = false;
 let lastRelic = {};
 export class SRPlugin extends Plugin {
@@ -51,15 +50,15 @@ export class SRPlugin extends Plugin {
         if (times !== times || times <= 1) {
             let piece = domain.rollPiece();
             lastRelic[this.e.user_id] = piece;
-            const img = await piece.generateImage(scorer(piece));
+            const img = await piece.generateImage();
             await this.reply(img, false, { at: false, recallMsg: 0 });
         }
         else if (times <= 20) {
             let imgs = [];
             let pieces = domain.rollPieceMulti(times);
-            pieces.sort((a, b) => scorer(b) - scorer(a));
+            pieces.sort((a, b) => b.score - a.score);
             for (const piece of pieces)
-                imgs.push(await piece.generateImage(scorer(piece)));
+                imgs.push(await piece.generateImage());
             lastRelic[this.e.user_id] = pieces;
             const msg = await Common.makeForwardMsg(this.e, imgs, `点击查看遗器`);
             await this.reply(msg, false, { at: false, recallMsg: 0 });
@@ -93,7 +92,7 @@ export class SRPlugin extends Plugin {
             let piece = pieces;
             this.upgradeTimes(piece, times);
             lastRelic[this.e.user_id] = piece;
-            const img = await piece.generateImage(scorer(piece));
+            const img = await piece.generateImage();
             await this.reply(img, false, { at: false, recallMsg: 0 });
         }
         else {
@@ -101,9 +100,9 @@ export class SRPlugin extends Plugin {
             for (let piece of pieces) {
                 this.upgradeTimes(piece, times);
             }
-            pieces.sort((a, b) => scorer(b) - scorer(a));
+            pieces.sort((a, b) => b.score - a.score);
             for (let piece of pieces) {
-                imgs.push(await piece.generateImage(scorer(piece)));
+                imgs.push(await piece.generateImage());
             }
             lastRelic[this.e.user_id] = pieces;
             const msg = await Common.makeForwardMsg(this.e, imgs, `点击查看强化结果`);

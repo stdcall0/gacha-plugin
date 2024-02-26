@@ -15,7 +15,6 @@ await (async function loadSRdata() {
         if (ret[i].status != 'fulfilled') {
             Logger.error(`[gacha-plugin-SR] Failed to load ${dirs[i]}`);
             Logger.error(ret[i].reason);
-            continue;
         }
     }
 })();

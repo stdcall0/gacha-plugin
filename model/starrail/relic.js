@@ -1,5 +1,5 @@
 import { Base } from '#gc.model';
-import { DisplayModes, Render, Path } from '#gc';
+import { DisplayModes, Render, Path, ScoreTier } from '#gc';
 export var RelicType;
 (function (RelicType) {
     RelicType[RelicType["Inner"] = 0] = "Inner";
@@ -33,6 +33,9 @@ export class Piece extends Base.Piece {
         this.mainStatList = mainStatList;
         this.subStatList = subStatList;
         this.subStatCount = subStatCount;
+        this._score = 0;
+        this._scoreSrc = "/";
+        this._lastLevel = -1;
     }
     get level() {
         return 0 + this.upgradeCount * 3;
@@ -42,17 +45,39 @@ export class Piece extends Base.Piece {
             return null;
         return Path.Resource + "/starrail/" + this.pieceData.image;
     }
-    generateText(score) {
+    calculateScore() {
+        if (!this.parentSet)
+            return;
+        if (this.level == this._lastLevel)
+            return;
+        this.parentSet.scorers.forEach(scorer => {
+            const score = scorer.calc(this);
+            if (score > this._score) {
+                this._score = score;
+                this._scoreSrc = scorer.displayName;
+            }
+        });
+        this._lastLevel = this.level;
+    }
+    get score() {
+        this.calculateScore();
+        return this._score;
+    }
+    get scoreSrc() {
+        this.calculateScore();
+        return this._scoreSrc;
+    }
+    generateText() {
         if (!this.pieceData)
             return null;
         let res;
         res = `${this.displayName} ${this.pieceData.displayName}\nLv. ${this.level}`;
-        res += `  |  ${DisplayModes.Float2D(score)}\n\n`;
+        res += `  |  ${DisplayModes.Float2D(this.score)}\n\n`;
         res += `${this.mainStat.displayName} ${this.mainStat.displayValue}\n\n`;
         this.subStats.forEach(subStat => res += `${subStat.displayName} ${subStat.displayValue}\n`);
         return res.trimEnd();
     }
-    async generateImage(score) {
+    async generateImage() {
         if (!this.pieceData)
             return null;
         const data = {
@@ -60,20 +85,23 @@ export class Piece extends Base.Piece {
             resPath: Path.Resource,
             htmlPath: Path.HTML,
             piece: this,
-            score: DisplayModes.Float1D(score),
-            locked: score >= 20
+            score: DisplayModes.Float1D(this.score),
+            scoreSrc: "规则: this.scoreSrc",
+            tier: ScoreTier(this.score),
+            locked: this.score >= 40
         };
         return Render.render("starrail_relic", data);
     }
 }
 ;
 export class Set extends Base.Set {
-    constructor(name, displayName, aliases, type, pieceList, pieceData) {
+    constructor(name, displayName, aliases, type, scorers, pieceList, pieceData) {
         super(name, displayName, aliases, pieceList, pieceData);
         this.name = name;
         this.displayName = displayName;
         this.aliases = aliases;
         this.type = type;
+        this.scorers = scorers;
         this.pieceList = pieceList;
         this.pieceData = pieceData;
     }
@@ -81,6 +109,4 @@ export class Set extends Base.Set {
 ;
 export class Domain extends Base.Domain {
 }
-;
-;
 ;
