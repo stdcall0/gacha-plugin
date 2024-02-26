@@ -41,7 +41,6 @@ body {
     color: #ffc870;
     font-size: 40px;
     height: 52px;
-    margin-bottom: 35px;
 }
 
 .name, .scoreSrc {
@@ -56,6 +55,7 @@ body {
 
 .scoreSrc {
     color: #e6dbd6b0;
+    size: 32px;
 }
 
 .tierACE {
@@ -101,6 +101,7 @@ body {
     position: relative;
     width: 700px;
     margin-left: 23px;
+    margin-top: 35px;
     background-image: url(./img/FrameItemRarityBg05.png);
     background-size: contain;
 }

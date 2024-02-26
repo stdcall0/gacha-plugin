@@ -1,4 +1,3 @@
-import { Logger } from "#gc";
 ;
 export class ScoreRule {
     target(piece, weight) {
@@ -31,7 +30,6 @@ export class Scorer {
             .forEach(rule => {
             score += rule.add(piece, this.weight);
             mul *= rule.mul(piece, this.weight);
-            Logger.warn(`[gc] score ${score} mul ${mul}`);
         });
         return score * mul;
     }
