@@ -3,7 +3,7 @@ import { Path, Logger } from '#gc';
 await (async function loadSRdata() {
     await import('#@/resources/starrail/index.js');
     const dirs = fs.readdirSync(Path.Resource + '/starrail', { withFileTypes: true })
-        .filter(item => item.isDirectory())
+        .filter(item => item.isDirectory() && item.name != "scorers")
         .map(item => item.name);
     let ret = [];
     for (let i = 0; i < dirs.length; ++i) {
