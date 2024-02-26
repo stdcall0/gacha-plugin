@@ -1,6 +1,8 @@
 import { AddInnerSet } from '../set.js';
 import { AddDomain } from '../domain.js';
 
+import { Scorer } from '../scorers/scorer.js';
+
 AddDomain(
     "World 7", "第七世界",
     [],
@@ -8,6 +10,9 @@ AddDomain(
         AddInnerSet(
             "Rutilant Arena", "繁星竞技场",
             ["繁星", "繁星套"],
+            [
+                Scorer.SeeleScorer
+            ],
             {
                 "Planar Sphere": {
                     name: "Taikiyan Laser Stadium",

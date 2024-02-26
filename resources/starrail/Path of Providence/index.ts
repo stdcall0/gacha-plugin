@@ -1,6 +1,8 @@
 import { AddOuterSet } from '../set.js';
 import { AddDomain } from '../domain.js';
 
+import { Scorer } from '../scorers/scorer.js';
+
 AddDomain(
     "Path of Providence", "睿治之径",
     ["量子本"],
@@ -8,6 +10,9 @@ AddDomain(
         AddOuterSet(
             "Genius of Brilliant Stars", "繁星璀璨的天才",
             ["量子", "量子套"],
+            [
+                Scorer.SeeleScorer
+            ],
             {
                 "Head": {
                     name: "Genius's Ultraremote Sensing Visor",

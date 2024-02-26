@@ -27,10 +27,11 @@ export function AddOuterSet(
         name: string, 
         displayName: string,
         aliases: string[],
+        scorers: StarRail.Scorer[],
         data: OuterData): StarRail.Set {
     const set = new StarRail.Set(
         name, displayName, aliases,
-        RelicType.Outer, piecesOuter, data
+        RelicType.Outer, scorers, piecesOuter, data
     );
     Sets.push(set);
     return set;
@@ -40,10 +41,11 @@ export function AddInnerSet(
         name: string, 
         displayName: string,
         aliases: string[],
+        scorers: StarRail.Scorer[],
         data: InnerData): StarRail.Set {
     const set = new StarRail.Set(
         name, displayName, aliases,
-        RelicType.Inner, piecesInner, data
+        RelicType.Inner, scorers, piecesInner, data
     );
     Sets.push(set);
     return set;
