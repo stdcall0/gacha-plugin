@@ -30,7 +30,7 @@ body {
 .title {
     position: relative;
     padding-top: 23px;
-    color: rgb(255, 200, 112);
+    color: #ffc870;
     font-size: 40px;
     height: 52px;
 }
@@ -44,14 +44,18 @@ body {
     margin-bottom: 35px;
 }
 
-.name, .score {
+.name, .scoreSrc {
     position: absolute;
     left: 23px;
 }
 
-.tier, .scoreSrc {
+.tier, .score {
     position: absolute;
     right: 23px;
+}
+
+.scoreSrc {
+    color: #e6dbd6b0;
 }
 
 .tierACE {
@@ -105,7 +109,7 @@ body {
     position: absolute;
     top: 136px;
     left: 26px;
-    color: rgb(230, 219, 214);
+    color: #e6dbd6;
     font-size: 35px;
     text-shadow: 0px 1px 1px rgba(0,0,0,200);
 }
