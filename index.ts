@@ -13,7 +13,7 @@ await (async function loadSRdata() {
 
     for (let i = 0; i < files.length; ++i) {
         Logger.info(`[gacha-plugin-SR] loading relic ${files[i]}..`);
-        ret.push(import(`${Path.Resource}/starrail/relics/${files[i]}.js`));
+        ret.push(import(`${Path.Resource}/starrail/relics/${files[i]}`));
     }
 
     ret = await Promise.allSettled(ret);
