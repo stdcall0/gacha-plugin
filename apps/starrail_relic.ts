@@ -8,6 +8,11 @@ import { StarRailData as data } from '#gc.res';
 let throttle: boolean = false;
 let lastRelic: { [key: string]: sr.Piece | sr.Piece[] } = {};
 
+interface IRollable {
+    rollPiece(): sr.Piece;
+    rollPieceMulti(times: number): sr.Piece[];
+};
+
 export class SRPlugin extends Plugin {
     constructor() {
         super({
@@ -32,29 +37,32 @@ export class SRPlugin extends Plugin {
         let inst: string = this.e.msg;
         inst = StrReplace(inst, ["刷","遗器","#","星铁","次"]);
 
-        let s_domain = "";
+        let s_src = "";
         let s_time = "";
 
         for (let i = 0; i < inst.length; ++i) {
             if ("0" <= inst[i] && inst[i] <= "9")
                 s_time = s_time + inst[i];
             else
-                s_domain = s_domain + inst[i];
+                s_src = s_src + inst[i];
         }
         let times = parseInt(s_time);
-        let domain: sr.Domain = null;
+        let src: IRollable = null;
 
         data.Domains.forEach(x => {
-            if (x.is(s_domain))
-                domain = x;
+            if (x.is(s_src))
+                src = x;
+        });
+        data.Sets.forEach(x => {
+            if (x.is(s_src))
+                src = x;
         });
 
-        if (domain == null) return;
-
-        await this.makeRelic(times, domain);
+        if (src)
+            await this.makeRelic(times, src);
     }
 
-    async makeRelic(times: number, domain: sr.Domain) {
+    async makeRelic(times: number, domain: IRollable) {
         if (throttle) return;
         throttle = true;
 

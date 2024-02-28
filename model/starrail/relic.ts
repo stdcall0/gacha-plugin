@@ -2,6 +2,7 @@ import { Base } from '#gc.model';
 import { DisplayModes, Render, Path, Lottery, ScoreTier } from '#gc';
 
 import { Scorer } from './scorer.js';
+import { set } from 'lodash';
 
 export enum RelicType {
     Inner,
@@ -129,4 +130,13 @@ export class Set extends Base.Set<Piece> {
     ) { super(name, displayName, aliases, pieceList, pieceData); }
 };
 
-export class Domain extends Base.Domain<Piece, Set> { };
+export class Domain extends Base.Domain<Piece, Set> { 
+    constructor(
+        public name: string,
+        public displayName: string,
+        public aliases: string[],
+        public setList: Lottery<Set>
+    ) {
+        super(name, displayName, aliases, new Lottery([])); // skip Set aliases
+    }
+};

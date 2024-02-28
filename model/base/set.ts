@@ -13,9 +13,14 @@ export abstract class Set<PieceType extends Piece<any>> {
         public pieceData: { [name: string]: PieceData }
     ) { }
 
+    is(s: string): boolean {
+        return this.aliases.includes(s);
+    }
+
     rollPiece(): PieceType {
         return this.pieceList.choice().instance(this);
     }
+
     rollPieceMulti(n: number): PieceType[] {
         let res = [];
         this.pieceList.choiceMulti(n).forEach(x => {
