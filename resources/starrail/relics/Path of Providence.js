@@ -3,8 +3,7 @@ import { AddDomain } from '../domain.js';
 import { Scorer } from '../scorers/scorer.js';
 AddDomain("Path of Providence", "睿治之径", ["量子本", "铁卫本"], [
     AddOuterSet("Genius of Brilliant Stars", "繁星璀璨的天才", ["量子", "量子套"], [
-        Scorer.JingliuScorer,
-        Scorer.JingYuanScorer,
+        // Scorer.JingYuanScorer,
         Scorer.QingqueScorer,
         Scorer.SeeleScorer
     ], {
@@ -30,11 +29,8 @@ AddDomain("Path of Providence", "睿治之径", ["量子本", "铁卫本"], [
         },
     }),
     AddOuterSet("Guard of Wuthering Snow", "戍卫风雪的铁卫", ["铁卫", "铁卫套"], [
-        Scorer.TrailblazerFireScorer,
+        // Scorer.TrailblazerFireScorer,
         Scorer.FuXuanScorer,
-        Scorer.ArlanScorer,
-        Scorer.TingyunScorer,
-        Scorer.PelaScorer
     ], {
         "Head": {
             name: "Guard's Cast Iron Helmet",

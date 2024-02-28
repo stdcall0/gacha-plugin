@@ -3,10 +3,9 @@ import { AddDomain } from '../domain.js';
 import { Scorer } from '../scorers/scorer.js';
 AddDomain("Path of Gelid Wind", "睿治之径", ["冰本", "风本"], [
     AddOuterSet("Hunter of Glacial Forest", "密林卧雪的猎人", ["冰", "冰套"], [
+        Scorer.YanqingScorer,
         Scorer.JingliuScorer,
-        Scorer.PelaScorer,
         Scorer.HertaScorer,
-        Scorer.YanqingScorer
     ], {
         "Head": {
             name: "Hunter's Artaius Hood",
@@ -33,9 +32,6 @@ AddDomain("Path of Gelid Wind", "睿治之径", ["冰本", "风本"], [
         Scorer.DanHengScorer,
         Scorer.SampoScorer,
         Scorer.BronyaScorer,
-        Scorer.AstaScorer,
-        Scorer.PelaScorer,
-        Scorer.SilverWolfScorer
     ], {
         "Head": {
             name: "Eagle's Beaked Helmet",

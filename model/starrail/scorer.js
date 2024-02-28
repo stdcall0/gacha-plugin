@@ -20,17 +20,27 @@ export class MainStatWeightRule extends ScoreRule {
     }
 }
 ;
-export class MainStatLevelRule extends ScoreRule {
-    constructor(pieceName, scale) {
+;
+export class MainStatMatchRule extends ScoreRule {
+    constructor(statMatch) {
         super();
-        this.pieceName = pieceName;
-        this.scale = scale;
+        this.statMatch = statMatch;
     }
     target(piece) {
-        return this.pieceName.includes(piece.name);
+        return [
+            "Body", "Feet",
+            "Planar Sphere", "Link Rope"
+        ].includes(piece.name);
+    }
+    mul(piece, weight) {
+        if (!(piece.mainStat.name in this.statMatch))
+            return 0.1;
+        return 1;
     }
     add(piece, weight) {
-        return this.scale * piece.level;
+        if (!(piece.mainStat.name in this.statMatch))
+            return 0;
+        return piece.level / 15 * this.statMatch[piece.mainStat.name];
     }
 }
 ;

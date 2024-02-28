@@ -9,4 +9,11 @@ const HertaWeight = {
     "Energy Regeneration Rate": 0.50,
     "Ice DMG Boost": 1
 };
-export const HertaScorer = new StarRail.Scorer("Herta", "黑塔", Rule.All, HertaWeight);
+const Match = {
+    "CRIT DMG": 5,
+    "CRIT Rate": 5,
+    "Ice DMG Boost": 6,
+    "ATK": 0,
+    "SPD": 5
+};
+export const HertaScorer = new StarRail.Scorer("Herta", "黑塔", Rule.makeRule(Match), HertaWeight);

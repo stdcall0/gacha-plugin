@@ -10,4 +10,8 @@ const Weight = {
     "Effect Hit Rate": 0.5,
     "Effect RES": 0.5
 };
+const Match = {
+    "Effect Hit Rate": 5,
+    "SPD": 5,
+};
 export const GepardScorer = new StarRail.Scorer("Gepard", "杰帕德", Rule.All, Weight);

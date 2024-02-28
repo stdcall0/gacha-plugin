@@ -9,4 +9,10 @@ const Weight = {
     "Energy Regeneration Rate": 0.50,
     "Quantum DMG Boost": 1
 };
-export const QingqueScorer = new StarRail.Scorer("Qingque", "青雀", Rule.All, Weight);
+const Match = {
+    "CRIT Rate": 5,
+    "SPD": 5,
+    "ATK": 0,
+    "Quantum DMG Boost": 6
+};
+export const QingqueScorer = new StarRail.Scorer("Qingque", "青雀", Rule.makeRule(Match), Weight);

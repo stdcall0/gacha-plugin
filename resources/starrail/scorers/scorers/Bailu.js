@@ -10,4 +10,10 @@ const Weight = {
     "Outgoing Healing Boost": 1,
     "Effect RES": 0.5
 };
-export const BailuScorer = new StarRail.Scorer("Bailu", "白露", Rule.All, Weight);
+const Match = {
+    "Outgoing Healing Boost": 5,
+    "SPD": 5,
+    "Energy Regeneration Rate": 10,
+    "HP": 0
+};
+export const BailuScorer = new StarRail.Scorer("Bailu", "白露", Rule.makeRule(Match), Weight);

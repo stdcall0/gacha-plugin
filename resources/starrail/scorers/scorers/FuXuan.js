@@ -12,4 +12,10 @@ const Weight = {
     "Effect RES": 0.5,
     "Quantum DMG Boost": 1
 };
-export const FuXuanScorer = new StarRail.Scorer("Fu Xuan", "符玄", Rule.All, Weight);
+const Match = {
+    "HP": 2,
+    "DEF": 0,
+    "SPD": 5,
+    "Energy Regeneration Rate": 10,
+};
+export const FuXuanScorer = new StarRail.Scorer("Fu Xuan", "符玄", Rule.makeRule(Match), Weight);

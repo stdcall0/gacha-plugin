@@ -9,4 +9,11 @@ const JingliuWeight = {
     "Energy Regeneration Rate": 0.5,
     "Ice DMG Boost": 1
 };
-export const JingliuScorer = new StarRail.Scorer("Jingliu", "镜流", Rule.All, JingliuWeight);
+const Match = {
+    "CRIT DMG": 5,
+    "SPD": 5,
+    "Ice DMG Boost": 6,
+    "ATK": 0,
+    "Energy Regeneration Rate": 10,
+};
+export const JingliuScorer = new StarRail.Scorer("Jingliu", "镜流", Rule.makeRule(Match), JingliuWeight);

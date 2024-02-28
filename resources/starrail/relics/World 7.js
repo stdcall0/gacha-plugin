@@ -3,7 +3,6 @@ import { AddDomain } from '../domain.js';
 import { Scorer } from '../scorers/scorer.js';
 AddDomain("World 7", "第七世界", ["第七宇宙"], [
     AddInnerSet("Rutilant Arena", "繁星竞技场", ["繁星", "繁星套"], [
-        Scorer.WeltScorer,
         Scorer.QingqueScorer,
         Scorer.DanHengBigScorer,
         Scorer.SeeleScorer,
@@ -21,8 +20,6 @@ AddDomain("World 7", "第七世界", ["第七宇宙"], [
         },
     }),
     AddInnerSet("Broken Keel", "折断的龙骨", ["龙骨", "龙骨套"], [
-        Scorer.NatashaScorer,
-        Scorer.LynxScorer,
         Scorer.GepardScorer,
         Scorer.LuochaScorer,
         Scorer.BailuScorer,
