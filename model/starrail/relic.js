@@ -1,5 +1,5 @@
 import { Base } from '#gc.model';
-import { DisplayModes, Render, Path, ScoreTier } from '#gc';
+import { DisplayModes, Render, Path, Lottery, ScoreTier } from '#gc';
 export var RelicType;
 (function (RelicType) {
     RelicType[RelicType["Inner"] = 0] = "Inner";
@@ -109,5 +109,12 @@ export class Set extends Base.Set {
 }
 ;
 export class Domain extends Base.Domain {
+    constructor(name, displayName, aliases, setList) {
+        super(name, displayName, aliases, new Lottery([])); // skip Set aliases
+        this.name = name;
+        this.displayName = displayName;
+        this.aliases = aliases;
+        this.setList = setList;
+    }
 }
 ;

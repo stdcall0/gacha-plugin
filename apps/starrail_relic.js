@@ -3,6 +3,7 @@ import { Plugin, Common, StrReplace } from '#gc';
 import { StarRailData as data } from '#gc.res';
 let throttle = false;
 let lastRelic = {};
+;
 export class SRPlugin extends Plugin {
     constructor() {
         super({
@@ -25,23 +26,26 @@ export class SRPlugin extends Plugin {
     async generateRelic() {
         let inst = this.e.msg;
         inst = StrReplace(inst, ["刷", "遗器", "#", "星铁", "次"]);
-        let s_domain = "";
+        let s_src = "";
         let s_time = "";
         for (let i = 0; i < inst.length; ++i) {
             if ("0" <= inst[i] && inst[i] <= "9")
                 s_time = s_time + inst[i];
             else
-                s_domain = s_domain + inst[i];
+                s_src = s_src + inst[i];
         }
         let times = parseInt(s_time);
-        let domain = null;
+        let src = null;
         data.Domains.forEach(x => {
-            if (x.is(s_domain))
-                domain = x;
+            if (x.is(s_src))
+                src = x;
         });
-        if (domain == null)
-            return;
-        await this.makeRelic(times, domain);
+        data.Sets.forEach(x => {
+            if (x.is(s_src))
+                src = x;
+        });
+        if (src)
+            await this.makeRelic(times, src);
     }
     async makeRelic(times, domain) {
         if (throttle)

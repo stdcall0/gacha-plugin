@@ -6,6 +6,9 @@ export class Set {
         this.pieceList = pieceList;
         this.pieceData = pieceData;
     }
+    is(s) {
+        return this.aliases.includes(s);
+    }
     rollPiece() {
         return this.pieceList.choice().instance(this);
     }
