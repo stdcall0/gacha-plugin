@@ -24,18 +24,32 @@ export class MainStatWeightRule extends ScoreRule {
     }
 };
 
-export class MainStatLevelRule extends ScoreRule {
+export interface StatMatchTable {
+    [ statName: string ]: number;
+};
+
+export class MainStatMatchRule extends ScoreRule {
     constructor(
-        public pieceName: string[],
-        public scale: number
+        public statMatch: StatMatchTable
     ) { super(); }
 
     override target(piece: Piece): boolean {
-        return this.pieceName.includes(piece.name);
+        return [
+            "Body", "Feet",
+            "Planar Sphere", "Link Rope"
+        ].includes(piece.name);
+    }
+
+    override mul(piece: Piece, weight: StatWeightTable): number {
+        if (!(piece.mainStat.name in this.statMatch))
+            return 0.1;
+        return 1;
     }
 
     override add(piece: Piece, weight: StatWeightTable): number {
-        return this.scale * piece.level;
+        if (!(piece.mainStat.name in this.statMatch))
+            return 0;
+        return piece.level / 15 * this.statMatch[piece.mainStat.name];
     }
 };
 

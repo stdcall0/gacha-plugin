@@ -13,9 +13,16 @@ const Weight = {
     "Imaginary DMG Boost": 1
 };
 
+const Match = {
+    "Outgoing Healing Boost": 5,
+    "Energy Regeneration Rate": 10,
+    "SPD": 5,
+    "ATK": 0,
+};
+
 export const LuochaScorer = new StarRail.Scorer(
     "Luocha",
     "罗刹",
-    Rule.All,
+    Rule.makeRule(Match),
     Weight
 );

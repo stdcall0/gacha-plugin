@@ -1,15 +1,27 @@
-import { MainStatLevel } from "./MainStatLevel.js";
+
 import { MainStatWeight } from "./MainStatWeight.js";
 import { SubStatWeight } from "./SubStatWeight.js";
 
 const All = [
-    // MainStatLevel,
     MainStatWeight,
     SubStatWeight
 ];
 
+import { StarRail } from "#gc.model";
+
+const MainStatMatchRule = StarRail.MainStatMatchRule;
+
+const makeRule = (match: StarRail.StatMatchTable): StarRail.ScoreRule[] => {
+    return [
+        MainStatWeight,
+        SubStatWeight,
+        new MainStatMatchRule(match)
+    ];
+};
+
 export {
-    MainStatLevel,
+    makeRule,
+    MainStatMatchRule,
     MainStatWeight,
     SubStatWeight,
     All

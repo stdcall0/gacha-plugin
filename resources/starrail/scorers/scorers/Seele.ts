@@ -11,9 +11,16 @@ const SeeleWeight = {
     "Quantum DMG Boost": 1
 };
 
+const Match = {
+    "ATK": 0,
+    "CRIT Rate": 5,
+    "CRIT DMG": 5,
+    "Quantum DMG Boost": 6,
+};
+
 export const SeeleScorer = new StarRail.Scorer(
     "Seele",
     "希儿",
-    Rule.All,
+    Rule.makeRule(Match),
     SeeleWeight
 );

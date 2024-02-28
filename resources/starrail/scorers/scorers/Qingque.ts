@@ -11,9 +11,16 @@ const Weight = {
     "Quantum DMG Boost": 1
 };
 
+const Match = {
+    "CRIT Rate": 5,
+    "SPD": 5,
+    "ATK": 0,
+    "Quantum DMG Boost": 6
+};
+
 export const QingqueScorer = new StarRail.Scorer(
     "Qingque",
     "青雀",
-    Rule.All,
+    Rule.makeRule(Match),
     Weight
 );

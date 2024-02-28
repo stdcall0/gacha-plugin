@@ -11,10 +11,9 @@ AddDomain(
             "Hunter of Glacial Forest", "密林卧雪的猎人",
             ["冰", "冰套"],
             [
+                Scorer.YanqingScorer,
                 Scorer.JingliuScorer,
-                Scorer.PelaScorer,
                 Scorer.HertaScorer,
-                Scorer.YanqingScorer
             ],
             {
                 "Head": {
@@ -46,9 +45,6 @@ AddDomain(
                 Scorer.DanHengScorer,
                 Scorer.SampoScorer,
                 Scorer.BronyaScorer,
-                Scorer.AstaScorer,
-                Scorer.PelaScorer,
-                Scorer.SilverWolfScorer
             ],
             {
                 "Head": {

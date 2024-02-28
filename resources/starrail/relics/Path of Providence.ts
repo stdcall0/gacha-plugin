@@ -11,8 +11,7 @@ AddDomain(
             "Genius of Brilliant Stars", "繁星璀璨的天才",
             ["量子", "量子套"],
             [
-                Scorer.JingliuScorer,
-                Scorer.JingYuanScorer,
+                // Scorer.JingYuanScorer,
                 Scorer.QingqueScorer,
                 Scorer.SeeleScorer
             ],
@@ -43,11 +42,8 @@ AddDomain(
             "Guard of Wuthering Snow", "戍卫风雪的铁卫",
             ["铁卫", "铁卫套"],
             [
-                Scorer.TrailblazerFireScorer,
+                // Scorer.TrailblazerFireScorer,
                 Scorer.FuXuanScorer,
-                Scorer.ArlanScorer,
-                Scorer.TingyunScorer,
-                Scorer.PelaScorer
             ],
             {
                 "Head": {

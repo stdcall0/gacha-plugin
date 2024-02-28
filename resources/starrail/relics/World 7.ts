@@ -11,7 +11,6 @@ AddDomain(
             "Rutilant Arena", "繁星竞技场",
             ["繁星", "繁星套"],
             [
-                Scorer.WeltScorer,
                 Scorer.QingqueScorer,
                 Scorer.DanHengBigScorer,
                 Scorer.SeeleScorer,
@@ -34,8 +33,6 @@ AddDomain(
             "Broken Keel", "折断的龙骨",
             ["龙骨", "龙骨套"],
             [
-                Scorer.NatashaScorer,
-                Scorer.LynxScorer,
                 Scorer.GepardScorer,
                 Scorer.LuochaScorer,
                 Scorer.BailuScorer,
