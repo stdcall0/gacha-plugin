@@ -21,8 +21,8 @@ export const makeRules = (mainRules: RuleArgs[]): StarRail.ScoreRule[] => {
     let arr: StarRail.ScoreRule[] = [ subRule ];
 
     for (let i = 0; i < mainRules.length; ++i) {
-        mainRules.push(null);
-        mainRules.push(null);
+        mainRules[i].push(null);
+        mainRules[i].push(null);
 
         mainRules[i][2] ??= 5.83; // default reward
         mainRules[i][3] ??= 0.25; // default punish
