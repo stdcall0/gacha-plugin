@@ -1,7 +1,7 @@
 import { StarRail } from '#gc.model';
 import { makeRules } from './rule.js';
 
-export const JingliuScorer = new StarRail.Scorer(
+export const Jingliu = new StarRail.Scorer(
     "Jingliu",
     "镜流",
     makeRules([

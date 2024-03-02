@@ -11,7 +11,7 @@ AddDomain(
             "Genius of Brilliant Stars", "繁星璀璨的天才",
             ["量子", "量子套"],
             [
-                Scorer.SeeleScorer
+                Scorer.Seele
             ],
             {
                 "Head": {
@@ -40,7 +40,7 @@ AddDomain(
             "Guard of Wuthering Snow", "戍卫风雪的铁卫",
             ["铁卫", "铁卫套"],
             [
-                Scorer.FuXuanScorer,
+                Scorer.FuXuan,
             ],
             {
                 "Head": {

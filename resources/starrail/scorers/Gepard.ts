@@ -1,7 +1,7 @@
 import { StarRail } from '#gc.model';
 import { makeRules } from './rule.js';
 
-export const GepardScorer = new StarRail.Scorer(
+export const Gepard = new StarRail.Scorer(
     "Gepard",
     "杰帕德",
     makeRules([

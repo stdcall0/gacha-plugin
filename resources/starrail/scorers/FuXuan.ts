@@ -1,7 +1,7 @@
 import { StarRail } from '#gc.model';
 import { makeRules } from './rule.js';
 
-export const FuXuanScorer = new StarRail.Scorer(
+export const FuXuan = new StarRail.Scorer(
     "Fu Xuan",
     "符玄",
     makeRules([

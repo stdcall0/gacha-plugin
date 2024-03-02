@@ -11,8 +11,8 @@ AddDomain(
             "Rutilant Arena", "繁星竞技场",
             ["繁星", "繁星套"],
             [
-                Scorer.SeeleScorer,
-                Scorer.JingliuScorer
+                Scorer.Seele,
+                Scorer.Jingliu
             ],
             {
                 "Planar Sphere": {
@@ -31,9 +31,9 @@ AddDomain(
             "Broken Keel", "折断的龙骨",
             ["龙骨", "龙骨套"],
             [
-                Scorer.GepardScorer,
-                Scorer.LuochaScorer,
-                Scorer.FuXuanScorer
+                Scorer.Gepard,
+                Scorer.Luocha,
+                Scorer.FuXuan
             ],
             {
                 "Planar Sphere": {

@@ -11,7 +11,7 @@ AddDomain(
             "Hunter of Glacial Forest", "密林卧雪的猎人",
             ["冰", "冰套"],
             [
-                Scorer.JingliuScorer
+                Scorer.Jingliu
             ],
             {
                 "Head": {
