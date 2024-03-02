@@ -18,8 +18,8 @@ export const makeRules = (mainRules) => {
     var _c, _d;
     let arr = [subRule];
     for (let i = 0; i < mainRules.length; ++i) {
-        mainRules.push(null);
-        mainRules.push(null);
+        mainRules[i].push(null);
+        mainRules[i].push(null);
         (_a = (_c = mainRules[i])[2]) !== null && _a !== void 0 ? _a : (_c[2] = 5.83); // default reward
         (_b = (_d = mainRules[i])[3]) !== null && _b !== void 0 ? _b : (_d[3] = 0.25); // default punish
         arr.push(new StarRail.MainStatRule(mainRules[i][0], mainRules[i][1], mainRules[i][2], mainRules[i][3]));
