@@ -1,7 +1,8 @@
 export * from './stat.js';
 export * from './piece.js';
 export * from './scorers/rule.js';
-export * from './scorers/scorer.js';
+import * as Scorer from './scorers/index.js';
+export { Scorer };
 import { Sets as sets } from './set.js';
 import { Domains as domains } from './domain.js';
 const Sets = sets;
