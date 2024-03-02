@@ -3,8 +3,8 @@ import { AddDomain } from '../domain.js';
 import * as Scorer from '../scorers/index.js';
 AddDomain("World 7", "第七世界", ["第七宇宙"], [
     AddInnerSet("Rutilant Arena", "繁星竞技场", ["繁星", "繁星套"], [
-        Scorer.SeeleScorer,
-        Scorer.JingliuScorer
+        Scorer.Seele,
+        Scorer.Jingliu
     ], {
         "Planar Sphere": {
             name: "Taikiyan Laser Stadium",
@@ -18,9 +18,9 @@ AddDomain("World 7", "第七世界", ["第七宇宙"], [
         },
     }),
     AddInnerSet("Broken Keel", "折断的龙骨", ["龙骨", "龙骨套"], [
-        Scorer.GepardScorer,
-        Scorer.LuochaScorer,
-        Scorer.FuXuanScorer
+        Scorer.Gepard,
+        Scorer.Luocha,
+        Scorer.FuXuan
     ], {
         "Planar Sphere": {
             name: "Insumousu's Whalefall Ship",

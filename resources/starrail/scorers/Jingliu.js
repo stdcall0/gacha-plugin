@@ -1,6 +1,6 @@
 import { StarRail } from '#gc.model';
 import { makeRules } from './rule.js';
-export const JingliuScorer = new StarRail.Scorer("Jingliu", "镜流", makeRules([
+export const Jingliu = new StarRail.Scorer("Jingliu", "镜流", makeRules([
     [["Body"], { "CRIT DMG": 5 }],
     [["Feet"], { "SPD": 5 }],
     [["Planar Sphere"], { "Ice DMG Boost": 6 }],

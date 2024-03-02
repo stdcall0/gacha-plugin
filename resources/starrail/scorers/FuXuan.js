@@ -1,6 +1,6 @@
 import { StarRail } from '#gc.model';
 import { makeRules } from './rule.js';
-export const FuXuanScorer = new StarRail.Scorer("Fu Xuan", "符玄", makeRules([
+export const FuXuan = new StarRail.Scorer("Fu Xuan", "符玄", makeRules([
     [["Body"], { "HP": 0, "DEF": 0, "CRIT DMG": 5 }],
     [["Feet"], { "SPD": 5 }],
     [["Planar Sphere"], { "HP": 3, "DEF": 3, "Quantum DMG Boost": 6 }],

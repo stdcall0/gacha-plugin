@@ -20,9 +20,9 @@ export class MainStatRule extends ScoreRule {
     add(piece, weight) {
         if (!(piece.mainStat.name in this.stat))
             return 0;
-        let score = (piece.level + 1) / 16 * this.stat[piece.mainStat.name];
+        let score = this.stat[piece.mainStat.name];
         score += this.reward * findRule(piece.mainStat, weight);
-        return score;
+        return (piece.level + 1) / 16 * score;
     }
     mul(piece) {
         if (!(piece.mainStat.name in this.stat))

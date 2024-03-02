@@ -1,6 +1,6 @@
 import { StarRail } from '#gc.model';
 import { makeRules } from './rule.js';
-export const LuochaScorer = new StarRail.Scorer("Luocha", "罗刹", makeRules([
+export const Luocha = new StarRail.Scorer("Luocha", "罗刹", makeRules([
     [["Body"], { "Outgoing Healing Boost": 5, "ATK": 0 }],
     [["Feet"], { "SPD": 5 }],
     [["Planar Sphere"], { "ATK": 3, "HP": 0 }],

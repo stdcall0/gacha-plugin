@@ -1,6 +1,6 @@
 import { StarRail } from '#gc.model';
 import { makeRules } from './rule.js';
-export const YinyueScorer = new StarRail.Scorer("Dan Heng·Imbibitor Lunae", "丹恒·饮月", makeRules([
+export const Yinyue = new StarRail.Scorer("Dan Heng·Imbibitor Lunae", "丹恒·饮月", makeRules([
     [["Body"], { "CRIT Rate": 5, "CRIT DMG": 5 }],
     [["Feet"], { "ATK": 0 }],
     [["Planar Sphere"], { "Imaginary DMG Boost": 6 }],

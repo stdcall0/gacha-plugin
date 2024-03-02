@@ -1,6 +1,6 @@
 import { StarRail } from '#gc.model';
 import { makeRules } from './rule.js';
-export const GepardScorer = new StarRail.Scorer("Gepard", "杰帕德", makeRules([
+export const Gepard = new StarRail.Scorer("Gepard", "杰帕德", makeRules([
     [["Body"], { "Effect Hit Rate": 5, "DEF": 0 }],
     [["Feet"], { "SPD": 5 }],
     [["Planar Sphere"], { "DEF": 3 }],

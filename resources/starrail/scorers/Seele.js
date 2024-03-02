@@ -1,6 +1,6 @@
 import { StarRail } from '#gc.model';
 import { makeRules } from './rule.js';
-export const SeeleScorer = new StarRail.Scorer("Seele", "希儿", makeRules([
+export const Seele = new StarRail.Scorer("Seele", "希儿", makeRules([
     [["Body"], { "CRIT Rate": 5, "CRIT DMG": 5 }],
     [["Feet"], { "ATK": 0 }],
     [["Planar Sphere"], { "Quantum DMG Boost": 6 }],
