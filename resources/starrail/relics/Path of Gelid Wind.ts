@@ -1,7 +1,7 @@
 import { AddOuterSet } from '../set.js';
 import { AddDomain } from '../domain.js';
 
-import { Scorer } from '../scorers/scorer.js';
+import * as Scorer from '../scorers/index.js';
 
 AddDomain(
     "Path of Gelid Wind", "睿治之径",
@@ -11,9 +11,7 @@ AddDomain(
             "Hunter of Glacial Forest", "密林卧雪的猎人",
             ["冰", "冰套"],
             [
-                Scorer.YanqingScorer,
-                Scorer.JingliuScorer,
-                Scorer.HertaScorer,
+                Scorer.JingliuScorer
             ],
             {
                 "Head": {
@@ -42,9 +40,6 @@ AddDomain(
             "Eagle of Twilight Line", "晨昏交界的翔鹰",
             ["风", "风套"],
             [
-                Scorer.DanHengScorer,
-                Scorer.SampoScorer,
-                Scorer.BronyaScorer,
             ],
             {
                 "Head": {

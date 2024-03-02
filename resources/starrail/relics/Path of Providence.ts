@@ -1,7 +1,7 @@
 import { AddOuterSet } from '../set.js';
 import { AddDomain } from '../domain.js';
 
-import { Scorer } from '../scorers/scorer.js';
+import * as Scorer from '../scorers/index.js';
 
 AddDomain(
     "Path of Providence", "睿治之径",
@@ -11,8 +11,6 @@ AddDomain(
             "Genius of Brilliant Stars", "繁星璀璨的天才",
             ["量子", "量子套"],
             [
-                // Scorer.JingYuanScorer,
-                Scorer.QingqueScorer,
                 Scorer.SeeleScorer
             ],
             {
@@ -42,7 +40,6 @@ AddDomain(
             "Guard of Wuthering Snow", "戍卫风雪的铁卫",
             ["铁卫", "铁卫套"],
             [
-                // Scorer.TrailblazerFireScorer,
                 Scorer.FuXuanScorer,
             ],
             {

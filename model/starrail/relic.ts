@@ -118,7 +118,6 @@ export class Piece extends Base.Piece<Set> {
 };
 
 export class Set extends Base.Set<Piece> {
-
     constructor(
         public name: string,
         public displayName: string,

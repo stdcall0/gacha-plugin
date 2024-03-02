@@ -1,7 +1,7 @@
 import { AddInnerSet } from '../set.js';
 import { AddDomain } from '../domain.js';
 
-import { Scorer } from '../scorers/scorer.js';
+import * as Scorer from '../scorers/index.js';
 
 AddDomain(
     "World 7", "第七世界",
@@ -11,8 +11,6 @@ AddDomain(
             "Rutilant Arena", "繁星竞技场",
             ["繁星", "繁星套"],
             [
-                Scorer.QingqueScorer,
-                Scorer.DanHengBigScorer,
                 Scorer.SeeleScorer,
                 Scorer.JingliuScorer
             ],
@@ -35,7 +33,6 @@ AddDomain(
             [
                 Scorer.GepardScorer,
                 Scorer.LuochaScorer,
-                Scorer.BailuScorer,
                 Scorer.FuXuanScorer
             ],
             {

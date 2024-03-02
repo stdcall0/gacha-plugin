@@ -9,51 +9,36 @@ export const findRule = (stat: Stat, rule: StatWeightTable): number => {
     return Base.findRule(stat, rule);
 };
 
-export class MainStatWeightRule extends ScoreRule {
+export class MainStatRule extends ScoreRule {
     constructor(
-        public pieceName: string[],
-        public scale: number
+        public targets: string[],
+        public stat: { [statName: string]: number },
+        public reward: number,
+        public punish: number
     ) { super(); }
 
     override target(piece: Piece): boolean {
-        return this.pieceName.includes(piece.name);
+        return this.targets.includes(piece.name);
     }
 
     override add(piece: Piece, weight: StatWeightTable): number {
-        return this.scale * findRule(piece.mainStat, weight);
-    }
-};
+        if (!(piece.mainStat.name in this.stat))
+            return 0;
 
-export interface StatMatchTable {
-    [ statName: string ]: number;
-};
+        let score = (piece.level + 1) / 16 * this.stat[piece.mainStat.name];
+        score += this.reward * findRule(piece.mainStat, weight);
 
-export class MainStatMatchRule extends ScoreRule {
-    constructor(
-        public statMatch: StatMatchTable
-    ) { super(); }
-
-    override target(piece: Piece): boolean {
-        return [
-            "Body", "Feet",
-            "Planar Sphere", "Link Rope"
-        ].includes(piece.name);
+        return score;
     }
 
-    override mul(piece: Piece, weight: StatWeightTable): number {
-        if (!(piece.mainStat.name in this.statMatch))
-            return 0.1;
+    override mul(piece: Piece): number {
+        if (!(piece.mainStat.name in this.stat))
+            return this.punish;
         return 1;
     }
-
-    override add(piece: Piece, weight: StatWeightTable): number {
-        if (!(piece.mainStat.name in this.statMatch))
-            return 0;
-        return piece.level / 15 * this.statMatch[piece.mainStat.name];
-    }
 };
 
-export class SubStatWeightRule extends ScoreRule {
+export class SubStatRule extends ScoreRule {
     constructor(
         public multipler: StatWeightTable
     ) { super(); }
