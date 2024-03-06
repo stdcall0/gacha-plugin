@@ -73,8 +73,10 @@ export class AntiEmojiPlugin extends Plugin {
         message.forEach(x => {
             // check if x.text is space
             const isSpace = x === null || x === void 0 ? void 0 : x.text.match(/^\s+$/);
+            // regex for emoji
+            const re = /[\p{Extended_Pictographic}\u{1F3FB}-\u{1F3FF}\u{1F9B0}-\u{1F9B3}]/u;
             if (x.type != "face" && x.type != "sface" &&
-                !(x.type == "text" && (/\p{Emoji}/u.test(x.text) || isSpace)))
+                !(x.type == "text" && (re.test(x.text) || isSpace)))
                 emoji = false;
         });
         if (emoji) {
