@@ -72,7 +72,7 @@ export interface GroupMessageEventData extends CommonMessageEventData {
 
         let emoji = true;
         message.forEach(x => {
-            if (x.type != "face" && x.type != "sface")
+            if (x.type != "face" && x.type != "sface" && !(x.type == "text" && /\p{Emoji}/u.test(x.text)))
                 emoji = false;
         });
         if (emoji) {
