@@ -6,7 +6,7 @@ export class AntiEmojiPlugin extends Plugin {
             name: '阻止表情包',
             dsc: '(gacha_plugin)',
             event: 'message',
-            priority: '98',
+            priority: '-114',
             rule: [
                 {
                     reg: '',
@@ -70,7 +70,10 @@ export class AntiEmojiPlugin extends Plugin {
         const message = this.e.message; // MessageElem[]
         let emoji = true;
         message.forEach(x => {
-            if (x.type != "face" && x.type != "sface" && !(x.type == "text" && /\p{Emoji}/u.test(x.text)))
+            // check if x.text is space
+            const isSpace = x === null || x === void 0 ? void 0 : x.text.match(/^\s+$/);
+            if (x.type != "face" && x.type != "sface" &&
+                !(x.type == "text" && (/\p{Emoji}/u.test(x.text) || isSpace)))
                 emoji = false;
         });
         if (emoji) {
