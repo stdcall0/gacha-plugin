@@ -1,6 +1,6 @@
 // Genshin Artifact Generation
 
-import { Plugin, Common, DisplayModes, StrReplace } from '#gc';
+import { Plugin } from '#gc';
 
 export class AntiEmojiPlugin extends Plugin {
     constructor() {
@@ -8,11 +8,12 @@ export class AntiEmojiPlugin extends Plugin {
             name: '阻止表情包',
             dsc: '(gacha_plugin)',
             event: 'message',
-            priority: '98',
+            priority: '999999',
             rule: [
                 {
                     reg: '',
-                    fnc: 'checkEmoji'
+                    fnc: 'checkEmoji',
+                    log: false
                 }
             ]
         });
@@ -72,7 +73,11 @@ export interface GroupMessageEventData extends CommonMessageEventData {
 
         let emoji = true;
         message.forEach(x => {
-            if (x.type != "face" && x.type != "sface" && !(x.type == "text" && /\p{Emoji}/u.test(x.text)))
+            // check if x.text is space
+            const isSpace = x?.text.match(/^\s+$/);
+
+            if (x.type != "face" && x.type != "sface" && 
+                !(x.type == "text" && (/\p{Emoji}/u.test(x.text) || isSpace)))
                 emoji = false;
         });
         if (emoji) {
