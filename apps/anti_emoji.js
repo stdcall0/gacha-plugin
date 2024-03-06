@@ -6,11 +6,12 @@ export class AntiEmojiPlugin extends Plugin {
             name: '阻止表情包',
             dsc: '(gacha_plugin)',
             event: 'message',
-            priority: '-114',
+            priority: '999999',
             rule: [
                 {
                     reg: '',
-                    fnc: 'checkEmoji'
+                    fnc: 'checkEmoji',
+                    log: false
                 }
             ]
         });
