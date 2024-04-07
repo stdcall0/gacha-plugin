@@ -1,5 +1,5 @@
 // @ts-ignore
-import puppeteer from '../../../lib/puppeteer/puppeteer.js';
+import puppeteer from '../../../../lib/puppeteer/puppeteer.js';
 
 type Data = { tplFile: string; };
 
