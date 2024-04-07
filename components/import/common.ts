@@ -1,5 +1,5 @@
 // @ts-ignore
-import common from '../../../lib/common/common.js';
+import common from '../../../../lib/common/common.js';
 
 const Common = {
     async replyPrivate(userId: string, msg: string) {

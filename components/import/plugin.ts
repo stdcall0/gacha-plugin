@@ -1,5 +1,5 @@
 // @ts-ignore
-import plugin from '../../../lib/plugins/plugin.js';
+import plugin from '../../../../lib/plugins/plugin.js';
 
 type Task = {
     name: string;

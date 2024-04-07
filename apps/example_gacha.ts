@@ -28,13 +28,13 @@ const fivePermLottery = new Lottery([fivePerm1, fivePerm2, fivePerm3]);
 const pool = new StarRail.GachaPool(fiveUpLottery, fivePermLottery, fourLottery, threeLottery);
 const state = new StarRail.GachaState(pool);
 
-const result = state.nextMulti(100);
+const result = state.nextMulti(500);
 
-// print result line by line, and count the number of each item
+// print result line by line (#{No.} {result}), and count the number of each item
 const count = new Map<string, number>();
-result.forEach(x => {
-    console.log(x.displayName);
-    count.set(x.displayName, (count.get(x.displayName) || 0) + 1);
+result.forEach((x, i) => {
+    console.log(`${i + 1}: ${x.name}`);
+    count.set(x.name, (count.get(x.name) || 0) + 1);
 });
 
 // print the count of each item
