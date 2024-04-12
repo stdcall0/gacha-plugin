@@ -56,7 +56,7 @@ export class SRGachaPlugin extends Plugin {
         last4[key] = state.lastFour;
         upg[key] = state.upGuaranteed;
     }
-    async item(i) {
+    item(i) {
         if (i.star == 5)
             return `[[${i.displayName}]]`;
         if (i.star == 4)
