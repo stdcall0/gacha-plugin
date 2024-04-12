@@ -64,7 +64,7 @@ export class SRGachaPlugin extends Plugin {
         upg[key] = state.upGuaranteed;
     }
 
-    async item(i: StarRail.GachaItem) {
+    item(i: StarRail.GachaItem) {
         if (i.star == 5) return `[[${i.displayName}]]`;
         if (i.star == 4) return `[${i.displayName}]`;
         return i.displayName;
@@ -74,7 +74,7 @@ export class SRGachaPlugin extends Plugin {
         let res = state.nextMulti(n);
 
         // print 10 results per line
-        let msg = [];
+        let msg: string[] = [];
         let resStr = "";
 
         for (let i = 0; i < res.length; ++i) {
