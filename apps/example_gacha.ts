@@ -65,8 +65,8 @@ export class SRGachaPlugin extends Plugin {
     }
 
     item(i: StarRail.GachaItem) {
-        if (i.star == 5) return `[[${i.displayName}]]`;
-        if (i.star == 4) return `[${i.displayName}]`;
+        if (i.star == 5) return `[[ ${i.displayName} ]]`;
+        if (i.star == 4) return `[ ${i.displayName} ]`;
         return i.displayName;
     }
 
@@ -104,7 +104,7 @@ export class SRGachaPlugin extends Plugin {
         }
         
         msg.push(`目前已垫 ${state.lastFive} 抽`);
-        await this.reply(msg, true, { at: false, recallMsg: 0 });
+        await this.reply(msg.join('\n'), true, { at: false, recallMsg: 0 });
         return state;
     }
 
