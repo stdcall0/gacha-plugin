@@ -59,13 +59,13 @@ export class Gacha {
         const five = this.s.last5 <= 72 ? 60 : 60 + 600 * (this.s.last5 - 72);
         const four = this.s.last4 <= 7 ? 510 : 510 + 5100 * (this.s.last4 - 7);
         return [
-            five - 1, // 5*
-            four - 1, // 4*
-            9430 - 1 // 3*
+            five, // 5*
+            four, // 4*
+            9430 // 3*
         ];
     }
     next(pool) {
-        const lot = new Lottery([5, 4, 3], this.weight);
+        const lot = new Lottery([5, 4, 3], this.weight, 10000);
         const sub = lot.choice();
         if (sub == 5) {
             let res = pool.five.next(this.s.up5Guaranteed);
