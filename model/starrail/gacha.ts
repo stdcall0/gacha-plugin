@@ -1,80 +1,155 @@
 import { Lottery } from "#gc";
 import { GachaItem } from "./gachaitem.js";
 
-export class GachaPool {
+export interface GachaResult {
+    item: GachaItem;
+    count: number;
+    count5?: number;
+    isGuaranteed: boolean;
+};
+
+export class GachaSubPool {
+    protected lot: Lottery<GachaItem>;
+
     constructor(
-        public fiveStarUpItems: Lottery<GachaItem>,
-        public fiveStarPermItems: Lottery<GachaItem>,
-        public fourStarItems: Lottery<GachaItem>,
-        public threeStarItems: Lottery<GachaItem>
+        public items: GachaItem[]
     ) {
+        this.lot = new Lottery(items);
+    }
+
+    next(): GachaResult {
+        const item = this.lot.choice();
+        return {
+            item,
+            count: 0,
+            isGuaranteed: false
+        };
     }
 };
 
-export class GachaState {
-    lastFour: number; // 4* is guaranteed each 10 rolls
-    lastFive: number;
-    upGuaranteed: boolean; // if 5* character is not the up one, it will be guaranteed next time
-    pool: GachaPool;
+export class GachaSubPoolUp {
+    protected lot: Lottery<GachaItem>;
+    private lotUp: Lottery<GachaItem>;
 
-    constructor(pool: GachaPool, lastFour?: number, lastFive?: number, upGuaranteed?: boolean) {
-        this.pool = pool;
-        this.lastFour = lastFour || 0;
-        this.lastFive = lastFive || 0;
-        this.upGuaranteed = upGuaranteed || false;
+    constructor(
+        public items: GachaItem[]
+    ) {
+        this.lot = new Lottery(items);
+        this.lotUp = this.lot.filter(i => i.up);
+    }
+
+    next(upGuaranteed: boolean): GachaResult {
+        if (upGuaranteed) {
+            const item = this.lotUp.choice();
+            return {
+                item,
+                count: 0,
+                isGuaranteed: true
+            };
+        } else {
+            const item = this.lot.choice();
+            return {
+                item,
+                count: 0,
+                isGuaranteed: false
+            };
+        }
+    }
+};
+
+export interface GachaPool {
+    five: GachaSubPoolUp;
+    four: GachaSubPoolUp;
+    three: GachaSubPool;
+}
+
+export interface GachaState {
+    last5: number;
+    last4: number;
+
+    up5Guaranteed: boolean;
+    up4Guaranteed: boolean;
+};
+
+export const defaultGachaState: GachaState = {
+    last5: 0,
+    last4: 0,
+    up5Guaranteed: false,
+    up4Guaranteed: false
+};
+
+export class Gacha {
+    private s: GachaState;
+
+    constructor(s: GachaState = defaultGachaState) {
+        this.s = s;
+    }
+    state(): GachaState {
+        return this.s;
     }
 
     get weight(): number[] {
-        const five = this.lastFive <= 72 ? 60 : 60 + 600 * (this.lastFive - 72);
-        const four = this.lastFour <= 7 ? 510 : 510 + 5100 * (this.lastFour - 7);
-        if (this.upGuaranteed) 
-            return [
-                five, // 5* up
-                0, // 5 * perm
-                four, // 4* item
-                9430 // 3* item
-            ];
-        else
-            return [
-                five / 2, // 5* up
-                five / 2, // 5 * perm
-                four, // 4* item
-                9430 // 3* item
-            ];
+        const five = this.s.last5 <= 72 ? 60 : 60 + 600 * (this.s.last5 - 72);
+        const four = this.s.last4 <= 7 ? 510 : 510 + 5100 * (this.s.last4 - 7);
+        return [
+            five, // 5*
+            four, // 4*
+            9430 // 3*
+        ];
     }
 
-    get lottery(): Lottery<Lottery<GachaItem>> {
-        return new Lottery([
-            this.pool.fiveStarUpItems,
-            this.pool.fiveStarPermItems,
-            this.pool.fourStarItems,
-            this.pool.threeStarItems
-        ], this.weight);
-    }
-
-    next(): GachaItem {
-        const _lot = this.lottery;
-        const itemsIndex = _lot.choiceIndex();
-
-        const item = _lot.objList[itemsIndex].choice();
+    next(pool: GachaPool): GachaResult {
+        const lot = new Lottery([5, 4, 3], this.weight);
+        const sub = lot.choice();
         
-        if (itemsIndex <= 1) {
-            this.lastFive = 0;
-            this.lastFour += 1;
+        if (sub == 5) {
+            let res = pool.five.next(this.s.up5Guaranteed);
+            if (res.isGuaranteed) {
+                this.s.up5Guaranteed = false;
+            } else {
+                this.s.up5Guaranteed = !res.item.up;
+            }
 
-            this.upGuaranteed = itemsIndex == 1;
-        } else if (itemsIndex == 2) {
-            this.lastFour = 0;
-            this.lastFive += 1;
-        } else if (itemsIndex == 3) {
-            this.lastFive += 1;
-            this.lastFour += 1;
-        } else throw new Error("Invalid item index");
+            res = {
+                ...res,
+                count5: this.s.last5 + 1,
+                count: this.s.last5 + 1
+            };
 
-        return item;
+            this.s.last5 = 0;
+            this.s.last4++;
+
+            return res;
+        } else if (sub == 4) {
+            let res = pool.four.next(this.s.up4Guaranteed);
+            if (res.isGuaranteed) {
+                this.s.up4Guaranteed = false;
+            } else {
+                this.s.up4Guaranteed = !res.item.up;
+            }
+
+            res = {
+                ...res,
+                count5: this.s.last5 + 1,
+                count: this.s.last4 + 1
+            };
+
+            this.s.last5++;
+            this.s.last4 = 0;
+
+            return res;
+        } else {
+            this.s.last5++;
+            this.s.last4++;
+
+            return {
+                ...pool.three.next(),
+                count5: this.s.last5
+            };
+        }
     }
 
-    nextMulti(n: number): GachaItem[] {
-        return Array.from({length: n}, this.next.bind(this));
+    nextMulti(pool: GachaPool, n: number): GachaResult[] {
+        return Array.from({length: n}, this.next.bind(this, pool));
     }
 };

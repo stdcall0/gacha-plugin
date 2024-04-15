@@ -1,29 +1,9 @@
-import { Plugin, Common, Lottery } from '#gc';
+import { Plugin, Common } from '#gc';
 
-import { StarRail } from "#gc.model";
+import { StarRail } from '#gc.model';
+import { StarRailData } from '#gc.res';
 
-const fiveStarUp = new Lottery([new StarRail.FiveStarItem("Acheron", "黄泉", "")]);
-const fourStarUp = new Lottery([
-    new StarRail.FourStarItem("41", "王俊超A", ""),
-    new StarRail.FourStarItem("42", "王俊超B", ""),
-    new StarRail.FourStarItem("43", "王俊超C", ""),
-]);
-const fiveStarNorm = new Lottery([
-    new StarRail.FiveStarItem("Welt", "瓦尔特", ""),
-    new StarRail.FiveStarItem("Himeko", "姬子", ""),
-    new StarRail.FiveStarItem("Bronya", "布洛妮娅", ""),
-    new StarRail.FiveStarItem("Gepard", "杰帕德", ""),
-    new StarRail.FiveStarItem("Clara", "克拉拉", ""),
-    new StarRail.FiveStarItem("Yanqing", "彦卿", ""),
-    new StarRail.FiveStarItem("Bailu", "白露", ""),
-]);
-
-let pool = new StarRail.GachaPool(fiveStarUp, fiveStarNorm, fourStarUp,
-    new Lottery([new StarRail.ThreeStarItem("垃圾", "垃圾", "")]));
-
-let last5: { [key: string]: number } = {};
-let last4: { [key: string]: number } = {};
-let upg: { [key: string]: boolean } = {};
+let state: { [key: string]: StarRail.GachaState } = {};
 
 export class SRGachaPlugin extends Plugin {
     constructor() {
@@ -49,83 +29,87 @@ export class SRGachaPlugin extends Plugin {
         });
     }
 
-    private getGachaState(key: string): StarRail.GachaState {
-        // get last5 and last4 from global variable
-        // default 0 if not exist
-        let l5 = last5[key] || 0;
-        let l4 = last4[key] || 0;
-        let up = upg[key] || false;
-        return new StarRail.GachaState(pool, l4, l5, up);
+    private getGacha(key: string): StarRail.Gacha {
+        const s = state[key] || StarRail.defaultGachaState;
+        return new StarRail.Gacha(s);
     }
-    private saveGachaState(key: string, state: StarRail.GachaState) {
-        // save last5 and last4 to global variable
-        last5[key] = state.lastFive;
-        last4[key] = state.lastFour;
-        upg[key] = state.upGuaranteed;
+    private saveGacha(key: string, gacha: StarRail.Gacha) {
+        state[key] = gacha.state();
     }
 
-    item(i: StarRail.GachaItem) {
-        if (i.star == 5) return `[[ ${i.displayName} ]]`;
-        if (i.star == 4) return `[ ${i.displayName} ]`;
-        return i.displayName;
+    item(x: StarRail.GachaItem): string {
+        if (x.star > 3) return `${x.star}* ${x.displayName}`;
+        return x.displayName;
     }
 
-    async n(n: number, state: StarRail.GachaState, summary: boolean): Promise<StarRail.GachaState> {
-        let res = state.nextMulti(n);
+    async n(n: number, gacha: StarRail.Gacha, summary: boolean): Promise<StarRail.Gacha> {
+        let res = gacha.nextMulti(StarRailData.Pool, n);
 
         // print 10 results per line
-        let msg: string[] = [];
+        let msg: string[] = ["详情: "];
         let resStr = "";
 
+        let cnt5 = 0;
+
+        let s5 = [], s4 = [];
+
         for (let i = 0; i < res.length; ++i) {
-            resStr += this.item(res[i]) + " ";
+            resStr += this.item(res[i].item) + ", ";
             if (i % 10 == 9) {
-                msg.push(resStr);
+                msg.push(`${cnt5}~${res[i].count5}: ${resStr}`);
                 resStr = "";
             }
+            if (i % 10 == 0) {
+                cnt5 = res[i].count5;
+            }
+
+            if (res[i].item.star == 5) s5.push(res[i]);
+            if (res[i].item.star == 4) s4.push(res[i]);
         }
-        if (resStr.length > 0) msg.push(resStr);
+
+        if (resStr.length > 0)
+            msg.push(`${cnt5}~${res[res.length - 1].count5}: ${resStr}`);
 
         if (summary) {
-            msg.push("");
-            let summary = "5*: ";
-            // show 5* with format name xcount
-            let five = res.filter(x => x.star == 5);
-            let fiveMap = new Map<string, number>();
-            five.forEach(x => {
-                let name = x.displayName;
-                let count = fiveMap.get(name) || 0;
-                fiveMap.set(name, count + 1);
-            });
-            fiveMap.forEach((v, k) => {
-                summary += `[${k}]x${v} `;
-            });
-            msg.push(summary);
+            msg.push(""); msg.push("统计: ");
+
+            if (s5.length > 0) {
+                msg.push("5*: ");
+                s5.forEach(x => {
+                    msg.push(`- ${x.item.displayName} (${x.count5})`);
+                });
+            }
+            if (s5.length > 0 && s4.length > 0) msg.push("");
+            if (s4.length > 0) {
+                msg.push("4*: ");
+                s4.forEach(x => {
+                    msg.push(`- ${x.item.displayName} (${x.count5} >> ${x.count})`);
+                });
+            }
         }
         
-        msg.push(`目前已垫 ${state.lastFive} 抽`);
         await this.reply(msg.join('\n'), true, { at: false, recallMsg: 0 });
-        return state;
+        return gacha;
     }
 
     async single() {
         const key = this.e.user_id;
-        let state = this.getGachaState(key);
-        state = await this.n(1, state, false);
-        this.saveGachaState(key, state);
+        let gacha = this.getGacha(key);
+        gacha = await this.n(1, gacha, false);
+        this.saveGacha(key, gacha);
     }
 
     async ten() {
         const key = this.e.user_id;
-        let state = this.getGachaState(key);
-        state = await this.n(10, state, false);
-        this.saveGachaState(key, state);
+        let gacha = this.getGacha(key);
+        gacha = await this.n(10, gacha, true);
+        this.saveGacha(key, gacha);
     }
 
     async hundred() {
         const key = this.e.user_id;
-        let state = this.getGachaState(key);
-        state = await this.n(100, state, true);
-        this.saveGachaState(key, state);
+        let gacha = this.getGacha(key);
+        gacha = await this.n(100, gacha, true);
+        this.saveGacha(key, gacha);
     }
 };

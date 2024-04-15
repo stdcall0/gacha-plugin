@@ -13,3 +13,6 @@ const Sets = sets;
 const Domains = domains;
 
 export { Sets, Domains };
+
+import Pool from "./gacha/index.js";
+export { Pool };
