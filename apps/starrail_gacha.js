@@ -66,17 +66,11 @@ export class SRGachaPlugin extends Plugin {
             if (s5.length > 0) {
                 msg.push("5*: ");
                 s5.forEach(x => {
-                    msg.push(`- ${x.item.displayName} (${x.count5})`);
+                    msg.push(`- ${x.item.displayName} (${x.count5}${x.isGuaranteed ? " 大保底" : ""})`);
                 });
-            }
-            if (s5.length > 0 && s4.length > 0)
                 msg.push("");
-            if (s4.length > 0) {
-                msg.push("4*: ");
-                s4.forEach(x => {
-                    msg.push(`- ${x.item.displayName} (${x.count5} >> ${x.count})`);
-                });
             }
+            msg.push("共 ${s5.length} 个 5*，${s4.length} 个 4*");
         }
         await this.reply(msg.join('\n'), true, { at: false, recallMsg: 0 });
         return gacha;
