@@ -7,7 +7,7 @@ export default class Lottery<ObjType> {
     probPrefix: number[];
     probTotal: number;
 
-    constructor(objList: ObjType[], probList?: number[]) {
+    constructor(objList: ObjType[], probList?: number[], public probCeil: number = 0) {
         if (typeof probList === 'undefined') {
             this.length = objList.length;
             this.objList = objList;
@@ -34,7 +34,11 @@ export default class Lottery<ObjType> {
     }
 
     choiceIndex(): number {
-        let r = lodash.random(0, this.probTotal, true);
+        let r : number;
+        if (this.probCeil > 0 && this.probCeil < this.probTotal)
+            r = lodash.random(0, this.probCeil, true);
+        else
+            r = lodash.random(0, this.probTotal, true);
         let i = lodash.sortedIndex(this.probPrefix, r);
         if (i >= this.length) i = this.length - 1;
         return i;
