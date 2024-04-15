@@ -1,37 +1,49 @@
-;
-export class ThreeStarItem {
-    constructor(name, displayName, image) {
+export class GachaItem {
+    constructor(name, displayName, up = false) {
         this.name = name;
         this.displayName = displayName;
-        this.image = image;
+        this.up = up;
+    }
+    get imagePath() {
+        return `/resources/sr-gacha/${this.star}/${this.name}.png`;
+    }
+}
+;
+export class Weapon extends GachaItem {
+}
+;
+export class Character extends GachaItem {
+}
+;
+// add more star items here
+// Star3Weapon, Star4Weapon & Character, Star5Weapon & Character
+export class Star3Weapon extends Weapon {
+    constructor() {
+        super(...arguments);
         this.star = 3;
     }
-    get imagePath() {
-        return `./resources/sr-gacha/3/${this.image}`;
-    }
 }
-;
-export class FourStarItem {
-    constructor(name, displayName, image) {
-        this.name = name;
-        this.displayName = displayName;
-        this.image = image;
+export class Star4Weapon extends Weapon {
+    constructor() {
+        super(...arguments);
         this.star = 4;
     }
-    get imagePath() {
-        return `./resources/sr-gacha/4/${this.image}`;
-    }
 }
-;
-export class FiveStarItem {
-    constructor(name, displayName, image) {
-        this.name = name;
-        this.displayName = displayName;
-        this.image = image;
+export class Star5Weapon extends Weapon {
+    constructor() {
+        super(...arguments);
         this.star = 5;
     }
-    get imagePath() {
-        return `./resources/sr-gacha/5/${this.image}`;
+}
+export class Star4Character extends Character {
+    constructor() {
+        super(...arguments);
+        this.star = 4;
     }
 }
-;
+export class Star5Character extends Character {
+    constructor() {
+        super(...arguments);
+        this.star = 5;
+    }
+}

@@ -1,69 +1,106 @@
 import { Lottery } from "#gc";
-export class GachaPool {
-    constructor(fiveStarUpItems, fiveStarPermItems, fourStarItems, threeStarItems) {
-        this.fiveStarUpItems = fiveStarUpItems;
-        this.fiveStarPermItems = fiveStarPermItems;
-        this.fourStarItems = fourStarItems;
-        this.threeStarItems = threeStarItems;
+;
+export class GachaSubPool {
+    constructor(items) {
+        this.items = items;
+        this.lot = new Lottery(items);
+    }
+    next() {
+        const item = this.lot.choice();
+        return {
+            item,
+            count: 0,
+            isGuaranteed: false
+        };
     }
 }
 ;
-export class GachaState {
-    constructor(pool, lastFour, lastFive, upGuaranteed) {
-        this.pool = pool;
-        this.lastFour = lastFour || 0;
-        this.lastFive = lastFive || 0;
-        this.upGuaranteed = upGuaranteed || false;
+export class GachaSubPoolUp {
+    constructor(items) {
+        this.items = items;
+        this.lot = new Lottery(items);
+        this.lotUp = this.lot.filter(i => i.up);
+    }
+    next(upGuaranteed) {
+        if (upGuaranteed) {
+            const item = this.lotUp.choice();
+            return {
+                item,
+                count: 0,
+                isGuaranteed: true
+            };
+        }
+        else {
+            const item = this.lot.choice();
+            return {
+                item,
+                count: 0,
+                isGuaranteed: false
+            };
+        }
+    }
+}
+;
+;
+export const defaultGachaState = {
+    last5: 0,
+    last4: 0,
+    up5Guaranteed: false,
+    up4Guaranteed: false
+};
+export class Gacha {
+    constructor(s = defaultGachaState) {
+        this.s = s;
+    }
+    state() {
+        return this.s;
     }
     get weight() {
-        const five = this.lastFive <= 72 ? 60 : 60 + 600 * (this.lastFive - 72);
-        const four = this.lastFour <= 7 ? 510 : 510 + 5100 * (this.lastFour - 7);
-        if (this.upGuaranteed)
-            return [
-                five, // 5* up
-                0, // 5 * perm
-                four, // 4* item
-                9430 // 3* item
-            ];
-        else
-            return [
-                five / 2, // 5* up
-                five / 2, // 5 * perm
-                four, // 4* item
-                9430 // 3* item
-            ];
+        const five = this.s.last5 <= 72 ? 60 : 60 + 600 * (this.s.last5 - 72);
+        const four = this.s.last4 <= 7 ? 510 : 510 + 5100 * (this.s.last4 - 7);
+        return [
+            five, // 5*
+            four, // 4*
+            9430 // 3*
+        ];
     }
-    get lottery() {
-        return new Lottery([
-            this.pool.fiveStarUpItems,
-            this.pool.fiveStarPermItems,
-            this.pool.fourStarItems,
-            this.pool.threeStarItems
-        ], this.weight);
+    next(pool) {
+        const lot = new Lottery([5, 4, 3], this.weight);
+        const sub = lot.choice();
+        if (sub == 5) {
+            let res = pool.five.next(this.s.up5Guaranteed);
+            if (res.isGuaranteed) {
+                this.s.up5Guaranteed = false;
+            }
+            else {
+                this.s.up5Guaranteed = !res.item.up;
+            }
+            res = Object.assign(Object.assign({}, res), { count5: this.s.last5 + 1, count: this.s.last5 + 1 });
+            this.s.last5 = 0;
+            this.s.last4++;
+            return res;
+        }
+        else if (sub == 4) {
+            let res = pool.four.next(this.s.up4Guaranteed);
+            if (res.isGuaranteed) {
+                this.s.up4Guaranteed = false;
+            }
+            else {
+                this.s.up4Guaranteed = !res.item.up;
+            }
+            res = Object.assign(Object.assign({}, res), { count5: this.s.last5 + 1, count: this.s.last4 + 1 });
+            this.s.last5++;
+            this.s.last4 = 0;
+            return res;
+        }
+        else {
+            this.s.last5++;
+            this.s.last4++;
+            return Object.assign(Object.assign({}, pool.three.next()), { count5: this.s.last5 });
+        }
     }
-    next() {
-        const _lot = this.lottery;
-        const itemsIndex = _lot.choiceIndex();
-        const item = _lot.objList[itemsIndex].choice();
-        if (itemsIndex <= 1) {
-            this.lastFive = 0;
-            this.lastFour += 1;
-            this.upGuaranteed = itemsIndex == 1;
-        }
-        else if (itemsIndex == 2) {
-            this.lastFour = 0;
-            this.lastFive += 1;
-        }
-        else if (itemsIndex == 3) {
-            this.lastFive += 1;
-            this.lastFour += 1;
-        }
-        else
-            throw new Error("Invalid item index");
-        return item;
-    }
-    nextMulti(n) {
-        return Array.from({ length: n }, this.next.bind(this));
+    nextMulti(pool, n) {
+        return Array.from({ length: n }, this.next.bind(this, pool));
     }
 }
 ;
