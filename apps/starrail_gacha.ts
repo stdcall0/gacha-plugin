@@ -83,7 +83,7 @@ export class SRGachaPlugin extends Plugin {
             msg.push(`共 ${s5.length} 个 5*，${s4.length} 个 4*`);
         }
         
-        await this.reply(msg.join('\n'), true, { at: true, recallMsg: 0 });
+        await this.reply(msg.join('\n'), true);
         return gacha;
     }
 
