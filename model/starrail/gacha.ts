@@ -92,9 +92,9 @@ export class Gacha {
         const five = this.s.last5 <= 72 ? 60 : 60 + 600 * (this.s.last5 - 72);
         const four = this.s.last4 <= 7 ? 510 : 510 + 5100 * (this.s.last4 - 7);
         return [
-            five, // 5*
-            four, // 4*
-            9430 // 3*
+            five - 1, // 5*
+            four - 1, // 4*
+            9430 - 1 // 3*
         ];
     }
 
