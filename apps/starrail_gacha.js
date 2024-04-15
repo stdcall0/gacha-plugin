@@ -40,7 +40,7 @@ export class SRGachaPlugin extends Plugin {
     async n(n, gacha, summary) {
         let res = gacha.nextMulti(StarRailData.Pool, n);
         // print 10 results per line
-        let msg = ["详情: "];
+        let msg = [" 详情: "];
         let resStr = "";
         let cnt5 = 0;
         let s5 = [], s4 = [];
@@ -70,9 +70,9 @@ export class SRGachaPlugin extends Plugin {
                 });
                 msg.push("");
             }
-            msg.push("共 ${s5.length} 个 5*，${s4.length} 个 4*");
+            msg.push(`共 ${s5.length} 个 5*，${s4.length} 个 4*`);
         }
-        await this.reply(msg.join('\n'), true, { at: false, recallMsg: 0 });
+        await this.reply(msg.join('\n'), true, { at: true, recallMsg: 0 });
         return gacha;
     }
     async single() {
