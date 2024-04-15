@@ -42,6 +42,11 @@ export class SRGachaPlugin extends Plugin {
         return x.displayName;
     }
 
+    lastFive(lastRes: StarRail.GachaResult): number {
+        if (lastRes.item.star == 5) return 0;
+        return lastRes.count5;
+    }
+
     async n(n: number, gacha: StarRail.Gacha, summary: boolean): Promise<StarRail.Gacha> {
         let res = gacha.nextMulti(StarRailData.Pool, n);
 
@@ -73,6 +78,14 @@ export class SRGachaPlugin extends Plugin {
         if (summary) {
             msg.push(""); msg.push("统计: ");
 
+            if (s4.length > 0) {
+                msg.push("4*: ");
+                s4.forEach(x => {
+                    msg.push(`- ${x.item.displayName} (${x.count5} >> ${x.count})`);
+                });
+                msg.push("");
+            }
+
             if (s5.length > 0) {
                 msg.push("5*: ");
                 s5.forEach(x => {
@@ -80,7 +93,7 @@ export class SRGachaPlugin extends Plugin {
                 });
                 msg.push("");
             }
-            msg.push(`共 ${s5.length} 个 5*，${s4.length} 个 4*`);
+            msg.push(`共 ${s5.length} 个 5*，${s4.length} 个 4*，已垫 ${this.lastFive(res[res.length - 1])} 抽`);
         }
         
         await this.reply(msg.join('\n'), true);
