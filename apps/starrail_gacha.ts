@@ -80,9 +80,11 @@ export class SRGachaPlugin extends Plugin {
 
             if (s4.length > 0) {
                 msg.push("4*: ");
+                let st = "- ";
                 s4.forEach(x => {
-                    msg.push(`- ${x.item.displayName} (${x.count5} >> ${x.count})`);
+                    st += `${x.item.displayName} (${x.count}), `;
                 });
+                msg.push(st.substring(0, st.length - 2));
                 msg.push("");
             }
 
