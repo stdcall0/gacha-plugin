@@ -1,3 +1,9 @@
+export var GachaItemType;
+(function (GachaItemType) {
+    GachaItemType[GachaItemType["Weapon"] = 0] = "Weapon";
+    GachaItemType[GachaItemType["Character"] = 1] = "Character";
+})(GachaItemType || (GachaItemType = {}));
+;
 export class GachaItem {
     constructor(name, displayName, up = false) {
         this.name = name;
@@ -10,13 +16,19 @@ export class GachaItem {
 }
 ;
 export class Weapon extends GachaItem {
+    constructor() {
+        super(...arguments);
+        this.type = GachaItemType.Weapon;
+    }
 }
 ;
 export class Character extends GachaItem {
+    constructor() {
+        super(...arguments);
+        this.type = GachaItemType.Character;
+    }
 }
 ;
-// add more star items here
-// Star3Weapon, Star4Weapon & Character, Star5Weapon & Character
 export class Star3Weapon extends Weapon {
     constructor() {
         super(...arguments);
