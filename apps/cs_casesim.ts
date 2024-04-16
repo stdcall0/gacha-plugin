@@ -208,11 +208,10 @@ export class CSCaseSimPlugin extends Plugin {
         }
 
         let d = Array.from({ length: 1000 }, () => this.gen(this.e.user_id))
-            .filter(x => ["Gold", "Red"].includes(x.rarity))
+        let totalPrice = d.map(x => x.item.prices[this.getFloat(x.float)][x.st])
+        d = d.filter(x => [CS.Rarity.Gold, CS.Rarity.Red].includes(x.rarity))
         
-        let previewMsg = "总估值: "
-            + `¥${d.map(x => x.item.prices[this.getFloat(x.float)][x.st])
-                .reduce((acc, x) => acc + x, 0).toFixed(2)}`;
+        let previewMsg = "总估值: ¥" + totalPrice.reduce((acc, x) => acc + x, 0).toFixed(2);
         
         const fMsg = await Common.makeForwardMsg(this.e, d.map(x => x.msg), previewMsg);
         await this.reply(fMsg, false, { recallMsg: 0 });
