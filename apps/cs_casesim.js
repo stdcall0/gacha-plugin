@@ -153,9 +153,10 @@ export class CSCaseSimPlugin extends Plugin {
         }
         let s = stat[this.e.user_id];
         let msg = `总开箱数: ${s.totalCase}\n`;
-        msg += `稀有度统计: `;
-        for (const [rarity, count] of Object.entries(s.countByRarity)) {
-            msg += `- ${this.getRarityEmojiSquare(rarity)}${rarity}: ${count} `;
+        msg += `稀有度统计: \n`;
+        for (const rarity of [CS.Rarity.Gold, CS.Rarity.Red, CS.Rarity.Pink, CS.Rarity.Purple, CS.Rarity.Blue]) {
+            const count = s.countByRarity[rarity];
+            msg += `- ${this.getRarityEmojiSquare(rarity)}${rarity}: ${count}\n`;
         }
         msg += `\n开箱费用: ¥${s.totalCase * c.price}`;
         msg += `\n总估值: ¥${s.totalValue}`;
