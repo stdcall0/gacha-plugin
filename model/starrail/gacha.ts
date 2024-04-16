@@ -1,5 +1,5 @@
 import { Lottery } from "#gc";
-import { GachaItem } from "./gachaitem.js";
+import { GachaItem, GachaItemType } from "./gachaitem.js";
 
 export interface GachaResult {
     item: GachaItem;
@@ -27,14 +27,21 @@ export class GachaSubPool {
     }
 };
 
+// FIXME: This implementaion is way too complicated. It can be de-integrated and simplified.
 export class GachaSubPoolUp {
-    protected lot: Lottery<GachaItem>;
+    private lot: Lottery<GachaItem>;
+    private lotPerm: Lottery<GachaItem>;
+    private lotPermWeap: Lottery<GachaItem>;
+    private lotPermChar: Lottery<GachaItem>;
     private lotUp: Lottery<GachaItem>;
 
     constructor(
         public items: GachaItem[]
     ) {
         this.lot = new Lottery(items);
+        this.lotPerm = this.lot.filter(i => !i.up);
+        this.lotPermWeap = this.lotPerm.filter(i => i.type == GachaItemType.Weapon);
+        this.lotPermChar = this.lotPerm.filter(i => i.type == GachaItemType.Character);
         this.lotUp = this.lot.filter(i => i.up);
     }
 
@@ -47,12 +54,34 @@ export class GachaSubPoolUp {
                 isGuaranteed: true
             };
         } else {
-            const item = this.lot.choice();
-            return {
-                item,
-                count: 0,
-                isGuaranteed: false
-            };
+            // 50 50
+            const isUp = new Lottery([true, false]).choice();
+            if (isUp) {
+                const item = this.lotUp.choice();
+                return {
+                    item,
+                    count: 0,
+                    isGuaranteed: false
+                };
+            } else {
+                if (!this.lotPermChar.length || !this.lotPermWeap.length) {
+                    const item = this.lotPerm.choice();
+                    return {
+                        item,
+                        count: 0,
+                        isGuaranteed: false
+                    };
+                } else {
+                    // 50 50 for weap or char
+                    const isWeap = new Lottery([true, false]).choice();
+                    const item = isWeap ? this.lotPermWeap.choice() : this.lotPermChar.choice();
+                    return {
+                        item,
+                        count: 0,
+                        isGuaranteed: false
+                    };
+                }
+            }
         }
     }
 };
