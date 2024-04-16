@@ -142,10 +142,15 @@ export class SRGachaPlugin extends Plugin {
         const buwai = rankData.up - wai;
         return buwai / rankData.up;
     }
-    getAverageUpCount(rankData) {
+    getAverageS5Count(rankData) {
         if (rankData.star5 == 0)
             return 180;
         return rankData.total / rankData.star5;
+    }
+    getAverageUpCount(rankData) {
+        if (rankData.up == 0)
+            return 180;
+        return rankData.total / rankData.up;
     }
     async showrank() {
         let msg = [" 抽卡统计: "];
@@ -157,7 +162,9 @@ export class SRGachaPlugin extends Plugin {
         let top1 = Object.values(rank)
             .filter(r => r.up > 0).sort((a, b) => this.getUpPercentage(b) - this.getUpPercentage(a));
         let top2 = Object.values(rank)
-            .filter(r => r.star5 > 0).sort((a, b) => this.getAverageUpCount(a) - this.getAverageUpCount(b));
+            .filter(r => r.star5 > 0).sort((a, b) => this.getAverageS5Count(a) - this.getAverageS5Count(b));
+        let top3 = Object.values(rank)
+            .filter(r => r.up > 0).sort((a, b) => this.getAverageUpCount(a) - this.getAverageUpCount(b));
         // show top 5
         for (let i = 0; i < 5; ++i) {
             if (i < top1.length) {
@@ -171,7 +178,16 @@ export class SRGachaPlugin extends Plugin {
         for (let i = 0; i < 5; ++i) {
             if (i < top2.length) {
                 let r = top2[i];
-                msg.push(`- ${r.name}: 共 ${r.total} 抽，${r.star5} 个 5*，平均 ${this.getAverageUpCount(r).toFixed(2)} 抽`);
+                msg.push(`- ${r.name}: 共 ${r.total} 抽，${r.star5} 个 5*，平均 ${this.getAverageS5Count(r).toFixed(2)} 抽`);
+            }
+        }
+        //show top3 5
+        msg.push("");
+        msg.push("排行榜 (平均 UP 抽数): ");
+        for (let i = 0; i < 5; ++i) {
+            if (i < top3.length) {
+                let r = top3[i];
+                msg.push(`- ${r.name}: 共 ${r.total} 抽，${r.up} 个 UP，平均 ${this.getAverageUpCount(r).toFixed(2)} 抽`);
             }
         }
         // reply msg
