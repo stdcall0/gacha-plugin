@@ -106,7 +106,7 @@ export class CSCaseSimPlugin extends Plugin {
         const paint = PaintLot.choice();
         let msg = `${this.getItemName(item, this.getFloat(float), st)}\n`;
         msg += `\n稀有度: ${this.getRarityEmojiSquare(rarity)}${rarity}\n磨损: ${float.toFixed(16)}\n图案模版: ${paint}`;
-        msg += `\n估值: ¥${item.prices[this.getFloat(float)][st]}`;
+        msg += `\n估值: ¥${item.prices[this.getFloat(float)][st].toFixed(2)}`;
         stat[user_id] = stat[user_id] || {
             totalCase: 0,
             countByRarity: {
@@ -139,12 +139,12 @@ export class CSCaseSimPlugin extends Plugin {
         let price = d.map(x => x.item.prices[this.getFloat(x.float)][x.st])
             .reduce((acc, x) => acc + x, 0);
         let previewMsg = `最高稀有度: ${this.getRarityEmojiSquare(rarity)}${rarity}\n`;
-        previewMsg += `总估值: ¥${price}`;
+        previewMsg += `总估值: ¥${price.toFixed(2)}`;
         let recallMsg = 120;
         if ([CS.Rarity.Gold, CS.Rarity.Red, CS.Rarity.Pink].includes(rarity))
             recallMsg = 0;
         const fMsg = await Common.makeForwardMsg(this.e, d.map(x => x.msg), previewMsg);
-        await this.reply(fMsg, true, { recallMsg });
+        await this.reply(fMsg, false, { recallMsg });
     }
     async stats() {
         if (!(this.e.user_id in stat)) {
