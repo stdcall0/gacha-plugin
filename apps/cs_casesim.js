@@ -48,12 +48,20 @@ export class CSCaseSimPlugin extends Plugin {
                     fnc: 'ten'
                 },
                 {
+                    reg: '^(!|！)开百箱.*$',
+                    fnc: 'hundred'
+                },
+                {
                     reg: '^(!|！)开千箱.*$',
                     fnc: 'thous'
                 },
                 {
                     reg: '^(!|！)统计.*$',
                     fnc: 'stats'
+                },
+                {
+                    reg: '^(!|！)重置.*$',
+                    fnc: 'reset'
                 }
             ]
         });
@@ -142,7 +150,8 @@ export class CSCaseSimPlugin extends Plugin {
         // get total price
         let price = d.map(x => x.item.prices[this.getFloat(x.float)][x.st])
             .reduce((acc, x) => acc + x, 0);
-        let previewMsg = `最高稀有度: ${this.getRarityEmojiSquare(rarity)}${rarity}\n`;
+        let previewMsg = `@${this.e.sender.nickname}\n`;
+        previewMsg += `最高稀有度: ${this.getRarityEmojiSquare(rarity)}${rarity}\n`;
         previewMsg += `总估值: ¥${price.toFixed(2)}`;
         let recallMsg = 120;
         if ([CS.Rarity.Gold, CS.Rarity.Red, CS.Rarity.Pink].includes(rarity))
@@ -179,6 +188,34 @@ export class CSCaseSimPlugin extends Plugin {
         let previewMsg = "总估值: ¥" + totalPrice.reduce((acc, x) => acc + x, 0).toFixed(2);
         const fMsg = await Common.makeForwardMsg(this.e, d.map(x => x.msg), previewMsg);
         await this.reply(fMsg, false, { recallMsg: 0 });
+    }
+    async hundred() {
+        let d = Array.from({ length: 100 }, () => this.gen(this.e.user_id));
+        // get highest rarity
+        let raritySort = [CS.Rarity.Gold, CS.Rarity.Red, CS.Rarity.Pink, CS.Rarity.Purple, CS.Rarity.Blue];
+        let rarity = raritySort.find(r => d.map(x => x.rarity).includes(r));
+        // get total price
+        let price = d.map(x => x.item.prices[this.getFloat(x.float)][x.st])
+            .reduce((acc, x) => acc + x, 0);
+        let previewMsg = `@${this.e.sender.nickname}\n`;
+        previewMsg += `最高稀有度: ${this.getRarityEmojiSquare(rarity)}${rarity}\n`;
+        previewMsg += `总估值: ¥${price.toFixed(2)}`;
+        let recallMsg = 120;
+        if ([CS.Rarity.Gold, CS.Rarity.Red, CS.Rarity.Pink].includes(rarity))
+            recallMsg = 0;
+        // only show Red & Gold & Pink
+        const fMsg = await Common.makeForwardMsg(this.e, d.filter(x => [CS.Rarity.Gold, CS.Rarity.Red, CS.Rarity.Pink].includes(x.rarity))
+            .map(x => x.msg), previewMsg);
+        await this.reply(fMsg, false, { recallMsg });
+    }
+    async reset() {
+        if (this.e.user_id in stat) {
+            delete stat[this.e.user_id];
+            await this.reply('已重置开箱统计', true);
+        }
+        else {
+            await this.reply('你还没有开过箱子哦', true);
+        }
     }
 }
 ;
