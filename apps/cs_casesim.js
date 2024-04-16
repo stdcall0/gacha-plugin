@@ -1,4 +1,4 @@
-import { Plugin, Lottery } from '#gc';
+import { Plugin, Common, Lottery } from '#gc';
 import lodash from 'lodash';
 import { CSData } from '#gc.res';
 import { CS } from '#gc.model';
@@ -29,6 +29,8 @@ const PaintLot = new Lottery(
 // a list containing 0 - 999
 lodash.range(0, 1000));
 const c = CSData.CaseKilowatt;
+;
+let stat = {};
 export class CSCaseSimPlugin extends Plugin {
     constructor() {
         super({
@@ -38,11 +40,32 @@ export class CSCaseSimPlugin extends Plugin {
             priority: '98',
             rule: [
                 {
-                    reg: '^!开箱.*$',
+                    reg: '^(!|！)开箱.*$',
                     fnc: 'single'
+                },
+                {
+                    reg: '^(!|！)开十箱.*$',
+                    fnc: 'ten'
+                },
+                {
+                    reg: '^(!|！)统计.*$',
+                    fnc: 'stats'
                 }
             ]
         });
+    }
+    getRarityEmojiSquare(rarity) {
+        if (rarity == CS.Rarity.Gold)
+            return '🟨';
+        if (rarity == CS.Rarity.Red)
+            return '🟥';
+        if (rarity == CS.Rarity.Purple)
+            return '🟪';
+        if (rarity == CS.Rarity.Pink)
+            return '🌸';
+        if (rarity == CS.Rarity.Blue)
+            return '🟦';
+        return '';
     }
     getFloat(float) {
         if (float < 0.07)
@@ -57,7 +80,7 @@ export class CSCaseSimPlugin extends Plugin {
     }
     getItemName(item, float, st) {
         let name = `${item.name} (${float})`;
-        if (st) {
+        if (st == CS.StatTrak.StatTrak) {
             if (name.includes('（★）'))
                 name = name.replace('（★）', '（★ StatTrak™）');
             else
@@ -65,7 +88,7 @@ export class CSCaseSimPlugin extends Plugin {
         }
         return name;
     }
-    async single() {
+    gen(user_id) {
         // use CaseKilowatt.rarity as lottery table and select a rarity
         const rarityLot = new Lottery(Object.keys(c.rarity), Object.values(c.rarity));
         const rarity = rarityLot.choice();
@@ -82,12 +105,62 @@ export class CSCaseSimPlugin extends Plugin {
         // Decide Paint Kit
         const paint = PaintLot.choice();
         let msg = `${this.getItemName(item, this.getFloat(float), st)}\n`;
-        msg += `\n稀有度: ${rarity}\n磨损: ${float.toFixed(6)}\n图案模版: ${paint}`;
+        msg += `\n稀有度: ${this.getRarityEmojiSquare(rarity)}${rarity}\n磨损: ${float.toFixed(16)}\n图案模版: ${paint}`;
         msg += `\n估值: ¥${item.prices[this.getFloat(float)][st]}`;
+        stat[user_id] = stat[user_id] || {
+            totalCase: 0,
+            countByRarity: {
+                [CS.Rarity.Gold]: 0,
+                [CS.Rarity.Red]: 0,
+                [CS.Rarity.Purple]: 0,
+                [CS.Rarity.Pink]: 0,
+                [CS.Rarity.Blue]: 0
+            },
+            totalValue: 0
+        };
+        stat[user_id].totalCase += 1;
+        stat[user_id].countByRarity[rarity] += 1;
+        stat[user_id].totalValue += item.prices[this.getFloat(float)][st];
+        return { msg, rarity, item, float, st, paint };
+    }
+    async single() {
+        let d = this.gen(this.e.user_id);
+        let recallMsg = 120;
+        if ([CS.Rarity.Gold, CS.Rarity.Red, CS.Rarity.Pink].includes(d.rarity))
+            recallMsg = 0;
+        await this.reply(d.msg, true, { recallMsg });
+    }
+    async ten() {
+        let d = Array.from({ length: 10 }, () => this.gen(this.e.user_id));
+        // get highest rarity
+        let raritySort = [CS.Rarity.Gold, CS.Rarity.Red, CS.Rarity.Pink, CS.Rarity.Purple, CS.Rarity.Blue];
+        let rarity = raritySort.find(r => d.map(x => x.rarity).includes(r));
+        // get total price
+        let price = d.map(x => x.item.prices[this.getFloat(x.float)][x.st])
+            .reduce((acc, x) => acc + x, 0);
+        let previewMsg = `最高稀有度: ${this.getRarityEmojiSquare(rarity)}${rarity}\n`;
+        previewMsg += `总估值: ¥${price}`;
         let recallMsg = 120;
         if ([CS.Rarity.Gold, CS.Rarity.Red, CS.Rarity.Pink].includes(rarity))
             recallMsg = 0;
-        await this.reply(msg, true, { recallMsg });
+        const fMsg = await Common.makeForwardMsg(this.e, d.map(x => x.msg), previewMsg);
+        await this.reply(fMsg, true, { recallMsg });
+    }
+    async stats() {
+        if (!(this.e.user_id in stat)) {
+            await this.reply('你还没有开过箱子哦', true);
+            return;
+        }
+        let s = stat[this.e.user_id];
+        let msg = `总开箱数: ${s.totalCase}\n`;
+        msg += `稀有度统计: `;
+        for (const [rarity, count] of Object.entries(s.countByRarity)) {
+            msg += `- ${this.getRarityEmojiSquare(rarity)}${rarity}: ${count} `;
+        }
+        msg += `\n开箱费用: ¥${s.totalCase * c.price}`;
+        msg += `\n总估值: ¥${s.totalValue}`;
+        msg += `\n盈亏: ¥${s.totalValue - s.totalCase * c.price}`;
+        await this.reply(msg, true);
     }
 }
 ;
