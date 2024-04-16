@@ -97,7 +97,8 @@ export class SRGachaPlugin extends Plugin {
             gacha,
             star5: s5.length,
             up: s5.filter(x => x.item.up).length,
-            total: n
+            total: // sum up all s5.count5
+            s5.reduce((acc, x) => acc + x.count5, 0)
         };
     }
     initRank(key, name) {
