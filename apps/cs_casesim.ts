@@ -189,9 +189,9 @@ export class CSCaseSimPlugin extends Plugin {
             const count = s.countByRarity[rarity];
             msg += `- ${this.getRarityEmojiSquare(rarity as CS.Rarity)}${rarity}: ${count}\n`;
         }
-        msg += `\n开箱费用: ¥${s.totalCase * c.price}`;
-        msg += `\n总估值: ¥${s.totalValue}`;
-        msg += `\n盈亏: ¥${s.totalValue - s.totalCase * c.price}`;
+        msg += `\n开箱费用: ¥${(s.totalCase * c.price).toFixed(2)}`;
+        msg += `\n总估值: ¥${s.totalValue.toFixed(2)}`;
+        msg += `\n盈亏: ¥${(s.totalValue - s.totalCase * c.price).toFixed(2)}`;
 
         await this.reply(msg, true);
     }
