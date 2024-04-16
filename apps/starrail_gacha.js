@@ -25,7 +25,7 @@ export class SRGachaPlugin extends Plugin {
                     fnc: 'single'
                 },
                 {
-                    reg: '^#星铁抽卡排名.*$',
+                    reg: '^#星铁抽卡(排名|排行).*$',
                     fnc: 'showrank'
                 }
             ]
@@ -136,9 +136,11 @@ export class SRGachaPlugin extends Plugin {
         this.updateRank(key, res);
     }
     getUpPercentage(rankData) {
-        if (rankData.star5 == 0)
+        if (rankData.up == 0)
             return 0;
-        return rankData.up / rankData.star5;
+        const wai = rankData.star5 - rankData.up;
+        const buwai = rankData.up - wai;
+        return buwai / rankData.up;
     }
     getAverageUpCount(rankData) {
         if (rankData.star5 == 0)
@@ -153,7 +155,7 @@ export class SRGachaPlugin extends Plugin {
         msg.push("");
         msg.push("排行榜 (小保底不歪): ");
         let top1 = Object.values(rank)
-            .filter(r => r.star5 > 0).sort((a, b) => this.getUpPercentage(b) - this.getUpPercentage(a));
+            .filter(r => r.up > 0).sort((a, b) => this.getUpPercentage(b) - this.getUpPercentage(a));
         let top2 = Object.values(rank)
             .filter(r => r.star5 > 0).sort((a, b) => this.getAverageUpCount(a) - this.getAverageUpCount(b));
         // show top 5
