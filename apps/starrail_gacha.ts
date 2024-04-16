@@ -177,7 +177,7 @@ export class SRGachaPlugin extends Plugin {
         let msg = [" 抽卡统计: "];
         this.initRank(this.e.user_id, this.e.sender.nickname);
         const me = rank[this.e.user_id];
-        msg.push(`- ${me.name}: 共 ${me.total} 抽，${me.star5} 个 5* (${me.up} 个 UP`);
+        msg.push(`- ${me.name}: 共 ${me.total} 抽，${me.star5} 个 5* (${me.up} 个 UP)`);
 
         msg.push(""); msg.push("排行榜 (小保底不歪): ");
         let top1 = Object.values(rank)
