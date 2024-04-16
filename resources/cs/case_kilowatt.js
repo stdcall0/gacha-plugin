@@ -1,6 +1,6 @@
 const CaseKilowatt = {
     'name': '千瓦武器箱',
-    'price': 10.38,
+    'price': 10.38 + 17,
     'items': {
         '蓝': [
             {
