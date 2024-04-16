@@ -82,9 +82,9 @@ export class CSCaseSimPlugin extends Plugin {
         let name = `${item.name} (${float})`;
         if (st == CS.StatTrak.StatTrak) {
             if (name.includes('（★）'))
-                name = name.replace('（★）', '（★ StatTrak™）');
+                name = name.replace('（★）', '（★ StatTrak）');
             else
-                name = name.replace(' |', '（StatTrak™） |');
+                name = name.replace(' |', '（StatTrak） |');
         }
         return name;
     }
