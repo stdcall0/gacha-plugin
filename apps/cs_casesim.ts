@@ -65,6 +65,10 @@ export class CSCaseSimPlugin extends Plugin {
                     fnc: 'ten'
                 },
                 {
+                    reg: '^(!|！)开千箱.*$',
+                    fnc: 'thous'
+                },
+                {
                     reg: '^(!|！)统计.*$',
                     fnc: 'stats'
                 }
@@ -194,5 +198,23 @@ export class CSCaseSimPlugin extends Plugin {
         msg += `\n盈亏: ¥${(s.totalValue - s.totalCase * c.price).toFixed(2)}`;
 
         await this.reply(msg, true);
+    }
+
+    async thous() {
+        const allowQQ = "3239703326";
+        if (this.e.user_id != allowQQ) {
+            await this.reply('你没有权限开千箱', true);
+            return;
+        }
+
+        let d = Array.from({ length: 1000 }, () => this.gen(this.e.user_id))
+            .filter(x => ["Gold", "Red"].includes(x.rarity))
+        
+        let previewMsg = "总估值: "
+            + `¥${d.map(x => x.item.prices[this.getFloat(x.float)][x.st])
+                .reduce((acc, x) => acc + x, 0).toFixed(2)}`;
+        
+        const fMsg = await Common.makeForwardMsg(this.e, d.map(x => x.msg), previewMsg);
+        await this.reply(fMsg, false, { recallMsg: 0 });
     }
 };
