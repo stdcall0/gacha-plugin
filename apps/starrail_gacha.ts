@@ -149,7 +149,7 @@ export class SRGachaPlugin extends Plugin {
         const key = this.e.user_id;
         this.initRank(key, this.e.sender.nickname);
         let gacha = this.getGacha(key);
-        let res = await this.n(1, gacha, false);
+        let res = await this.n(10, gacha, true);
         this.saveGacha(key, gacha);
         this.updateRank(key, res);
     }
@@ -158,7 +158,7 @@ export class SRGachaPlugin extends Plugin {
         const key = this.e.user_id;
         this.initRank(key, this.e.sender.nickname);
         let gacha = this.getGacha(key);
-        let res = await this.n(1, gacha, false);
+        let res = await this.n(100, gacha, true);
         this.saveGacha(key, gacha);
         this.updateRank(key, res);
     }
