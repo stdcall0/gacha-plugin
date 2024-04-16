@@ -189,7 +189,7 @@ export class SRGachaPlugin extends Plugin {
         for (let i = 0; i < 5; ++i) {
             if (i < top1.length) {
                 let r = top1[i];
-                msg.push(`- ${r.name}: ${r.star5} 个 5*，${r.up} 个 UP，小保底不歪 ${this.getUpPercentage(r).toFixed(2)}%`);
+                msg.push(`- ${r.name}: ${r.star5} 个 5*，${r.up} 个 UP，小保底不歪 ${(this.getUpPercentage(r)*100).toFixed(2)}%`);
             }
         }
         // show top2 5
