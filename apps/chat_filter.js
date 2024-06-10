@@ -30,15 +30,14 @@ export class ChatFilterPlugin extends Plugin {
         }
         const message = this.e.raw_message;
         if (message.trimStart().startsWith(filter_prefix)) {
-            await this.e.recall();
+            this.e.group.recallMsg(this.e.message_id);
             return;
         }
         const sender_uid = this.e.sender.user_id;
         // check extra filter
         if (extra_filter_uid.includes(sender_uid) &&
             message.trimStart().startsWith(extra_filter_prefix)) {
-            await this.e.recall();
-            return;
+            this.e.group.recallMsg(this.e.message_id);
         }
     }
 }
