@@ -1,7 +1,6 @@
 import { Plugin, Common, Lottery } from '#gc';
 import lodash from 'lodash';
 import { CSData } from '#gc.res';
-import CaseKilowatt from '#@/resources/cs/case_kilowatt.js';
 import { CS } from '#gc.model';
 
 
