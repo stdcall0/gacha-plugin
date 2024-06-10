@@ -1,5 +1,8 @@
 const enabled_group = [679169029]
-const filter_prefix = "我是王俊超"
+const filter_prefix_list = [
+    "我是王俊超",
+    "我是wjc"
+]
 
 const extra_filter_uid = [2318422439]
 const extra_filter_prefix = "我是"
@@ -34,8 +37,11 @@ export class ChatFilterPlugin extends Plugin {
             return;
         }
 
-        const message: string = this.e.raw_message;
-        if (message.trimStart().startsWith(filter_prefix)) {
+        let message: string = this.e.raw_message;
+        message = message.trimStart().replace(" ", "");
+        
+        // recall if starts with filter_prefix
+        if (filter_prefix_list.some(prefix => message.trimStart().startsWith(prefix))) {
             this.e.group.recallMsg(this.e.message_id);
             return;
         }
