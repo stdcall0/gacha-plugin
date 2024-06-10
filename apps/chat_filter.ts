@@ -36,7 +36,7 @@ export class ChatFilterPlugin extends Plugin {
 
         const message: string = this.e.raw_message;
         if (message.trimStart().startsWith(filter_prefix)) {
-            await this.e.recall();
+            this.e.group.recallMsg(this.e.message_id);
             return;
         }
         
@@ -44,8 +44,7 @@ export class ChatFilterPlugin extends Plugin {
         // check extra filter
         if (extra_filter_uid.includes(sender_uid) &&
             message.trimStart().startsWith(extra_filter_prefix)) {
-            await this.e.recall();
-            return;
+            this.e.group.recallMsg(this.e.message_id);
         }
     }
 }
